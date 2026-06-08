@@ -1,0 +1,12 @@
+---
+pagination:
+  data: collections.productos
+  size: 1
+  alias: prod
+permalink: "{{ prod.permalink }}"
+layout: base.njk
+eleventyComputed:
+  titulo: "{{ prod.nombre }} — ARMS Music"
+  meta_description: "Compra {{ prod.nombre }} en ARMS Music Guatemala. Precio: Q{{ prod.precio }}. Envío a toda Guatemala."
+---
+{% include "producto.njk" %}
