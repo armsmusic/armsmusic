@@ -19,6 +19,18 @@ function safeSlug(str) {
     .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 }
 
+// ── Resolver IDs a objetos completos ─────────────────────────
+function resolverSeccion(seccion) {
+  const indice = {};
+  productosData.catalogo.forEach(p => { indice[p.id] = p; });
+  const ids   = productosData.secciones[seccion] || [];
+  const extra = productosData.extra[seccion]      || [];
+  return ids.map(id => ({
+    ...indice[id],
+    extra: extra.includes(id)
+  })).filter(Boolean);
+}
+
 module.exports = function(eleventyConfig) {
 
   // ── Assets ───────────────────────────────────────────────────
@@ -38,12 +50,34 @@ module.exports = function(eleventyConfig) {
     return `/${pilar}/${safeSlug(nombre)}/`;
   });
 
-  // ── Colección: todas las páginas de producto ──────────────────
-  eleventyConfig.addCollection("productos", function() {
+  // ── Global data: productos resueltos por sección ─────────────
+  // Disponible en templates como productos.inears, productos.monitores, etc.
+  eleventyConfig.addGlobalData("productos", () => {
+    const resultado = {};
+    const todasSecciones = [
+      'inears', 'monitores', 'audio', 'accesorios-inears',
+      'audio-sistemas', 'audio-interfaces', 'audio-microfonos', 'audio-cables'
+    ];
+    todasSecciones.forEach(sec => {
+      resultado[sec] = resolverSeccion(sec);
+    });
+    return resultado;
+  });
+
+  // ── Colección: páginas individuales de producto ───────────────
+  eleventyConfig.addCollection("productosPages", function() {
+    const indice = {};
+    productosData.catalogo.forEach(p => { indice[p.id] = p; });
     const items = [];
+
     for (const [seccion, pilar] of Object.entries(PILARES)) {
-      const lista = productosData[seccion] || [];
+      const lista = resolverSeccion(seccion);
       lista.forEach(prod => {
+        // Evitar duplicados: un producto puede estar en varias secciones
+        // Solo genera página en la primera sección donde aparece
+        const yaExiste = items.find(i => i.slug === safeSlug(prod.nombre));
+        if (yaExiste) return;
+
         items.push({
           ...prod,
           seccion,
