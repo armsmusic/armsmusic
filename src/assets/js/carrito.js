@@ -65,7 +65,6 @@ async function cargarStock() {
 const STOCK_BAJO = 5;
 
 function getStockIndicator(btn) {
-  // Buscar el contenedor directo del botón — cada card tiene su propio scope
   const container = btn.closest('.card-body, .card-categoria-body, .producto-acciones');
   if (!container) return null;
   let ind = container.querySelector('.stock-indicator');
@@ -77,7 +76,6 @@ function getStockIndicator(btn) {
     if (btnRow) container.insertBefore(ind, btnRow);
     else container.insertBefore(ind, btn);
   }
-  // Garantizar spans internos
   if (!ind.querySelector('.stock-dot')) {
     ind.innerHTML = '<span class="stock-dot"></span><span class="stock-text"></span>';
   }
@@ -302,6 +300,8 @@ function animarAgregar(btnEl, callback) {
 // ── AGREGAR AL CARRITO ────────────────────────────────────────
 function agregarAlCarrito(nombre, precio, btnEl) {
   const stockActual = nombre in stockGlobal ? stockGlobal[nombre] : null;
+
+  // Bloquear si el producto está agotado
   if (stockActual !== null && stockActual <= 0) {
     if (btnEl) {
       btnEl.disabled      = true;
@@ -313,6 +313,25 @@ function agregarAlCarrito(nombre, precio, btnEl) {
     }
     return;
   }
+
+  // Bloquear si la cantidad en carrito ya alcanzó el stock disponible
+  const idxActual = carrito.findIndex(i => i.nombre === nombre);
+  if (stockActual !== null && idxActual > -1 && carrito[idxActual].cantidad >= stockActual) {
+    if (btnEl) {
+      // Mostrar aviso flotante justo encima del botón
+      if (!btnEl.querySelector('.stock-max-msg')) {
+        const msg = document.createElement('div');
+        msg.className = 'stock-max-msg';
+        msg.textContent = 'Stock máximo alcanzado';
+        msg.style.cssText = 'position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a1a1a;border:1px solid rgba(239,68,68,0.4);color:#f87171;font-size:0.75rem;font-weight:600;padding:0.3rem 0.65rem;border-radius:0.5rem;white-space:nowrap;pointer-events:none;z-index:10;';
+        btnEl.style.position = 'relative';
+        btnEl.appendChild(msg);
+        setTimeout(() => msg.remove(), 2500);
+      }
+    }
+    return;
+  }
+
   animarAgregar(btnEl, () => {
     const idx = carrito.findIndex(i => i.nombre === nombre);
     if (idx > -1) {
