@@ -37,19 +37,18 @@
     { "nombre": "Extensión 10 metros In-Ears", "extra": true, "precio": 135, "precioOriginal": 170, "descuento": "-21%", "g1": "#0a1a2a", "g2": "#1a3a6b", "svgTipo": "cable10m", "subtitulo": "Plug 1/4\" a Jack 3.5mm" }
   ],
   "audio": [
-    { "nombre": "Joyo Momix",                 "extra": false, "precio": 995, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
-    { "nombre": "Joyo Momix CAB",             "extra": false, "precio": 295, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
-    { "nombre": "Joyo Interface JW-05R",      "extra": false, "precio": 550, "precioOriginal": 649, "descuento": "-15%", "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
-    { "nombre": "Irig Mini Interfaz",         "extra": false, "precio": 149, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
-    { "nombre": "Transmisor Instrumentos SKY","extra": false, "precio": 275, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
-    { "nombre": "Transmisor Audio/Instrumentos","extra": true,"precio": 249, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
-    { "nombre": "Transmisor para Microfono",  "extra": true,  "precio": 249, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
-    { "nombre": "Microfono SM57",             "extra": true,  "precio": 299, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
-    { "nombre": "Microfono BETA 58A",         "extra": true,  "precio": 299, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
-    { "nombre": "Microfono SM58",             "extra": true,  "precio": 299, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
-    { "nombre": "Microfono Lavariel",         "extra": true,  "precio": 195, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
-    { "nombre": "Pedal FX Mini Delay",        "extra": true,  "precio": 195, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
-    { "nombre": "Cable Plug 1/4 a Plug 1/4",  "extra": true,  "precio": 25,  "g1": "#1a0a0a", "g2": "#6b1a1a", "svgTipo": "cable30cm", "descripcion": "Cable para Pedal de Efectos de 30cm mono macho a macho" }
+    { "nombre": "Joyo Momix",                   "extra": false, "precio": 995, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
+    { "nombre": "Joyo Momix CAB",               "extra": false, "precio": 295, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
+    { "nombre": "Joyo Interface JW-05R",        "extra": false, "precio": 550, "precioOriginal": 649, "descuento": "-15%", "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
+    { "nombre": "Irig Mini Interfaz",           "extra": false, "precio": 149, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
+    { "nombre": "Transmisor Instrumentos SKY",  "extra": false, "precio": 275, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
+    { "nombre": "Transmisor Audio/Instrumentos","extra": true,  "precio": 249, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
+    { "nombre": "Transmisor para Microfono",    "extra": true,  "precio": 249, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
+    { "nombre": "Microfono SM57",               "extra": true,  "precio": 299, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
+    { "nombre": "Microfono BETA 58A",           "extra": true,  "precio": 299, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
+    { "nombre": "Microfono SM58",               "extra": true,  "precio": 299, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
+    { "nombre": "Microfono Lavariel",           "extra": true,  "precio": 195, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
+    { "nombre": "Cable Plug 1/4 a Plug 1/4",   "extra": true,  "precio": 25,  "g1": "#1a0a0a", "g2": "#6b1a1a", "svgTipo": "cable30cm", "descripcion": "Cable para Pedal de Efectos de 30cm mono macho a macho" }
   ],
   "accesorios-inears": [
     { "nombre": "KZ AZ09",                           "extra": false, "precio": 295, "g1": "#064e3b", "g2": "#047857", "svgTipo": "iem" },
@@ -63,5 +62,33 @@
     { "nombre": "ESTUCHE IN EARS",                   "extra": true,  "precio": 25,  "g1": "#1e293b", "g2": "#334155", "svgTipo": "iem" },
     { "nombre": "Adaptador Tipo C a Jack 3.5mm",     "extra": true,  "precio": 25,  "g1": "#064e3b", "g2": "#065f46", "svgTipo": "iem" },
     { "nombre": "EAR TIPS | Almohadillas Espuma",    "extra": true,  "precio": 29,  "g1": "#1e293b", "g2": "#334155", "svgTipo": "iem" }
+  ],
+  "audio-sistemas": [
+    { "nombre": "Debra ER Mini",               "extra": false, "precio": 775, "g1": "#27272a", "g2": "#52525b", "svgTipo": "iem" },
+    { "nombre": "SKY Monitor",                 "extra": false, "precio": 429, "precioOriginal": 499, "descuento": "-14%", "g1": "#1e1b4b", "g2": "#4f46e5", "svgTipo": "iem" },
+    { "nombre": "Amplificador HA-400",         "extra": false, "precio": 269, "precioOriginal": 325, "descuento": "-17%", "g1": "#27272a", "g2": "#52525b", "svgTipo": "iem" },
+    { "nombre": "Amplificador HA-800",         "extra": false, "precio": 395, "g1": "#1e1b4b", "g2": "#4f46e5", "svgTipo": "iem" },
+    { "nombre": "PM1 Monitor Personal",        "extra": false, "precio": 249, "g1": "#27272a", "g2": "#52525b", "svgTipo": "iem" },
+    { "nombre": "P2 Monitor Personal",         "extra": true,  "precio": 295, "g1": "#1e1b4b", "g2": "#4f46e5", "svgTipo": "iem" },
+    { "nombre": "Transmisor Instrumentos SKY", "extra": false, "precio": 275, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
+    { "nombre": "Transmisor Audio/Instrumentos","extra": true, "precio": 249, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
+    { "nombre": "Transmisor para Microfono",   "extra": true,  "precio": 249, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" }
+  ],
+  "audio-interfaces": [
+    { "nombre": "Joyo Momix",            "extra": false, "precio": 995, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
+    { "nombre": "Joyo Momix CAB",        "extra": false, "precio": 295, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
+    { "nombre": "Joyo Interface JW-05R", "extra": false, "precio": 550, "precioOriginal": 649, "descuento": "-15%", "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
+    { "nombre": "Irig Mini Interfaz",    "extra": false, "precio": 149, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" }
+  ],
+  "audio-microfonos": [
+    { "nombre": "Microfono SM57",      "extra": false, "precio": 299, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
+    { "nombre": "Microfono BETA 58A",  "extra": false, "precio": 299, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" },
+    { "nombre": "Microfono SM58",      "extra": false, "precio": 299, "g1": "#1c1917", "g2": "#44403c", "svgTipo": "iem" },
+    { "nombre": "Microfono Lavariel",  "extra": true,  "precio": 195, "g1": "#1a1a2e", "g2": "#312e81", "svgTipo": "iem" }
+  ],
+  "audio-cables": [
+    { "nombre": "Extensión 5 metros In-Ears",  "extra": false, "precio": 115, "precioOriginal": 130, "descuento": "-12%", "g1": "#0a2a1a", "g2": "#1a6b3a", "svgTipo": "cable5m",  "subtitulo": "Plug 1/4\" a Jack 3.5mm" },
+    { "nombre": "Extensión 10 metros In-Ears", "extra": false, "precio": 135, "precioOriginal": 170, "descuento": "-21%", "g1": "#0a1a2a", "g2": "#1a3a6b", "svgTipo": "cable10m", "subtitulo": "Plug 1/4\" a Jack 3.5mm" },
+    { "nombre": "Cable Plug 1/4 a Plug 1/4",  "extra": false, "precio": 25,  "g1": "#1a0a0a", "g2": "#6b1a1a", "svgTipo": "cable30cm", "descripcion": "Cable para Pedal de Efectos de 30cm mono macho a macho" }
   ]
 }

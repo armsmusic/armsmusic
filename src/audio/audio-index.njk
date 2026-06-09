@@ -1,0 +1,171 @@
+---
+layout: base.njk
+titulo: Audio Profesional — ARMS Music Guatemala
+meta_description: Equipos de audio profesional en Guatemala. Interfaces, micrófonos, sistemas de monitoreo y cables. Envío a toda Guatemala con ARMS Music.
+permalink: /audio/index.html
+---
+
+<div class="categoria-page">
+
+  <!-- HERO -->
+  <section class="categoria-hero">
+    <div class="container">
+      <nav aria-label="Ruta de navegación" style="margin-bottom:1rem;">
+        <ol class="breadcrumb-arms">
+          <li><a href="/">Inicio</a></li>
+          <li><span aria-hidden="true">›</span></li>
+          <li aria-current="page">Audio</li>
+        </ol>
+      </nav>
+      <div class="categoria-hero-inner">
+        <div>
+          <h1 class="categoria-titulo">Audio Profesional</h1>
+          <p class="categoria-subtitulo">Interfaces, micrófonos, sistemas de monitoreo y cables para tu setup</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESCRIPCIÓN -->
+  <section style="padding-bottom:2rem;">
+    <div class="container">
+      <p style="color:rgba(255,255,255,0.5); font-size:0.95rem; max-width:680px; line-height:1.7;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      </p>
+    </div>
+  </section>
+
+  <!-- SLIDER DE SUBPILARES -->
+  <section style="padding-bottom:5rem;">
+    <div class="container">
+      <h2 style="font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:1.25rem;">Explorar por categoría</h2>
+
+      <!-- Slider -->
+      <div style="overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none; margin:0 -1rem; padding:0 1rem 0.5rem;">
+        <div style="display:flex; gap:1rem; width:max-content;">
+
+          <!-- Sistemas -->
+          <a href="/audio/sistemas/" style="text-decoration:none; flex-shrink:0; width:160px;">
+            <div class="audio-hub-card">
+              <div class="audio-hub-img" style="background:linear-gradient(135deg,#27272a,#52525b);">
+                <svg viewBox="0 0 120 120" width="56" height="56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="20" y="40" width="80" height="50" rx="6" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+                  <rect x="30" y="50" width="60" height="8" rx="2" fill="rgba(255,255,255,0.15)"/>
+                  <circle cx="38" cy="72" r="8" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+                  <circle cx="82" cy="72" r="8" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+                  <line x1="60" y1="25" x2="60" y2="40" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+                  <circle cx="60" cy="22" r="4" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+                </svg>
+              </div>
+              <div class="audio-hub-body">
+                <p class="audio-hub-nombre">Sistemas</p>
+                <p class="audio-hub-count">{{ productos["audio-sistemas"] | length }} productos</p>
+              </div>
+            </div>
+          </a>
+
+          <!-- Interfaces -->
+          <a href="/audio/interfaces/" style="text-decoration:none; flex-shrink:0; width:160px;">
+            <div class="audio-hub-card">
+              <div class="audio-hub-img" style="background:linear-gradient(135deg,#1a1a2e,#312e81);">
+                <svg viewBox="0 0 120 120" width="56" height="56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="25" y="35" width="70" height="55" rx="6" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+                  <circle cx="42" cy="58" r="9" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                  <circle cx="78" cy="58" r="9" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                  <rect x="35" y="74" width="50" height="6" rx="3" fill="rgba(255,255,255,0.1)"/>
+                  <line x1="42" y1="35" x2="42" y2="25" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+                  <line x1="78" y1="35" x2="78" y2="25" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+                  <circle cx="42" cy="23" r="3" fill="rgba(255,255,255,0.2)"/>
+                  <circle cx="78" cy="23" r="3" fill="rgba(255,255,255,0.2)"/>
+                </svg>
+              </div>
+              <div class="audio-hub-body">
+                <p class="audio-hub-nombre">Interfaces</p>
+                <p class="audio-hub-count">{{ productos["audio-interfaces"] | length }} productos</p>
+              </div>
+            </div>
+          </a>
+
+          <!-- Micrófonos -->
+          <a href="/audio/microfonos/" style="text-decoration:none; flex-shrink:0; width:160px;">
+            <div class="audio-hub-card">
+              <div class="audio-hub-img" style="background:linear-gradient(135deg,#1c1917,#44403c);">
+                <svg viewBox="0 0 120 120" width="56" height="56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="48" y="20" width="24" height="48" rx="12" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                  <path d="M35 62 Q35 82 60 82 Q85 82 85 62" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                  <line x1="60" y1="82" x2="60" y2="100" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+                  <line x1="45" y1="100" x2="75" y2="100" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+                  <line x1="48" y1="38" x2="72" y2="38" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                  <line x1="48" y1="46" x2="72" y2="46" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                  <line x1="48" y1="54" x2="72" y2="54" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                </svg>
+              </div>
+              <div class="audio-hub-body">
+                <p class="audio-hub-nombre">Micrófonos</p>
+                <p class="audio-hub-count">{{ productos["audio-microfonos"] | length }} productos</p>
+              </div>
+            </div>
+          </a>
+
+          <!-- Cables -->
+          <a href="/audio/cables/" style="text-decoration:none; flex-shrink:0; width:160px;">
+            <div class="audio-hub-card">
+              <div class="audio-hub-img" style="background:linear-gradient(135deg,#0a2a1a,#1a6b3a);">
+                <svg viewBox="0 0 120 120" width="56" height="56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 60 Q20 30 60 30 Q100 30 100 60" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="3" stroke-linecap="round"/>
+                  <circle cx="20" cy="62" r="8" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+                  <rect x="16" y="70" width="8" height="14" rx="2" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                  <circle cx="100" cy="62" r="8" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+                  <rect x="96" y="70" width="8" height="14" rx="2" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                </svg>
+              </div>
+              <div class="audio-hub-body">
+                <p class="audio-hub-nombre">Cables</p>
+                <p class="audio-hub-count">{{ productos["audio-cables"] | length }} productos</p>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<style>
+.audio-hub-card {
+  background: var(--bs-secondary-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.audio-hub-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(102,0,255,0.45);
+  box-shadow: 0 0 0 1px rgba(102,0,255,0.2), 0 8px 28px rgba(0,0,0,0.4);
+}
+.audio-hub-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+}
+.audio-hub-body {
+  padding: 0.75rem;
+}
+.audio-hub-nombre {
+  margin: 0 0 0.2rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+}
+.audio-hub-count {
+  margin: 0;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.4);
+}
+/* Ocultar scrollbar en webkit */
+div::-webkit-scrollbar { display: none; }
+</style>

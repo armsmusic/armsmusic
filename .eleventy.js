@@ -4,10 +4,13 @@ const productosData = require('./src/_data/productos.json');
 const PILARES = {
   'inears':            'in-ears',
   'accesorios-inears': 'in-ears/accesorios',
-  // audio y sus subpilares se agregarán aquí cuando estén definidos
+  'audio-sistemas':    'audio/sistemas',
+  'audio-interfaces':  'audio/interfaces',
+  'audio-microfonos':  'audio/microfonos',
+  'audio-cables':      'audio/cables'
 };
 
-// ── Filtro slug (igual que antes) ─────────────────────────────
+// ── Filtro slug ───────────────────────────────────────────────
 function safeSlug(str) {
   return String(str).toLowerCase()
     .replace(/[áàäâ]/g,'a').replace(/[éèëê]/g,'e')
@@ -29,7 +32,6 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter("safeSlug", safeSlug);
 
   // ── Filtro: URL de un producto ────────────────────────────────
-  // Uso: {{ prod.nombre | productoUrl(prod.seccion) }}
   eleventyConfig.addFilter("productoUrl", (nombre, seccion) => {
     const pilar = PILARES[seccion];
     if (!pilar) return '#';
@@ -37,7 +39,6 @@ module.exports = function(eleventyConfig) {
   });
 
   // ── Colección: todas las páginas de producto ──────────────────
-  // Para las secciones que YA tienen pilar definido
   eleventyConfig.addCollection("productos", function() {
     const items = [];
     for (const [seccion, pilar] of Object.entries(PILARES)) {
@@ -49,7 +50,6 @@ module.exports = function(eleventyConfig) {
           pilar,
           slug:      safeSlug(prod.nombre),
           permalink: `/${pilar}/${safeSlug(prod.nombre)}/index.html`,
-          // Productos relacionados: misma sección, excluyendo el actual
           relacionados: lista
             .filter(p => p.nombre !== prod.nombre)
             .slice(0, 3)
