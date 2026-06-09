@@ -43,11 +43,13 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter("gtq",      (num) => `Q${Number(num).toLocaleString()}`);
   eleventyConfig.addFilter("safeSlug", safeSlug);
 
-  // ── Filtro: URL de un producto ────────────────────────────────
-  eleventyConfig.addFilter("productoUrl", (nombre, seccion) => {
-    const pilar = PILARES[seccion];
-    if (!pilar) return '#';
-    return `/${pilar}/${safeSlug(nombre)}/`;
+  // ── Filtro: URL de un producto (busca la sección por ID) ─────
+  eleventyConfig.addFilter("productoUrl", (id) => {
+    for (const [seccion, pilar] of Object.entries(PILARES)) {
+      const ids = productosData.secciones[seccion] || [];
+      if (ids.includes(id)) return `/${pilar}/${id}/`;
+    }
+    return '#';
   });
 
   // ── Global data: productos resueltos por sección ─────────────
@@ -75,15 +77,15 @@ module.exports = function(eleventyConfig) {
       lista.forEach(prod => {
         // Evitar duplicados: un producto puede estar en varias secciones
         // Solo genera página en la primera sección donde aparece
-        const yaExiste = items.find(i => i.slug === safeSlug(prod.nombre));
+        const yaExiste = items.find(i => i.slug === prod.id);
         if (yaExiste) return;
 
         items.push({
           ...prod,
           seccion,
           pilar,
-          slug:      safeSlug(prod.nombre),
-          permalink: `/${pilar}/${safeSlug(prod.nombre)}/index.html`,
+          slug:      prod.id,
+          permalink: `/${pilar}/${prod.id}/index.html`,
           relacionados: lista
             .filter(p => p.nombre !== prod.nombre)
             .slice(0, 3)

@@ -56,14 +56,14 @@ permalink: /in-ears/index.html
         {% for prod in productos.inears %}
         {% set varId = ("var-cat-" + prod.nombre) | replace(" ", "-") | replace("/", "-") %}
         {% set btnId = ("btn-cat-" + prod.nombre) | replace(" ", "-") | replace("/", "-") %}
-        {% set prodUrl = prod.nombre | productoUrl("inears") %}
+        {% set prodUrl = prod.id | productoUrl %}
         <div class="col-6 col-lg-3">
           <article class="card-categoria">
 
             <!-- Imagen -->
             <a href="{{ prodUrl }}" class="card-categoria-img" style="background:linear-gradient(135deg,{{ prod.g1 }},{{ prod.g2 }});">
               {% set svgPartial = "svgs/" + prod.svgTipo + ".njk" %}
-              {% include svgPartial %}
+              {% include "product-img.njk" %}
               {% if prod.descuento %}
               <span class="card-categoria-badge">{{ prod.descuento }}</span>
               {% endif %}

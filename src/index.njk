@@ -337,7 +337,7 @@ meta_description: ARMS Music — Audífonos KZ e IEMs de alta fidelidad y equipo
               <a class="d-block overflow-hidden product-img-wrap" href="#" style="height:180px;">
                 <div class="w-100 h-100 d-flex align-items-center justify-content-center"
                   style="background:linear-gradient(135deg,{{ prod.g1 }},{{ prod.g2 }});">
-                  {% include svgPartial %}
+                  {% include "product-img.njk" %}
                 </div>
               </a>
               <div class="card-body">
@@ -365,12 +365,12 @@ meta_description: ARMS Music — Audífonos KZ e IEMs de alta fidelidad y equipo
                   {% endfor %}
                 </div>
                 <div class="d-flex gap-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.nombre | productoUrl('inears') }}"><i class="fa-solid fa-eye"></i> Ver más</a>
+                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
                   <button class="btn btn-sm btn-agregar" id="{{ btnId }}" data-product-name="{{ prod.nombre }} - {{ prod.variantes[0] }}" onclick="agregarAlCarrito('{{ prod.nombre }} - {{ prod.variantes[0] }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
                 </div>
                 {% else %}
                 <div class="d-flex gap-2 mt-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.nombre | productoUrl('inears') }}"><i class="fa-solid fa-eye"></i> Ver más</a>
+                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
                   <button class="btn btn-sm btn-agregar" data-product-name="{{ prod.nombre }}" onclick="agregarAlCarrito('{{ prod.nombre }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
                 </div>
                 {% endif %}
@@ -423,7 +423,7 @@ meta_description: ARMS Music — Audífonos KZ e IEMs de alta fidelidad y equipo
               <a class="d-block overflow-hidden product-img-wrap" href="#" style="height:180px;">
                 <div class="w-100 h-100 d-flex align-items-center justify-content-center"
                   style="background:linear-gradient(135deg,{{ prod.g1 }},{{ prod.g2 }});">
-                  {% include svgPartial %}
+                  {% include "product-img.njk" %}
                 </div>
               </a>
               <div class="card-body">
@@ -451,12 +451,12 @@ meta_description: ARMS Music — Audífonos KZ e IEMs de alta fidelidad y equipo
                   {% endfor %}
                 </div>
                 <div class="d-flex gap-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.nombre | productoUrl('monitores') }}"><i class="fa-solid fa-eye"></i> Ver más</a>
+                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
                   <button class="btn btn-sm btn-agregar" id="{{ btnId }}" data-product-name="{{ prod.nombre }} - {{ prod.variantes[0] }}" onclick="agregarAlCarrito('{{ prod.nombre }} - {{ prod.variantes[0] }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
                 </div>
                 {% else %}
                 <div class="d-flex gap-2 mt-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.nombre | productoUrl('monitores') }}"><i class="fa-solid fa-eye"></i> Ver más</a>
+                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
                   <button class="btn btn-sm btn-agregar" data-product-name="{{ prod.nombre }}" onclick="agregarAlCarrito('{{ prod.nombre }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
                 </div>
                 {% endif %}
@@ -509,7 +509,7 @@ meta_description: ARMS Music — Audífonos KZ e IEMs de alta fidelidad y equipo
               <a class="d-block overflow-hidden product-img-wrap" href="#" style="height:180px;">
                 <div class="w-100 h-100 d-flex align-items-center justify-content-center"
                   style="background:linear-gradient(135deg,{{ prod.g1 }},{{ prod.g2 }});">
-                  {% include svgPartial %}
+                  {% include "product-img.njk" %}
                 </div>
               </a>
               <div class="card-body">
@@ -537,12 +537,12 @@ meta_description: ARMS Music — Audífonos KZ e IEMs de alta fidelidad y equipo
                   {% endfor %}
                 </div>
                 <div class="d-flex gap-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.nombre | productoUrl('audio') }}"><i class="fa-solid fa-eye"></i> Ver más</a>
+                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
                   <button class="btn btn-sm btn-agregar" id="{{ btnId }}" data-product-name="{{ prod.nombre }} - {{ prod.variantes[0] }}" onclick="agregarAlCarrito('{{ prod.nombre }} - {{ prod.variantes[0] }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
                 </div>
                 {% else %}
                 <div class="d-flex gap-2 mt-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.nombre | productoUrl('audio') }}"><i class="fa-solid fa-eye"></i> Ver más</a>
+                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
                   <button class="btn btn-sm btn-agregar" data-product-name="{{ prod.nombre }}" onclick="agregarAlCarrito('{{ prod.nombre }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
                 </div>
                 {% endif %}
@@ -595,7 +595,7 @@ meta_description: ARMS Music — Audífonos KZ e IEMs de alta fidelidad y equipo
               <a class="d-block overflow-hidden product-img-wrap" href="#" style="height:180px;">
                 <div class="w-100 h-100 d-flex align-items-center justify-content-center"
                   style="background:linear-gradient(135deg,{{ prod.g1 }},{{ prod.g2 }});">
-                  {% include svgPartial %}
+                  {% include "product-img.njk" %}
                 </div>
               </a>
               <div class="card-body">
@@ -623,12 +623,12 @@ meta_description: ARMS Music — Audífonos KZ e IEMs de alta fidelidad y equipo
                   {% endfor %}
                 </div>
                 <div class="d-flex gap-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.nombre | productoUrl('accesorios-inears') }}"><i class="fa-solid fa-eye"></i> Ver más</a>
+                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
                   <button class="btn btn-sm btn-agregar" id="{{ btnId }}" data-product-name="{{ prod.nombre }} - {{ prod.variantes[0] }}" onclick="agregarAlCarrito('{{ prod.nombre }} - {{ prod.variantes[0] }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
                 </div>
                 {% else %}
                 <div class="d-flex gap-2 mt-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.nombre | productoUrl('accesorios-inears') }}"><i class="fa-solid fa-eye"></i> Ver más</a>
+                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
                   <button class="btn btn-sm btn-agregar" data-product-name="{{ prod.nombre }}" onclick="agregarAlCarrito('{{ prod.nombre }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
                 </div>
                 {% endif %}

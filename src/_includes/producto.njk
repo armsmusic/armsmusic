@@ -12,6 +12,7 @@
 {% set seccion       = prod.seccion %}
 {% set pilar         = prod.pilar %}
 {% set relacionados  = prod.relacionados %}
+{% set imagenes      = prod.imagenes %}
 
 {# Pilar label y URL #}
 {% if pilar == "in-ears" %}
@@ -74,12 +75,10 @@
     <div class="container">
       <div class="row g-4 g-lg-5 align-items-start">
 
-        <!-- Imagen -->
+        <!-- Galería -->
         <div class="col-lg-5">
-          <div class="producto-imagen-wrap" style="background:linear-gradient(135deg,{{ g1 }},{{ g2 }});">
-            {% set svgPartial = "svgs/" + svgTipo + ".njk" %}
-            {% include svgPartial %}
-          </div>
+          {% include "product-gallery.njk" %}
+
           {% if descuento %}
           <div class="text-center mt-3">
             <span class="badge-discount-lg">🔥 {{ descuento }} de descuento</span>
@@ -175,11 +174,11 @@
         {% set relBtnId = ("btn-add-" + rel.nombre) | replace(" ", "-") | replace("/", "-") %}
         <div class="col-lg-4 col-md-6">
           <article data-lazy-card class="card h-100 border-0 shadow-sm bg-body overflow-hidden">
-            <a class="d-block overflow-hidden product-img-wrap" href="{{ rel.nombre | productoUrl(seccion) }}" style="height:160px;">
+            <a class="d-block overflow-hidden product-img-wrap" href="{{ rel.id | productoUrl }}" style="height:160px;">
               <div class="w-100 h-100 d-flex align-items-center justify-content-center"
                 style="background:linear-gradient(135deg,{{ rel.g1 }},{{ rel.g2 }});">
-                {% set relSvg = "svgs/" + rel.svgTipo + ".njk" %}
-                {% include relSvg %}
+                {% set prod = rel %}
+                {% include "product-img.njk" %}
               </div>
             </a>
             <div class="card-body">
@@ -206,7 +205,7 @@
                 {% endfor %}
               </div>
               <div class="d-flex gap-2">
-                <a class="btn btn-sm btn-primary" href="{{ rel.nombre | productoUrl(seccion) }}"><i class="fa-solid fa-eye"></i> Ver más</a>
+                <a class="btn btn-sm btn-primary" href="{{ rel.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
                 <button class="btn btn-sm btn-agregar" id="{{ relBtnId }}"
                   data-product-name="{{ rel.nombre }} - {{ rel.variantes[0] }}"
                   onclick="agregarAlCarrito('{{ rel.nombre }} - {{ rel.variantes[0] }}', {{ rel.precio }}, this)">
@@ -215,7 +214,7 @@
               </div>
               {% else %}
               <div class="d-flex gap-2 mt-2">
-                <a class="btn btn-sm btn-primary" href="{{ rel.nombre | productoUrl(seccion) }}"><i class="fa-solid fa-eye"></i> Ver más</a>
+                <a class="btn btn-sm btn-primary" href="{{ rel.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
                 <button class="btn btn-sm btn-agregar"
                   data-product-name="{{ rel.nombre }}"
                   onclick="agregarAlCarrito('{{ rel.nombre }}', {{ rel.precio }}, this)">
@@ -242,3 +241,15 @@
   </section>
 
 </div>
+
+<script>
+function cambiarImagen(src, btn) {
+  document.getElementById('img-principal').src = src;
+  document.querySelectorAll('.thumb-btn').forEach(b => {
+    b.style.borderColor = 'rgba(255,255,255,0.12)';
+    b.classList.remove('thumb-active');
+  });
+  btn.style.borderColor = 'var(--bs-primary)';
+  btn.classList.add('thumb-active');
+}
+</script>

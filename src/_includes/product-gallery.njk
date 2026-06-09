@@ -1,0 +1,41 @@
+{% set svgPartial = "svgs/" + svgTipo + ".njk" %}
+
+{% if imagenes and imagenes.length > 0 %}
+
+  <!-- Imagen principal -->
+  <div class="producto-imagen-wrap" id="img-principal-wrap" style="background:linear-gradient(135deg,{{ g1 }},{{ g2 }});">
+    <img id="img-principal"
+      src="/assets/img/productos/{{ imagenes[0] }}"
+      alt="{{ nombre }}"
+      onerror="this.replaceWith(document.getElementById('svg-tmpl-main').content.cloneNode(true))"
+      style="width:100%; height:100%; object-fit:contain; display:block;">
+    <template id="svg-tmpl-main">
+      {% include svgPartial %}
+    </template>
+  </div>
+
+  <!-- Thumbnails (solo si hay más de 1 imagen) -->
+  {% if imagenes.length > 1 %}
+  <div style="display:flex; gap:0.5rem; margin-top:0.75rem; flex-wrap:wrap;">
+    {% for img in imagenes %}
+    <button onclick="cambiarImagen('/assets/img/productos/{{ img }}', this)"
+      style="width:64px; height:64px; border-radius:0.5rem; overflow:hidden; padding:0; cursor:pointer;
+             border:2px solid {% if loop.first %}var(--bs-primary){% else %}rgba(255,255,255,0.12){% endif %};
+             background:linear-gradient(135deg,{{ g1 }},{{ g2 }});
+             transition:border-color .15s ease; flex-shrink:0;"
+      class="thumb-btn {% if loop.first %}thumb-active{% endif %}">
+      <img src="/assets/img/productos/{{ img }}" alt="{{ nombre }} foto {{ loop.index }}"
+        style="width:100%; height:100%; object-fit:contain;">
+    </button>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+{% else %}
+
+  <!-- Fallback SVG -->
+  <div class="producto-imagen-wrap" style="background:linear-gradient(135deg,{{ g1 }},{{ g2 }});">
+    {% include svgPartial %}
+  </div>
+
+{% endif %}
