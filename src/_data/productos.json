@@ -118,7 +118,7 @@
       ],
       "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
       "imagenes": [
-        "kz-castor.webp"
+        "castor1.png", "castor2.png", "castor3.png", "castor4.png", "castor5.jpg"
       ]
     },
     {
@@ -869,7 +869,6 @@
   },
   "extra": {
     "inears": [
-      "kz-edx-pro-x",
       "qkz-ak6-aers",
       "qkz-zen",
       "kz-castor",
@@ -893,14 +892,12 @@
       "kz-sonata"
     ],
     "monitores": [
-      "amplificador-ha-800",
       "pm1-monitor-personal",
       "p2-monitor-personal",
       "extension-5m-inears",
       "extension-10m-inears"
     ],
     "audio": [
-      "irig-mini-interfaz",
       "transmisor-instrumentos-sky",
       "transmisor-audio-instrumentos",
       "transmisor-para-microfono",
@@ -911,7 +908,6 @@
       "cable-plug-1-4"
     ],
     "accesorios-inears": [
-      "cables-repuesto-kz",
       "kz-784-core",
       "kz-am02-dac",
       "cable-high-quality-kz",

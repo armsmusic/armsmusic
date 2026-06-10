@@ -329,50 +329,43 @@ meta_description: ARMS Music — Audífonos KZ e IEMs de alta fidelidad y equipo
         </div>
         <div class="row g-4" id="row-inears">
           {% for prod in productos.inears %}
-          {% set svgPartial = "svgs/" + prod.svgTipo + ".njk" %}
+          {% set prodUrl = prod.id | productoUrl %}
           {% set varId = ("var-" + prod.nombre) | replace(" ", "-") | replace("/", "-") %}
           {% set btnId = ("btn-add-" + prod.nombre) | replace(" ", "-") | replace("/", "-") %}
-          <div class="col-lg-4 col-md-6 reveal{% if prod.extra %} extra-card{% endif %}"{% if prod.extra %} data-section="inears" style="display:none;"{% endif %}>
-            <article data-lazy-card class="card h-100 border-0 shadow-sm bg-body overflow-hidden">
-              <a class="d-block overflow-hidden product-img-wrap" href="#" style="height:180px;">
-                <div class="w-100 h-100 d-flex align-items-center justify-content-center"
-                  style="background:linear-gradient(135deg,{{ prod.g1 }},{{ prod.g2 }});">
-                  {% include "product-img.njk" %}
-                </div>
+          <div class="col-6 col-lg-3 reveal{% if prod.extra %} extra-card{% endif %}"{%- if prod.extra %} data-section="inears" style="display:none;"{% endif %}>
+            <article data-lazy-card class="card-categoria">
+              <a href="{{ prodUrl }}" class="card-categoria-img" style="background:linear-gradient(135deg,{{ prod.g1 }},{{ prod.g2 }})">
+                {% include "product-img.njk" %}
+                {% if prod.descuento %}<span class="card-categoria-badge">{{ prod.descuento }}</span>{% endif %}
               </a>
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                  <h5 class="card-title mb-0" style="font-size:0.95rem;">{{ prod.nombre }}{% if prod.subtitulo %}<small class="d-block text-secondary" style="font-size:0.78rem;">{{ prod.subtitulo }}</small>{% endif %}</h5>
-                  {% if prod.precioOriginal %}
-                  <div class="price-block">
-                    <span class="price-original">{{ prod.precioOriginal | gtq }}</span>
-                    <div class="price-sale">
-                      <span class="badge bg-primary">{{ prod.precio | gtq }}</span>
-                      <span class="badge-discount">{{ prod.descuento }}</span>
-                    </div>
-                  </div>
-                  {% else %}
-                  <span class="badge bg-primary">{{ prod.precio | gtq }}</span>
-                  {% endif %}
+              <div class="card-categoria-body">
+                <a href="{{ prodUrl }}" class="card-categoria-nombre">{{ prod.nombre }}{% if prod.subtitulo %}<small class="d-block" style="font-size:0.72rem;color:rgba(255,255,255,0.45);">{{ prod.subtitulo }}</small>{% endif %}</a>
+                <div class="card-categoria-precio">
+                  {% if prod.precioOriginal %}<span class="card-cat-precio-original">{{ prod.precioOriginal | gtq }}</span>{% endif %}
+                  <span class="card-cat-precio-actual">{{ prod.precio | gtq }}</span>
                 </div>
-                {% if prod.descripcion %}<p style="font-size:0.78rem; color:rgba(255,255,255,0.5); margin:0.4rem 0 0;">{{ prod.descripcion }}</p>{% endif %}
                 {% if prod.variantes %}
-                <div class="d-flex flex-wrap gap-1 mb-3" id="{{ varId }}">
+                <div class="d-flex flex-wrap gap-1 mb-2" id="{{ varId }}">
                   {% for varName in prod.variantes %}
                   <button onclick="seleccionarVariante(this, '{{ prod.nombre }}', '{{ varName }}', {{ prod.precio }})"
-                    style="padding:0.19rem 0.45rem; border-radius:0.4rem; font-size:0.54rem; font-weight:600; cursor:pointer; {{ vs[varName] }}; transition:all .15s ease;{% if loop.first %} border-width:2px;{% endif %}"
+                    style="padding:0.15rem 0.4rem; border-radius:0.35rem; font-size:0.52rem; font-weight:600; cursor:pointer; {{ vs[varName] }}; transition:all .15s ease;{% if loop.first %} border-width:2px;{% endif %}"
                     {% if loop.first %}class="var-btn-active"{% endif %}>{{ varName }}</button>
                   {% endfor %}
                 </div>
-                <div class="d-flex gap-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
-                  <button class="btn btn-sm btn-agregar" id="{{ btnId }}" data-product-name="{{ prod.nombre }} - {{ prod.variantes[0] }}" onclick="agregarAlCarrito('{{ prod.nombre }} - {{ prod.variantes[0] }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
-                </div>
+                {% endif %}
+                <div class="stock-indicator" style="margin-bottom:0.4rem; font-size:0.7rem;"></div>
+                {% if prod.variantes %}
+                <button class="btn-cat-agregar btn-agregar" id="{{ btnId }}"
+                  data-product-name="{{ prod.nombre }} - {{ prod.variantes[0] }}"
+                  onclick="agregarAlCarrito('{{ prod.nombre }} - {{ prod.variantes[0] }}', {{ prod.precio }}, this)">
+                  <i class="fa-solid fa-cart-plus"></i> Agregar
+                </button>
                 {% else %}
-                <div class="d-flex gap-2 mt-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
-                  <button class="btn btn-sm btn-agregar" data-product-name="{{ prod.nombre }}" onclick="agregarAlCarrito('{{ prod.nombre }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
-                </div>
+                <button class="btn-cat-agregar btn-agregar"
+                  data-product-name="{{ prod.nombre }}"
+                  onclick="agregarAlCarrito('{{ prod.nombre }}', {{ prod.precio }}, this)">
+                  <i class="fa-solid fa-cart-plus"></i> Agregar
+                </button>
                 {% endif %}
               </div>
             </article>
@@ -415,50 +408,43 @@ meta_description: ARMS Music — Audífonos KZ e IEMs de alta fidelidad y equipo
         </div>
         <div class="row g-4" id="row-monitores">
           {% for prod in productos.monitores %}
-          {% set svgPartial = "svgs/" + prod.svgTipo + ".njk" %}
+          {% set prodUrl = prod.id | productoUrl %}
           {% set varId = ("var-" + prod.nombre) | replace(" ", "-") | replace("/", "-") %}
           {% set btnId = ("btn-add-" + prod.nombre) | replace(" ", "-") | replace("/", "-") %}
-          <div class="col-lg-4 col-md-6 reveal{% if prod.extra %} extra-card{% endif %}"{% if prod.extra %} data-section="monitores" style="display:none;"{% endif %}>
-            <article data-lazy-card class="card h-100 border-0 shadow-sm bg-body overflow-hidden">
-              <a class="d-block overflow-hidden product-img-wrap" href="#" style="height:180px;">
-                <div class="w-100 h-100 d-flex align-items-center justify-content-center"
-                  style="background:linear-gradient(135deg,{{ prod.g1 }},{{ prod.g2 }});">
-                  {% include "product-img.njk" %}
-                </div>
+          <div class="col-6 col-lg-3 reveal{% if prod.extra %} extra-card{% endif %}"{%- if prod.extra %} data-section="monitores" style="display:none;"{% endif %}>
+            <article data-lazy-card class="card-categoria">
+              <a href="{{ prodUrl }}" class="card-categoria-img" style="background:linear-gradient(135deg,{{ prod.g1 }},{{ prod.g2 }})">
+                {% include "product-img.njk" %}
+                {% if prod.descuento %}<span class="card-categoria-badge">{{ prod.descuento }}</span>{% endif %}
               </a>
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                  <h5 class="card-title mb-0" style="font-size:0.95rem;">{{ prod.nombre }}{% if prod.subtitulo %}<small class="d-block text-secondary" style="font-size:0.78rem;">{{ prod.subtitulo }}</small>{% endif %}</h5>
-                  {% if prod.precioOriginal %}
-                  <div class="price-block">
-                    <span class="price-original">{{ prod.precioOriginal | gtq }}</span>
-                    <div class="price-sale">
-                      <span class="badge bg-primary">{{ prod.precio | gtq }}</span>
-                      <span class="badge-discount">{{ prod.descuento }}</span>
-                    </div>
-                  </div>
-                  {% else %}
-                  <span class="badge bg-primary">{{ prod.precio | gtq }}</span>
-                  {% endif %}
+              <div class="card-categoria-body">
+                <a href="{{ prodUrl }}" class="card-categoria-nombre">{{ prod.nombre }}{% if prod.subtitulo %}<small class="d-block" style="font-size:0.72rem;color:rgba(255,255,255,0.45);">{{ prod.subtitulo }}</small>{% endif %}</a>
+                <div class="card-categoria-precio">
+                  {% if prod.precioOriginal %}<span class="card-cat-precio-original">{{ prod.precioOriginal | gtq }}</span>{% endif %}
+                  <span class="card-cat-precio-actual">{{ prod.precio | gtq }}</span>
                 </div>
-                {% if prod.descripcion %}<p style="font-size:0.78rem; color:rgba(255,255,255,0.5); margin:0.4rem 0 0;">{{ prod.descripcion }}</p>{% endif %}
                 {% if prod.variantes %}
-                <div class="d-flex flex-wrap gap-1 mb-3" id="{{ varId }}">
+                <div class="d-flex flex-wrap gap-1 mb-2" id="{{ varId }}">
                   {% for varName in prod.variantes %}
                   <button onclick="seleccionarVariante(this, '{{ prod.nombre }}', '{{ varName }}', {{ prod.precio }})"
-                    style="padding:0.19rem 0.45rem; border-radius:0.4rem; font-size:0.54rem; font-weight:600; cursor:pointer; {{ vs[varName] }}; transition:all .15s ease;{% if loop.first %} border-width:2px;{% endif %}"
+                    style="padding:0.15rem 0.4rem; border-radius:0.35rem; font-size:0.52rem; font-weight:600; cursor:pointer; {{ vs[varName] }}; transition:all .15s ease;{% if loop.first %} border-width:2px;{% endif %}"
                     {% if loop.first %}class="var-btn-active"{% endif %}>{{ varName }}</button>
                   {% endfor %}
                 </div>
-                <div class="d-flex gap-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
-                  <button class="btn btn-sm btn-agregar" id="{{ btnId }}" data-product-name="{{ prod.nombre }} - {{ prod.variantes[0] }}" onclick="agregarAlCarrito('{{ prod.nombre }} - {{ prod.variantes[0] }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
-                </div>
+                {% endif %}
+                <div class="stock-indicator" style="margin-bottom:0.4rem; font-size:0.7rem;"></div>
+                {% if prod.variantes %}
+                <button class="btn-cat-agregar btn-agregar" id="{{ btnId }}"
+                  data-product-name="{{ prod.nombre }} - {{ prod.variantes[0] }}"
+                  onclick="agregarAlCarrito('{{ prod.nombre }} - {{ prod.variantes[0] }}', {{ prod.precio }}, this)">
+                  <i class="fa-solid fa-cart-plus"></i> Agregar
+                </button>
                 {% else %}
-                <div class="d-flex gap-2 mt-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
-                  <button class="btn btn-sm btn-agregar" data-product-name="{{ prod.nombre }}" onclick="agregarAlCarrito('{{ prod.nombre }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
-                </div>
+                <button class="btn-cat-agregar btn-agregar"
+                  data-product-name="{{ prod.nombre }}"
+                  onclick="agregarAlCarrito('{{ prod.nombre }}', {{ prod.precio }}, this)">
+                  <i class="fa-solid fa-cart-plus"></i> Agregar
+                </button>
                 {% endif %}
               </div>
             </article>
@@ -501,50 +487,43 @@ meta_description: ARMS Music — Audífonos KZ e IEMs de alta fidelidad y equipo
         </div>
         <div class="row g-4" id="row-audio">
           {% for prod in productos.audio %}
-          {% set svgPartial = "svgs/" + prod.svgTipo + ".njk" %}
+          {% set prodUrl = prod.id | productoUrl %}
           {% set varId = ("var-" + prod.nombre) | replace(" ", "-") | replace("/", "-") %}
           {% set btnId = ("btn-add-" + prod.nombre) | replace(" ", "-") | replace("/", "-") %}
-          <div class="col-lg-4 col-md-6 reveal{% if prod.extra %} extra-card{% endif %}"{% if prod.extra %} data-section="audio" style="display:none;"{% endif %}>
-            <article data-lazy-card class="card h-100 border-0 shadow-sm bg-body overflow-hidden">
-              <a class="d-block overflow-hidden product-img-wrap" href="#" style="height:180px;">
-                <div class="w-100 h-100 d-flex align-items-center justify-content-center"
-                  style="background:linear-gradient(135deg,{{ prod.g1 }},{{ prod.g2 }});">
-                  {% include "product-img.njk" %}
-                </div>
+          <div class="col-6 col-lg-3 reveal{% if prod.extra %} extra-card{% endif %}"{%- if prod.extra %} data-section="audio" style="display:none;"{% endif %}>
+            <article data-lazy-card class="card-categoria">
+              <a href="{{ prodUrl }}" class="card-categoria-img" style="background:linear-gradient(135deg,{{ prod.g1 }},{{ prod.g2 }})">
+                {% include "product-img.njk" %}
+                {% if prod.descuento %}<span class="card-categoria-badge">{{ prod.descuento }}</span>{% endif %}
               </a>
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                  <h5 class="card-title mb-0" style="font-size:0.95rem;">{{ prod.nombre }}{% if prod.subtitulo %}<small class="d-block text-secondary" style="font-size:0.78rem;">{{ prod.subtitulo }}</small>{% endif %}</h5>
-                  {% if prod.precioOriginal %}
-                  <div class="price-block">
-                    <span class="price-original">{{ prod.precioOriginal | gtq }}</span>
-                    <div class="price-sale">
-                      <span class="badge bg-primary">{{ prod.precio | gtq }}</span>
-                      <span class="badge-discount">{{ prod.descuento }}</span>
-                    </div>
-                  </div>
-                  {% else %}
-                  <span class="badge bg-primary">{{ prod.precio | gtq }}</span>
-                  {% endif %}
+              <div class="card-categoria-body">
+                <a href="{{ prodUrl }}" class="card-categoria-nombre">{{ prod.nombre }}{% if prod.subtitulo %}<small class="d-block" style="font-size:0.72rem;color:rgba(255,255,255,0.45);">{{ prod.subtitulo }}</small>{% endif %}</a>
+                <div class="card-categoria-precio">
+                  {% if prod.precioOriginal %}<span class="card-cat-precio-original">{{ prod.precioOriginal | gtq }}</span>{% endif %}
+                  <span class="card-cat-precio-actual">{{ prod.precio | gtq }}</span>
                 </div>
-                {% if prod.descripcion %}<p style="font-size:0.78rem; color:rgba(255,255,255,0.5); margin:0.4rem 0 0;">{{ prod.descripcion }}</p>{% endif %}
                 {% if prod.variantes %}
-                <div class="d-flex flex-wrap gap-1 mb-3" id="{{ varId }}">
+                <div class="d-flex flex-wrap gap-1 mb-2" id="{{ varId }}">
                   {% for varName in prod.variantes %}
                   <button onclick="seleccionarVariante(this, '{{ prod.nombre }}', '{{ varName }}', {{ prod.precio }})"
-                    style="padding:0.19rem 0.45rem; border-radius:0.4rem; font-size:0.54rem; font-weight:600; cursor:pointer; {{ vs[varName] }}; transition:all .15s ease;{% if loop.first %} border-width:2px;{% endif %}"
+                    style="padding:0.15rem 0.4rem; border-radius:0.35rem; font-size:0.52rem; font-weight:600; cursor:pointer; {{ vs[varName] }}; transition:all .15s ease;{% if loop.first %} border-width:2px;{% endif %}"
                     {% if loop.first %}class="var-btn-active"{% endif %}>{{ varName }}</button>
                   {% endfor %}
                 </div>
-                <div class="d-flex gap-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
-                  <button class="btn btn-sm btn-agregar" id="{{ btnId }}" data-product-name="{{ prod.nombre }} - {{ prod.variantes[0] }}" onclick="agregarAlCarrito('{{ prod.nombre }} - {{ prod.variantes[0] }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
-                </div>
+                {% endif %}
+                <div class="stock-indicator" style="margin-bottom:0.4rem; font-size:0.7rem;"></div>
+                {% if prod.variantes %}
+                <button class="btn-cat-agregar btn-agregar" id="{{ btnId }}"
+                  data-product-name="{{ prod.nombre }} - {{ prod.variantes[0] }}"
+                  onclick="agregarAlCarrito('{{ prod.nombre }} - {{ prod.variantes[0] }}', {{ prod.precio }}, this)">
+                  <i class="fa-solid fa-cart-plus"></i> Agregar
+                </button>
                 {% else %}
-                <div class="d-flex gap-2 mt-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
-                  <button class="btn btn-sm btn-agregar" data-product-name="{{ prod.nombre }}" onclick="agregarAlCarrito('{{ prod.nombre }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
-                </div>
+                <button class="btn-cat-agregar btn-agregar"
+                  data-product-name="{{ prod.nombre }}"
+                  onclick="agregarAlCarrito('{{ prod.nombre }}', {{ prod.precio }}, this)">
+                  <i class="fa-solid fa-cart-plus"></i> Agregar
+                </button>
                 {% endif %}
               </div>
             </article>
@@ -587,50 +566,43 @@ meta_description: ARMS Music — Audífonos KZ e IEMs de alta fidelidad y equipo
         </div>
         <div class="row g-4" id="row-accesorios-inears">
           {% for prod in productos["accesorios-inears"] %}
-          {% set svgPartial = "svgs/" + prod.svgTipo + ".njk" %}
+          {% set prodUrl = prod.id | productoUrl %}
           {% set varId = ("var-" + prod.nombre) | replace(" ", "-") | replace("/", "-") %}
           {% set btnId = ("btn-add-" + prod.nombre) | replace(" ", "-") | replace("/", "-") %}
-          <div class="col-lg-4 col-md-6 reveal{% if prod.extra %} extra-card{% endif %}"{% if prod.extra %} data-section="accesorios-inears" style="display:none;"{% endif %}>
-            <article data-lazy-card class="card h-100 border-0 shadow-sm bg-body overflow-hidden">
-              <a class="d-block overflow-hidden product-img-wrap" href="#" style="height:180px;">
-                <div class="w-100 h-100 d-flex align-items-center justify-content-center"
-                  style="background:linear-gradient(135deg,{{ prod.g1 }},{{ prod.g2 }});">
-                  {% include "product-img.njk" %}
-                </div>
+          <div class="col-6 col-lg-3 reveal{% if prod.extra %} extra-card{% endif %}"{%- if prod.extra %} data-section="accesorios-inears" style="display:none;"{% endif %}>
+            <article data-lazy-card class="card-categoria">
+              <a href="{{ prodUrl }}" class="card-categoria-img" style="background:linear-gradient(135deg,{{ prod.g1 }},{{ prod.g2 }})">
+                {% include "product-img.njk" %}
+                {% if prod.descuento %}<span class="card-categoria-badge">{{ prod.descuento }}</span>{% endif %}
               </a>
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                  <h5 class="card-title mb-0" style="font-size:0.95rem;">{{ prod.nombre }}{% if prod.subtitulo %}<small class="d-block text-secondary" style="font-size:0.78rem;">{{ prod.subtitulo }}</small>{% endif %}</h5>
-                  {% if prod.precioOriginal %}
-                  <div class="price-block">
-                    <span class="price-original">{{ prod.precioOriginal | gtq }}</span>
-                    <div class="price-sale">
-                      <span class="badge bg-primary">{{ prod.precio | gtq }}</span>
-                      <span class="badge-discount">{{ prod.descuento }}</span>
-                    </div>
-                  </div>
-                  {% else %}
-                  <span class="badge bg-primary">{{ prod.precio | gtq }}</span>
-                  {% endif %}
+              <div class="card-categoria-body">
+                <a href="{{ prodUrl }}" class="card-categoria-nombre">{{ prod.nombre }}{% if prod.subtitulo %}<small class="d-block" style="font-size:0.72rem;color:rgba(255,255,255,0.45);">{{ prod.subtitulo }}</small>{% endif %}</a>
+                <div class="card-categoria-precio">
+                  {% if prod.precioOriginal %}<span class="card-cat-precio-original">{{ prod.precioOriginal | gtq }}</span>{% endif %}
+                  <span class="card-cat-precio-actual">{{ prod.precio | gtq }}</span>
                 </div>
-                {% if prod.descripcion %}<p style="font-size:0.78rem; color:rgba(255,255,255,0.5); margin:0.4rem 0 0;">{{ prod.descripcion }}</p>{% endif %}
                 {% if prod.variantes %}
-                <div class="d-flex flex-wrap gap-1 mb-3" id="{{ varId }}">
+                <div class="d-flex flex-wrap gap-1 mb-2" id="{{ varId }}">
                   {% for varName in prod.variantes %}
                   <button onclick="seleccionarVariante(this, '{{ prod.nombre }}', '{{ varName }}', {{ prod.precio }})"
-                    style="padding:0.19rem 0.45rem; border-radius:0.4rem; font-size:0.54rem; font-weight:600; cursor:pointer; {{ vs[varName] }}; transition:all .15s ease;{% if loop.first %} border-width:2px;{% endif %}"
+                    style="padding:0.15rem 0.4rem; border-radius:0.35rem; font-size:0.52rem; font-weight:600; cursor:pointer; {{ vs[varName] }}; transition:all .15s ease;{% if loop.first %} border-width:2px;{% endif %}"
                     {% if loop.first %}class="var-btn-active"{% endif %}>{{ varName }}</button>
                   {% endfor %}
                 </div>
-                <div class="d-flex gap-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
-                  <button class="btn btn-sm btn-agregar" id="{{ btnId }}" data-product-name="{{ prod.nombre }} - {{ prod.variantes[0] }}" onclick="agregarAlCarrito('{{ prod.nombre }} - {{ prod.variantes[0] }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
-                </div>
+                {% endif %}
+                <div class="stock-indicator" style="margin-bottom:0.4rem; font-size:0.7rem;"></div>
+                {% if prod.variantes %}
+                <button class="btn-cat-agregar btn-agregar" id="{{ btnId }}"
+                  data-product-name="{{ prod.nombre }} - {{ prod.variantes[0] }}"
+                  onclick="agregarAlCarrito('{{ prod.nombre }} - {{ prod.variantes[0] }}', {{ prod.precio }}, this)">
+                  <i class="fa-solid fa-cart-plus"></i> Agregar
+                </button>
                 {% else %}
-                <div class="d-flex gap-2 mt-2">
-                  <a class="btn btn-sm btn-primary" href="{{ prod.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
-                  <button class="btn btn-sm btn-agregar" data-product-name="{{ prod.nombre }}" onclick="agregarAlCarrito('{{ prod.nombre }}', {{ prod.precio }}, this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
-                </div>
+                <button class="btn-cat-agregar btn-agregar"
+                  data-product-name="{{ prod.nombre }}"
+                  onclick="agregarAlCarrito('{{ prod.nombre }}', {{ prod.precio }}, this)">
+                  <i class="fa-solid fa-cart-plus"></i> Agregar
+                </button>
                 {% endif %}
               </div>
             </article>

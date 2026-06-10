@@ -174,7 +174,7 @@
         {% set relBtnId = ("btn-add-" + rel.nombre) | replace(" ", "-") | replace("/", "-") %}
         <div class="col-lg-4 col-md-6">
           <article data-lazy-card class="card h-100 border-0 shadow-sm bg-body overflow-hidden">
-            <a class="d-block overflow-hidden product-img-wrap" href="{{ rel.id | productoUrl }}" style="height:160px;">
+            <a class="d-block overflow-hidden product-img-wrap" href="{{ rel.id | productoUrl }}" style="aspect-ratio:1/1;">
               <div class="w-100 h-100 d-flex align-items-center justify-content-center"
                 style="background:linear-gradient(135deg,{{ rel.g1 }},{{ rel.g2 }});">
                 {% set prod = rel %}

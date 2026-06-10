@@ -570,7 +570,8 @@ function seleccionarVariante(btn, nombreBase, variante, precio) {
       btnAdd.innerHTML      = totalVariantes > 0
         ? `<i class="fa-solid fa-cart-plus"></i> Agregar<span style="position:absolute;top:-8px;right:-8px;background:#ef4444;color:#fff;border-radius:50%;width:20px;height:20px;font-size:0.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1;pointer-events:none;">${totalVariantes}</span>`
         : '<i class="fa-solid fa-cart-plus"></i> Agregar';
-      btnAdd.className      = 'btn btn-sm btn-agregar';
+      btnAdd.classList.remove('btn-sm');
+      btnAdd.classList.add('btn', 'btn-agregar');
       btnAdd.style.opacity  = '1';
       btnAdd.style.cursor   = 'pointer';
       btnAdd.onclick        = () => agregarAlCarrito(fullName, precio, btnAdd);

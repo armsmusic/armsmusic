@@ -198,7 +198,7 @@
 
 /* ── Mobile adjustments ─────────────────────────────────────── */
 @media (max-width: 767.98px) {
-  .producto-imagen-wrap { aspect-ratio: 4/3; border-radius: 1rem; }
+  .producto-imagen-wrap { aspect-ratio: 1/1; border-radius: 1rem; }
   .producto-nombre { font-size: 1.5rem; }
   .producto-precio-actual { font-size: 1.6rem; }
   .btn-agregar-lg, .btn-whatsapp-producto { flex: 1 1 100%; }
