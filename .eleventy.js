@@ -1,4 +1,7 @@
 const productosData = require('./src/_data/productos.json');
+const fs            = require('fs');
+const path          = require('path');
+const md            = require('markdown-it')({ html: true, breaks: true });
 
 // ── Mapa de sección → pilar URL ───────────────────────────────
 const PILARES = {
@@ -19,16 +22,44 @@ function safeSlug(str) {
     .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 }
 
+// ── Leer descripción desde archivo .md ───────────────────────
+function leerDescripcion(id) {
+  const filePath = path.join(__dirname, 'src', 'descripciones', `${id}.md`);
+  if (fs.existsSync(filePath)) {
+    return md.render(fs.readFileSync(filePath, 'utf8'));
+  }
+  return null;
+}
+
+// ── Leer imágenes desde carpeta del producto ─────────────────
+const IMG_EXTS = new Set(['.webp', '.jpg', '.jpeg', '.png']);
+
+function leerImagenes(id) {
+  const carpeta = path.join(__dirname, 'src', 'assets', 'img', 'productos', id);
+  if (!fs.existsSync(carpeta)) return [];
+  return fs.readdirSync(carpeta)
+    .filter(f => IMG_EXTS.has(path.extname(f).toLowerCase()))
+    .sort()
+    .map(f => `${id}/${f}`);
+}
+
 // ── Resolver IDs a objetos completos ─────────────────────────
 function resolverSeccion(seccion) {
   const indice = {};
   productosData.catalogo.forEach(p => { indice[p.id] = p; });
   const ids   = productosData.secciones[seccion] || [];
   const extra = productosData.extra[seccion]      || [];
-  return ids.map(id => ({
-    ...indice[id],
-    extra: extra.includes(id)
-  })).filter(Boolean);
+  return ids.map(id => {
+    const prod = indice[id];
+    if (!prod) return null;
+    const descMd = leerDescripcion(id);
+    return {
+      ...prod,
+      descripcion: descMd || prod.descripcion || null,
+      imagenes:    leerImagenes(id),
+      extra:       extra.includes(id)
+    };
+  }).filter(Boolean);
 }
 
 module.exports = function(eleventyConfig) {
@@ -53,7 +84,6 @@ module.exports = function(eleventyConfig) {
   });
 
   // ── Global data: productos resueltos por sección ─────────────
-  // Disponible en templates como productos.inears, productos.monitores, etc.
   eleventyConfig.addGlobalData("productos", () => {
     const resultado = {};
     const todasSecciones = [
@@ -68,15 +98,11 @@ module.exports = function(eleventyConfig) {
 
   // ── Colección: páginas individuales de producto ───────────────
   eleventyConfig.addCollection("productosPages", function() {
-    const indice = {};
-    productosData.catalogo.forEach(p => { indice[p.id] = p; });
     const items = [];
 
     for (const [seccion, pilar] of Object.entries(PILARES)) {
       const lista = resolverSeccion(seccion);
       lista.forEach(prod => {
-        // Evitar duplicados: un producto puede estar en varias secciones
-        // Solo genera página en la primera sección donde aparece
         const yaExiste = items.find(i => i.slug === prod.id);
         if (yaExiste) return;
 

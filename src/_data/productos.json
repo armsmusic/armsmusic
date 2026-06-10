@@ -12,10 +12,6 @@
       "variantes": [
         "Crystal",
         "Gray"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-edx-lite.webp"
       ]
     },
     {
@@ -29,10 +25,6 @@
         "Negro",
         "Verde",
         "Purple"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "qkz-ak3.webp"
       ]
     },
     {
@@ -46,10 +38,6 @@
         "Negro",
         "Verde",
         "Crystal"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-edx-pro.webp"
       ]
     },
     {
@@ -66,10 +54,6 @@
         "Verde",
         "Crystal",
         "Gray"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-edx-pro-x.webp"
       ]
     },
     {
@@ -82,10 +66,6 @@
       "variantes": [
         "Negro",
         "Blanco"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "qkz-ak6-aers.webp"
       ]
     },
     {
@@ -99,10 +79,6 @@
         "Negro",
         "Purple",
         "Blue"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "qkz-zen.webp"
       ]
     },
     {
@@ -115,10 +91,6 @@
       "variantes": [
         "Negro",
         "Silver"
-      ],
-      "descripcion": "<p>Los KZ Castor revolucionan los audífonos in-ear (IEM) con un sistema de doble driver dinámico y switches de afinación física. Diseñados para audiófilos, músicos y amantes de los bajos potentes.</p><h3>Características Clave</h3><ul><li><strong>Doble Driver Dinámico:</strong> Un driver independiente para graves profundos y otro para medios/agudos cristalinos.</li><li><strong>Switches de Afinación Física:</strong> 4 interruptores para modificar el perfil de sonido en tiempo real.</li><li><strong>Diseño Ergonómico Hi-Fi:</strong> Ajuste cómodo con aislamiento de ruido pasivo.</li><li><strong>Cable Desmontable de 2 Pines:</strong> Cable premium de alta pureza (0.75mm) fácilmente reemplazable.</li></ul><h3>Especificaciones Técnicas</h3><ul><li><strong>Rango de Frecuencia:</strong> 20 - 40,000 Hz</li><li><strong>Impedancia:</strong> 16 - 20 Ohm</li><li><strong>Sensibilidad:</strong> 103 - 105 dB</li><li><strong>Conector:</strong> Jack 3.5mm / Pines de 0.75mm</li></ul><h3>Contenido del Paquete</h3><ul><li>Audífonos KZ Castor</li><li>Cable trenzado</li><li>3 pares de almohadillas (S, M, L)</li><li>Herramienta de ajuste de switches</li></ul>",
-      "imagenes": [
-        "castor1.png", "castor2.png", "castor3.png", "castor4.png", "castor5.jpg"
       ]
     },
     {
@@ -131,10 +103,6 @@
       "variantes": [
         "Gray",
         "Silver"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-d-fi.webp"
       ]
     },
     {
@@ -143,11 +111,7 @@
       "precio": 229,
       "g1": "#1a1a2e",
       "g2": "#0f3460",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-angelears.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "kz-zvx",
@@ -159,10 +123,6 @@
       "variantes": [
         "Negro",
         "Silver"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-zvx.webp"
       ]
     },
     {
@@ -177,10 +137,6 @@
       "variantes": [
         "Negro",
         "Silver"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-castor-pro.webp"
       ]
     },
     {
@@ -194,10 +150,6 @@
         "Negro",
         "Dorado",
         "Silver"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-zsn-pro-2.webp"
       ]
     },
     {
@@ -210,10 +162,6 @@
       "variantes": [
         "Negro",
         "Purple"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-zst.webp"
       ]
     },
     {
@@ -226,10 +174,6 @@
       "variantes": [
         "Negro",
         "Dorado"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-zsn-pro-x.webp"
       ]
     },
     {
@@ -240,11 +184,7 @@
       "descuento": "-14%",
       "g1": "#1a1a2e",
       "g2": "#0f3460",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "cca-polaris.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "kz-zex",
@@ -252,11 +192,7 @@
       "precio": 325,
       "g1": "#1c1917",
       "g2": "#3d3530",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-zex.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "kz-zs10-pro-x",
@@ -266,11 +202,7 @@
       "descuento": "-15%",
       "g1": "#1c1917",
       "g2": "#3d3530",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-zs10-pro-x.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "kz-zs10-pro-2",
@@ -278,11 +210,7 @@
       "precio": 495,
       "g1": "#1a1a2e",
       "g2": "#0f3460",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-zs10-pro-2.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "kz-terminator-zsx",
@@ -295,10 +223,6 @@
         "Negro",
         "Verde",
         "Purple"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-terminator-zsx.webp"
       ]
     },
     {
@@ -307,11 +231,7 @@
       "precio": 595,
       "g1": "#1e1b4b",
       "g2": "#4338ca",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-zsx.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "kz-zs12-pro-x",
@@ -319,11 +239,7 @@
       "precio": 595,
       "g1": "#064e3b",
       "g2": "#047857",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-zs12-pro-x.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "kz-as16-pro-x",
@@ -333,11 +249,7 @@
       "descuento": "-20%",
       "g1": "#064e3b",
       "g2": "#047857",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-as16-pro-x.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "kz-zax",
@@ -349,10 +261,6 @@
       "variantes": [
         "Negro",
         "Silver"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-zax.webp"
       ]
     },
     {
@@ -361,11 +269,7 @@
       "precio": 1495,
       "g1": "#1e1b4b",
       "g2": "#4338ca",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-as24.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "kz-sonata",
@@ -373,11 +277,7 @@
       "precio": 1795,
       "g1": "#1a1a2e",
       "g2": "#0f3460",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-sonata.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "debra-er-mini",
@@ -385,11 +285,7 @@
       "precio": 775,
       "g1": "#27272a",
       "g2": "#52525b",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "debra-er-mini.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "sky-monitor",
@@ -399,11 +295,7 @@
       "descuento": "-14%",
       "g1": "#1e1b4b",
       "g2": "#4f46e5",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "sky-monitor.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "amplificador-ha-400",
@@ -413,11 +305,7 @@
       "descuento": "-17%",
       "g1": "#27272a",
       "g2": "#52525b",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "amplificador-ha-400.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "amplificador-ha-800",
@@ -425,11 +313,7 @@
       "precio": 395,
       "g1": "#1e1b4b",
       "g2": "#4f46e5",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "amplificador-ha-800.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "pm1-monitor-personal",
@@ -437,11 +321,7 @@
       "precio": 249,
       "g1": "#27272a",
       "g2": "#52525b",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "pm1-monitor-personal.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "p2-monitor-personal",
@@ -449,11 +329,7 @@
       "precio": 295,
       "g1": "#1e1b4b",
       "g2": "#4f46e5",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "p2-monitor-personal.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "transmisor-instrumentos-sky",
@@ -461,11 +337,7 @@
       "precio": 275,
       "g1": "#1a1a2e",
       "g2": "#312e81",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "transmisor-instrumentos-sky.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "transmisor-audio-instrumentos",
@@ -473,11 +345,7 @@
       "precio": 249,
       "g1": "#1c1917",
       "g2": "#44403c",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "transmisor-audio-instrumentos.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "transmisor-para-microfono",
@@ -485,11 +353,7 @@
       "precio": 249,
       "g1": "#1a1a2e",
       "g2": "#312e81",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "transmisor-para-microfono.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "joyo-momix",
@@ -497,11 +361,7 @@
       "precio": 995,
       "g1": "#1a1a2e",
       "g2": "#312e81",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "joyo-momix.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "joyo-momix-cab",
@@ -509,11 +369,7 @@
       "precio": 295,
       "g1": "#1c1917",
       "g2": "#44403c",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "joyo-momix-cab.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "joyo-interface-jw-05r",
@@ -523,11 +379,7 @@
       "descuento": "-15%",
       "g1": "#1a1a2e",
       "g2": "#312e81",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "joyo-interface-jw-05r.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "irig-mini-interfaz",
@@ -535,11 +387,7 @@
       "precio": 149,
       "g1": "#1c1917",
       "g2": "#44403c",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "irig-mini-interfaz.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "microfono-sm57",
@@ -547,11 +395,7 @@
       "precio": 299,
       "g1": "#1c1917",
       "g2": "#44403c",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "microfono-sm57.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "microfono-beta-58a",
@@ -559,11 +403,7 @@
       "precio": 299,
       "g1": "#1a1a2e",
       "g2": "#312e81",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "microfono-beta-58a.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "microfono-sm58",
@@ -571,11 +411,7 @@
       "precio": 299,
       "g1": "#1c1917",
       "g2": "#44403c",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "microfono-sm58.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "microfono-lavariel",
@@ -583,11 +419,7 @@
       "precio": 195,
       "g1": "#1a1a2e",
       "g2": "#312e81",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "microfono-lavariel.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "extension-5m-inears",
@@ -598,11 +430,7 @@
       "g1": "#0a2a1a",
       "g2": "#1a6b3a",
       "svgTipo": "cable5m",
-      "subtitulo": "Plug 1/4\" a Jack 3.5mm",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "extension-5m-inears.webp"
-      ]
+      "subtitulo": "Plug 1/4\" a Jack 3.5mm"
     },
     {
       "id": "extension-10m-inears",
@@ -613,11 +441,7 @@
       "g1": "#0a1a2a",
       "g2": "#1a3a6b",
       "svgTipo": "cable10m",
-      "subtitulo": "Plug 1/4\" a Jack 3.5mm",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "extension-10m-inears.webp"
-      ]
+      "subtitulo": "Plug 1/4\" a Jack 3.5mm"
     },
     {
       "id": "cable-plug-1-4",
@@ -625,11 +449,7 @@
       "precio": 25,
       "g1": "#1a0a0a",
       "g2": "#6b1a1a",
-      "svgTipo": "cable30cm",
-      "descripcion": "Cable para Pedal de Efectos de 30cm mono macho a macho.",
-      "imagenes": [
-        "cable-plug-1-4.webp"
-      ]
+      "svgTipo": "cable30cm"
     },
     {
       "id": "kz-az09",
@@ -637,11 +457,7 @@
       "precio": 295,
       "g1": "#064e3b",
       "g2": "#047857",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-az09.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "kz-ae01",
@@ -649,11 +465,7 @@
       "precio": 329,
       "g1": "#1c1917",
       "g2": "#3d3530",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-ae01.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "kz-az15",
@@ -661,11 +473,7 @@
       "precio": 449,
       "g1": "#1e1b4b",
       "g2": "#4338ca",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-az15.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "cables-repuesto-kz",
@@ -675,11 +483,7 @@
       "descuento": "-20%",
       "g1": "#064e3b",
       "g2": "#065f46",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "cables-repuesto-kz.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "kz-784-core",
@@ -687,11 +491,7 @@
       "precio": 195,
       "g1": "#1e293b",
       "g2": "#334155",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-784-core.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "kz-am02-dac",
@@ -699,11 +499,7 @@
       "precio": 159,
       "g1": "#064e3b",
       "g2": "#065f46",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "kz-am02-dac.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "cable-high-quality-kz",
@@ -718,10 +514,6 @@
         "Negro",
         "Dorado",
         "Blue"
-      ],
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "cable-high-quality-kz.webp"
       ]
     },
     {
@@ -730,11 +522,7 @@
       "precio": 30,
       "g1": "#064e3b",
       "g2": "#065f46",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "estuche-kz.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "estuche-in-ears",
@@ -742,11 +530,7 @@
       "precio": 25,
       "g1": "#1e293b",
       "g2": "#334155",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "estuche-in-ears.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "adaptador-tipo-c",
@@ -754,11 +538,7 @@
       "precio": 25,
       "g1": "#064e3b",
       "g2": "#065f46",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "adaptador-tipo-c.webp"
-      ]
+      "svgTipo": "iem"
     },
     {
       "id": "ear-tips-espuma",
@@ -766,11 +546,7 @@
       "precio": 29,
       "g1": "#1e293b",
       "g2": "#334155",
-      "svgTipo": "iem",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "imagenes": [
-        "ear-tips-espuma.webp"
-      ]
+      "svgTipo": "iem"
     }
   ],
   "secciones": {
