@@ -433,32 +433,7 @@ footer { border-top: 1px solid var(--bs-border-color); background: rgba(102,0,25
 /* ============================================================
    VISTA LISTA / GRID (toggle mobile)
 ============================================================ */
-.view-toggle { display: none; }
-@media (max-width: 991.98px) {
-  .view-toggle { display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem; margin-bottom: 1rem; }
-}
-.view-toggle-btn {
-  width: 32px; height: 32px; border-radius: 0.4rem;
-  border: 1px solid rgba(255,255,255,0.12); background: transparent;
-  color: rgba(255,255,255,0.4);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: all .15s ease;
-}
-.view-toggle-btn.active { background: rgba(102,0,255,0.2); border-color: rgba(102,0,255,0.5); color: #fff; }
 
-@media (max-width: 991.98px) {
-  .row.list-view > [class*="col-"] { width: 100% !important; max-width: 100% !important; flex: 0 0 100% !important; }
-  .row.list-view .card { flex-direction: row !important; height: auto !important; align-items: center; }
-  .row.list-view .card .product-img-wrap { width: 90px !important; min-width: 90px !important; height: 90px !important; flex-shrink: 0; border-radius: 0.75rem 0 0 0.75rem !important; }
-  .row.list-view .card .product-img-wrap > div { height: 100% !important; }
-  .row.list-view .card .product-img-wrap > div svg { width: 44px !important; height: 44px !important; }
-  .row.list-view .card .card-body { padding: 0.65rem 0.85rem !important; flex: 1; }
-  .row.list-view .card .card-title { font-size: 0.82rem !important; margin-bottom: 0.2rem !important; }
-  .row.list-view .card .card-text { display: none !important; }
-  .row.list-view .card [id^="var-"] { margin-bottom: 0.35rem !important; }
-  .row.list-view .card .stock-indicator { margin-bottom: 0.25rem !important; }
-  .row.list-view .card .d-flex.gap-2 { gap: 0.3rem !important; }
-  .row.list-view .card .btn-sm { font-size: 0.7rem !important; padding: 0.25rem 0.5rem !important; }
 }
 
 /* ============================================================
@@ -590,14 +565,5 @@ footer { border-top: 1px solid var(--bs-border-color); background: rgba(102,0,25
    VISTA LISTA — card-categoria (home con nuevo estilo)
 ============================================================ */
 @media (max-width: 991.98px) {
-  .row.list-view .card-categoria { flex-direction: row !important; height: auto !important; align-items: center; border-radius: 0.75rem !important; }
-  .row.list-view .card-categoria .card-categoria-img { width: 90px !important; min-width: 90px !important; height: 90px !important; flex-shrink: 0; aspect-ratio: unset !important; border-radius: 0.75rem 0 0 0.75rem !important; }
-  .row.list-view .card-categoria .card-categoria-img svg { width: 44px !important; height: 44px !important; }
-  .row.list-view .card-categoria .card-categoria-img img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
-  .row.list-view .card-categoria .card-categoria-img::after { display: none; }
-  .row.list-view .card-categoria .card-categoria-body { padding: 0.65rem 0.85rem !important; flex: 1; }
-  .row.list-view .card-categoria .card-categoria-nombre { font-size: 0.82rem !important; margin-bottom: 0.2rem !important; display: block; }
-  .row.list-view .card-categoria [id^="var-"] { margin-bottom: 0.35rem !important; }
-  .row.list-view .card-categoria .stock-indicator { margin-bottom: 0.25rem !important; }
-  .row.list-view .card-categoria .btn-cat-agregar { font-size: 0.7rem !important; padding: 0.25rem 0.5rem !important; width: 100%; }
+  
 }

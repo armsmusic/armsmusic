@@ -1,0 +1,66 @@
+---
+layout: base.njk
+titulo: Sistemas de Monitoreo y Amplificación — ARMS Music Guatemala
+meta_description: Monitores personales, amplificadores de auriculares y transmisores inalámbricos en Guatemala. Envío a toda Guatemala con ARMS Music.
+permalink: /audio/sistemas/index.html
+---
+
+<div class="categoria-page">
+
+  <!-- HERO -->
+  <section class="categoria-hero">
+    <div class="container">
+      <nav aria-label="Ruta de navegación" style="margin-bottom:1rem;">
+        <ol class="breadcrumb-arms">
+          <li><a href="/">Inicio</a></li>
+          <li><span aria-hidden="true">›</span></li>
+          <li><a href="/audio/">Audio</a></li>
+          <li><span aria-hidden="true">›</span></li>
+          <li aria-current="page">Sistemas</li>
+        </ol>
+      </nav>
+      <div class="categoria-hero-inner">
+        <div>
+          <h1 class="categoria-titulo">Sistemas de Monitoreo</h1>
+          <p class="categoria-subtitulo">Monitores personales, amplificadores y transmisores inalámbricos</p>
+        </div>
+        <div class="categoria-stats">
+          <span class="categoria-count">{{ productos["audio-sistemas"] | length }} productos</span>
+        </div>
+      </div>
+      <a href="/audio/" class="categoria-banner-accesorio">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <span>Ver todo <strong>Audio Profesional</strong></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- DESCRIPCIÓN -->
+  <section style="padding-bottom:1.5rem;">
+    <div class="container">
+      <p style="color:rgba(255,255,255,0.5); font-size:0.95rem; max-width:680px; line-height:1.7;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+      </p>
+    </div>
+  </section>
+
+  <!-- GRID -->
+  <section class="categoria-grid-section">
+    <div class="container">
+
+      <div class="row g-3" id="row-categoria-audio-sistemas">
+        {% for prod in productos["audio-sistemas"] %}
+        {% set varId  = ("var-cat-" + prod.nombre) | replace(" ", "-") | replace("/", "-") %}
+        {% set btnId  = ("btn-cat-" + prod.nombre) | replace(" ", "-") | replace("/", "-") %}
+        {% set prodUrl = prod.id | productoUrl %}
+        <div class="col-6 col-lg-3">
+            {% include "card-producto.njk" %}
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section>
+
+</div>

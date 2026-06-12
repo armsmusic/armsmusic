@@ -342,18 +342,23 @@ function actualizarMunicipios() {
           return;
         }
 
-        const card    = col.querySelector('.card');
-        const titleEl = card ? card.querySelector('.card-title') : null;
-        const descEl  = card ? card.querySelector('.card-text')  : null;
+        const card    = col.querySelector('.card-categoria, .card');
+        const titleEl = card ? (card.querySelector('.card-categoria-nombre') || card.querySelector('.card-title')) : null;
+        const descEl  = card ? card.querySelector('.card-text') : null;
 
         const titleTxt = (titleEl?.textContent || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
         const descTxt  = (descEl?.textContent  || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 
         const matchQ = !q || titleTxt.includes(q) || descTxt.includes(q);
 
-        // Precio: buscar badge de precio en la card
+        // Precio: buscar en card-cat-precio-actual o badge.bg-primary
+        const precioEl = card ? card.querySelector('.card-cat-precio-actual') : null;
         const priceBadges = card ? card.querySelectorAll('.badge.bg-primary') : [];
         let cardPrecio = Infinity;
+        if (precioEl) {
+          const val = parseFloat(precioEl.textContent.replace(/[^0-9.]/g,''));
+          if (!isNaN(val)) cardPrecio = val;
+        }
         priceBadges.forEach(b => {
           const val = parseFloat(b.textContent.replace(/[^0-9.]/g,''));
           if (!isNaN(val) && val < cardPrecio) cardPrecio = val;
@@ -381,7 +386,7 @@ function actualizarMunicipios() {
       const verTodoWrap  = document.getElementById('ver-todo-wrap-'  + sec);
       const verMenosWrap = document.getElementById('ver-menos-wrap-' + sec);
       if (verTodoWrap)  verTodoWrap.style.display  = hayFiltroActivo ? 'none' : '';
-      if (verMenosWrap) verMenosWrap.style.display = hayFiltroActivo ? 'none' : '';
+      if (verMenosWrap) verMenosWrap.style.display = 'none';
     });
 
     if (resultCount) {

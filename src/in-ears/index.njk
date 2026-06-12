@@ -39,80 +39,13 @@ permalink: /in-ears/index.html
   <section class="categoria-grid-section">
     <div class="container">
 
-      {# Mapa estilos variante #}
-      {% set vs = {
-        "Negro":   "background:#1a1a1a;border:1.5px solid #555;color:#fff",
-        "Verde":   "background:#064e3b;border:1.5px solid #10B981;color:#6ee7b7",
-        "Crystal": "background:#e0f2fe;border:1.5px solid #38bdf8;color:#0369a1",
-        "Gray":    "background:#374151;border:1.5px solid #9ca3af;color:#d1d5db",
-        "Purple":  "background:#2e1065;border:1.5px solid #a855f7;color:#d8b4fe",
-        "Silver":  "background:#1e293b;border:1.5px solid #94a3b8;color:#cbd5e1",
-        "Blue":    "background:#1e3a5f;border:1.5px solid #3b82f6;color:#93c5fd",
-        "Dorado":  "background:#451a03;border:1.5px solid #d97706;color:#fcd34d",
-        "Blanco":  "background:#f8fafc;border:1.5px solid #cbd5e1;color:#1e293b"
-      } %}
-
       <div class="row g-3" id="row-categoria-inears">
         {% for prod in productos.inears %}
         {% set varId = ("var-cat-" + prod.nombre) | replace(" ", "-") | replace("/", "-") %}
         {% set btnId = ("btn-cat-" + prod.nombre) | replace(" ", "-") | replace("/", "-") %}
         {% set prodUrl = prod.id | productoUrl %}
         <div class="col-6 col-lg-3">
-          <article class="card-categoria">
-
-            <!-- Imagen -->
-            <a href="{{ prodUrl }}" class="card-categoria-img" style="background:linear-gradient(135deg,{{ prod.g1 }},{{ prod.g2 }});">
-              {% set svgPartial = "svgs/" + prod.svgTipo + ".njk" %}
-              {% include "product-img.njk" %}
-              {% if prod.descuento %}
-              <span class="card-categoria-badge">{{ prod.descuento }}</span>
-              {% endif %}
-            </a>
-
-            <!-- Info -->
-            <div class="card-categoria-body">
-              <a href="{{ prodUrl }}" class="card-categoria-nombre">{{ prod.nombre }}</a>
-
-              <!-- Precio -->
-              <div class="card-categoria-precio">
-                {% if prod.precioOriginal %}
-                <span class="card-cat-precio-original">{{ prod.precioOriginal | gtq }}</span>
-                {% endif %}
-                <span class="card-cat-precio-actual">{{ prod.precio | gtq }}</span>
-              </div>
-
-              <!-- Variantes -->
-              {% if prod.variantes %}
-              <div class="d-flex flex-wrap gap-1 mb-2" id="{{ varId }}">
-                {% for varName in prod.variantes %}
-                <button onclick="seleccionarVariante(this, '{{ prod.nombre }}', '{{ varName }}', {{ prod.precio }})"
-                  style="padding:0.15rem 0.4rem; border-radius:0.35rem; font-size:0.52rem; font-weight:600; cursor:pointer; {{ vs[varName] }}; transition:all .15s ease;{% if loop.first %} border-width:2px;{% endif %}"
-                  {% if loop.first %}class="var-btn-active"{% endif %}>{{ varName }}</button>
-                {% endfor %}
-              </div>
-              {% endif %}
-
-              <!-- Stock indicator -->
-              <div class="stock-indicator" style="margin-bottom:0.4rem; font-size:0.7rem;"></div>
-
-              <!-- Botón agregar -->
-              {% if prod.variantes %}
-              <button class="btn-cat-agregar btn-agregar"
-                id="{{ btnId }}"
-                data-product-name="{{ prod.nombre }} - {{ prod.variantes[0] }}"
-                onclick="agregarAlCarrito('{{ prod.nombre }} - {{ prod.variantes[0] }}', {{ prod.precio }}, this)">
-                <i class="fa-solid fa-cart-plus"></i> Agregar
-              </button>
-              {% else %}
-              <button class="btn-cat-agregar btn-agregar"
-                data-product-name="{{ prod.nombre }}"
-                onclick="agregarAlCarrito('{{ prod.nombre }}', {{ prod.precio }}, this)">
-                <i class="fa-solid fa-cart-plus"></i> Agregar
-              </button>
-              {% endif %}
-
-            </div>
-          </article>
+            {% include "card-producto.njk" %}
         </div>
         {% endfor %}
       </div>

@@ -41,18 +41,6 @@
 {% set varId = ("var-" + nombre) | replace(" ", "-") | replace("/", "-") %}
 {% set btnId = ("btn-add-" + nombre) | replace(" ", "-") | replace("/", "-") %}
 
-{% set vs = {
-  "Negro":   "background:#1a1a1a;border:1.5px solid #555;color:#fff",
-  "Verde":   "background:#064e3b;border:1.5px solid #10B981;color:#6ee7b7",
-  "Crystal": "background:#e0f2fe;border:1.5px solid #38bdf8;color:#0369a1",
-  "Gray":    "background:#374151;border:1.5px solid #9ca3af;color:#d1d5db",
-  "Purple":  "background:#2e1065;border:1.5px solid #a855f7;color:#d8b4fe",
-  "Silver":  "background:#1e293b;border:1.5px solid #94a3b8;color:#cbd5e1",
-  "Blue":    "background:#1e3a5f;border:1.5px solid #3b82f6;color:#93c5fd",
-  "Dorado":  "background:#451a03;border:1.5px solid #d97706;color:#fcd34d",
-  "Blanco":  "background:#f8fafc;border:1.5px solid #cbd5e1;color:#1e293b"
-} %}
-
 <div class="producto-page">
 
   <!-- BREADCRUMB -->
@@ -168,62 +156,17 @@
   <section class="py-producto-sm">
     <div class="container">
       <h2 class="producto-section-title mb-4">También te puede interesar</h2>
-      <div class="row g-4">
+      <div class="row g-3">
         {% for rel in relacionados %}
-        {% set relVarId = ("var-" + rel.nombre) | replace(" ", "-") | replace("/", "-") %}
-        {% set relBtnId = ("btn-add-" + rel.nombre) | replace(" ", "-") | replace("/", "-") %}
-        <div class="col-lg-4 col-md-6">
-          <article data-lazy-card class="card h-100 border-0 shadow-sm bg-body overflow-hidden">
-            <a class="d-block overflow-hidden product-img-wrap" href="{{ rel.id | productoUrl }}" style="aspect-ratio:1/1;">
-              <div class="w-100 h-100 d-flex align-items-center justify-content-center"
-                style="background:linear-gradient(135deg,{{ rel.g1 }},{{ rel.g2 }});">
-                {% set prod = rel %}
-                {% include "product-img.njk" %}
-              </div>
-            </a>
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start mb-2">
-                <h5 class="card-title mb-0" style="font-size:0.9rem;">{{ rel.nombre }}</h5>
-                {% if rel.precioOriginal %}
-                <div class="price-block">
-                  <span class="price-original">{{ rel.precioOriginal | gtq }}</span>
-                  <div class="price-sale">
-                    <span class="badge bg-primary">{{ rel.precio | gtq }}</span>
-                    <span class="badge-discount">{{ rel.descuento }}</span>
-                  </div>
-                </div>
-                {% else %}
-                <span class="badge bg-primary">{{ rel.precio | gtq }}</span>
-                {% endif %}
-              </div>
-              {% if rel.variantes %}
-              <div class="d-flex flex-wrap gap-1 mb-3" id="{{ relVarId }}">
-                {% for varName in rel.variantes %}
-                <button onclick="seleccionarVariante(this, '{{ rel.nombre }}', '{{ varName }}', {{ rel.precio }})"
-                  style="padding:0.19rem 0.45rem; border-radius:0.4rem; font-size:0.54rem; font-weight:600; cursor:pointer; {{ vs[varName] }}; transition:all .15s ease;{% if loop.first %} border-width:2px;{% endif %}"
-                  {% if loop.first %}class="var-btn-active"{% endif %}>{{ varName }}</button>
-                {% endfor %}
-              </div>
-              <div class="d-flex gap-2">
-                <a class="btn btn-sm btn-primary" href="{{ rel.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
-                <button class="btn btn-sm btn-agregar" id="{{ relBtnId }}"
-                  data-product-name="{{ rel.nombre }} - {{ rel.variantes[0] }}"
-                  onclick="agregarAlCarrito('{{ rel.nombre }} - {{ rel.variantes[0] }}', {{ rel.precio }}, this)">
-                  <i class="fa-solid fa-cart-plus"></i> Agregar
-                </button>
-              </div>
-              {% else %}
-              <div class="d-flex gap-2 mt-2">
-                <a class="btn btn-sm btn-primary" href="{{ rel.id | productoUrl }}"><i class="fa-solid fa-eye"></i> Ver más</a>
-                <button class="btn btn-sm btn-agregar"
-                  data-product-name="{{ rel.nombre }}"
-                  onclick="agregarAlCarrito('{{ rel.nombre }}', {{ rel.precio }}, this)">
-                  <i class="fa-solid fa-cart-plus"></i> Agregar
-                </button>
-              </div>
-              {% endif %}
-            </div>
-          </article>
+        {% set relVarId = ("var-cat-" + rel.nombre) | replace(" ", "-") | replace("/", "-") %}
+        {% set relBtnId = ("btn-cat-" + rel.nombre) | replace(" ", "-") | replace("/", "-") %}
+        {% set relUrl   = rel.id | productoUrl %}
+        <div class="col-6 col-lg-3">
+            {% set prod    = rel %}
+            {% set prodUrl = rel.id | productoUrl %}
+            {% set varId   = ("var-cat-" + rel.nombre) | replace(" ", "-") | replace("/", "-") %}
+            {% set btnId   = ("btn-cat-" + rel.nombre) | replace(" ", "-") | replace("/", "-") %}
+            {% include "card-producto.njk" %}
         </div>
         {% endfor %}
       </div>

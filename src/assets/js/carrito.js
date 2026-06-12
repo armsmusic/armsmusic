@@ -18,7 +18,6 @@ function guardarCarrito() {
 // ── INIT ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   if (carrito.length > 0) actualizarContador();
-  ['inears', 'monitores', 'audio', 'accesorios-inears'].forEach(s => setView(s, 'list'));
   cargarStock();
   checkBottomNav();
   window.addEventListener('resize', checkBottomNav);
@@ -117,22 +116,7 @@ function actualizarBotonesStock() {
   autoSeleccionarVarianteDisponible();
 }
 
-// ── VISTA LISTA / GRID ────────────────────────────────────────
-function setView(sectionId, mode) {
-  const row     = document.getElementById('row-' + sectionId);
-  const btnGrid = document.getElementById('btn-grid-' + sectionId);
-  const btnList = document.getElementById('btn-list-' + sectionId);
-  if (!row) return;
-  if (mode === 'list') {
-    row.classList.add('list-view');
-    if (btnList) btnList.classList.add('active');
-    if (btnGrid) btnGrid.classList.remove('active');
-  } else {
-    row.classList.remove('list-view');
-    if (btnGrid) btnGrid.classList.add('active');
-    if (btnList) btnList.classList.remove('active');
-  }
-}
+
 
 // ── BOTTOM NAV ────────────────────────────────────────────────
 function checkBottomNav() {

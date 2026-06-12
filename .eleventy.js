@@ -62,6 +62,58 @@ function resolverSeccion(seccion) {
   }).filter(Boolean);
 }
 
+// ── Aleatorizar array (Fisher-Yates) ─────────────────────────
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ── Tomar N aleatorios de una sección, excluyendo un ID ──────
+function aleatoriosDe(seccion, n, excluirId = null) {
+  const lista = resolverSeccion(seccion).filter(p => p.id !== excluirId);
+  return shuffle(lista).slice(0, n);
+}
+
+// ── Construir relacionados según pilar ───────────────────────
+function construirRelacionados(pilar, prodId) {
+  const esInears = pilar === 'in-ears' || pilar === 'in-ears/accesorios';
+  const esAudio  = pilar === 'audio/sistemas' || pilar === 'audio/interfaces' ||
+                   pilar === 'audio/microfonos' || pilar === 'audio/cables';
+
+  if (esInears) {
+    // Pedir 4 de cada sección para tener suficientes para 2 ciclos
+    const accesorios = aleatoriosDe('accesorios-inears', 4, prodId);
+    const inears     = aleatoriosDe('inears',            4, prodId);
+    const sistemas   = aleatoriosDe('audio-sistemas',    4, prodId);
+    // Intercalar en ciclos: 2+2+2, 2+2+2
+    const result = [];
+    for (let i = 0; i < 2; i++) {
+      result.push(...accesorios.slice(i*2, i*2+2));
+      result.push(...inears.slice(i*2, i*2+2));
+      result.push(...sistemas.slice(i*2, i*2+2));
+    }
+    return result.slice(0, 12);
+  }
+
+  if (esAudio) {
+    return [
+      ...aleatoriosDe('audio-sistemas',   3, prodId),
+      ...aleatoriosDe('audio-interfaces', 3, prodId),
+      ...aleatoriosDe('inears',           2, prodId),
+      ...aleatoriosDe('audio-cables',     2, prodId),
+      ...aleatoriosDe('audio-microfonos', 2, prodId),
+    ];
+  }
+
+  // Fallback: 3 de la misma sección
+  const seccion = Object.keys(PILARES).find(s => PILARES[s] === pilar) || 'inears';
+  return aleatoriosDe(seccion, 3, prodId);
+}
+
 module.exports = function(eleventyConfig) {
 
   // ── Assets ───────────────────────────────────────────────────
@@ -81,6 +133,19 @@ module.exports = function(eleventyConfig) {
       if (ids.includes(id)) return `/${pilar}/${id}/`;
     }
     return '#';
+  });
+
+  // ── Global data: mapa de estilos de variantes ────────────────
+  eleventyConfig.addGlobalData("vs", {
+    "Negro":   "background:#1a1a1a;border:1.5px solid #555;color:#fff",
+    "Verde":   "background:#064e3b;border:1.5px solid #10B981;color:#6ee7b7",
+    "Crystal": "background:#e0f2fe;border:1.5px solid #38bdf8;color:#0369a1",
+    "Gray":    "background:#374151;border:1.5px solid #9ca3af;color:#d1d5db",
+    "Purple":  "background:#2e1065;border:1.5px solid #a855f7;color:#d8b4fe",
+    "Silver":  "background:#1e293b;border:1.5px solid #94a3b8;color:#cbd5e1",
+    "Blue":    "background:#1e3a5f;border:1.5px solid #3b82f6;color:#93c5fd",
+    "Dorado":  "background:#451a03;border:1.5px solid #d97706;color:#fcd34d",
+    "Blanco":  "background:#f8fafc;border:1.5px solid #cbd5e1;color:#1e293b"
   });
 
   // ── Global data: productos resueltos por sección ─────────────
@@ -110,11 +175,9 @@ module.exports = function(eleventyConfig) {
           ...prod,
           seccion,
           pilar,
-          slug:      prod.id,
-          permalink: `/${pilar}/${prod.id}/index.html`,
-          relacionados: lista
-            .filter(p => p.nombre !== prod.nombre)
-            .slice(0, 3)
+          slug:        prod.id,
+          permalink:   `/${pilar}/${prod.id}/index.html`,
+          relacionados: construirRelacionados(pilar, prod.id)
         });
       });
     }
