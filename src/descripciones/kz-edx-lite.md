@@ -1,22 +1,31 @@
-Los EDX LITE revolucionan los audífonos in-ear con un sistema de doble driver dinámico y switches de afinación física. Diseñados para audiófilos, músicos y amantes de los bajos potentes.
+El in-ear de entrada que suena mejor de lo que su precio sugiere. El KZ EDX Lite está diseñado para quien quiere calidad de audio real sin gastar de más — un driver dinámico super lineal que entrega bajos definidos, medios presentes y agudos sin fatiga.
 
-## Características Clave
+## ¿Por qué elegir el KZ EDX Lite?
 
-- **Doble Driver Dinámico:** Un driver independiente para graves profundos y otro para medios/agudos cristalinos.
-- **Switches de Afinación Física:** 4 interruptores para modificar el perfil de sonido en tiempo real.
-- **Diseño Ergonómico Hi-Fi:** Ajuste cómodo con aislamiento de ruido pasivo.
-- **Cable Desmontable de 2 Pines:** Cable premium de alta pureza (0.75mm) fácilmente reemplazable.
+**Driver dinámico super lineal:** Tecnología heredada de modelos más avanzados de KZ. Reduce la distorsión y entrega un sonido equilibrado y natural — sin los picos artificiales que arruinan la mezcla.
 
-## Especificaciones Técnicas
+**Cable desmontable 2 pines:** El conector chapado en oro permite cambiar el cable cuando quieras. Actualizas el cable, no el audífono.
 
-- **Rango de Frecuencia:** 20 - 40,000 Hz
-- **Impedancia:** 16 - 20 Ohm
-- **Sensibilidad:** 103 - 105 dB
-- **Conector:** Jack 3.5mm / Pines de 0.75mm
+**Diseño ergonómico:** Carcasa translúcida liviana pensada para horas de uso sin fatiga. Compatible con smartphones, laptops y consolas sin necesitar amplificador.
 
-## Contenido del Paquete
+## Especificaciones técnicas
 
-- Audífonos KZ Castor Pro
-- Cable trenzado
-- 3 pares de almohadillas (S, M, L)
-- Herramienta de ajuste de switches
+| Característica | Detalle |
+|----------------|---------|
+| Driver | 1 Driver Dinámico Super Lineal |
+| Respuesta de frecuencia | 20 Hz – 40,000 Hz |
+| Impedancia | 23Ω |
+| Sensibilidad | 108 dB |
+| Conector | Jack 3.5mm |
+| Cable | Desmontable, 2 pines 0.75mm, 120cm |
+
+## ¿Para quién es ideal?
+
+Para quien está entrando al mundo del audio y quiere un IEM real — no un audífono genérico. Ideal para monitoreo en escenario, gaming, escuchar tu musica favorita y llamadas del día a día.
+
+## Contenido del paquete
+
+- 1 par KZ EDX Lite
+- Cable desmontable de cobre OFC
+- 3 pares de tips de silicona (S, M, L)
+- Manual de usuario
