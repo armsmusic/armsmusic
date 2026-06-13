@@ -8,20 +8,23 @@ El in-ear de entrada que suena mejor de lo que su precio sugiere. El KZ EDX Lite
 
 **Diseño ergonómico:** Carcasa translúcida liviana pensada para horas de uso sin fatiga. Compatible con smartphones, laptops y consolas sin necesitar amplificador.
 
+**Compatible con módulos Bluetooth KZ:** Convierte tu in-ear en inalámbrico sin cambiar el audífono — solo actualizas el cable.
+
 ## Especificaciones técnicas
 
 | Característica | Detalle |
 |----------------|---------|
 | Driver | 1 Driver Dinámico Super Lineal |
+| Configuración | 2 drivers |
 | Respuesta de frecuencia | 20 Hz – 40,000 Hz |
 | Impedancia | 23Ω |
 | Sensibilidad | 108 dB |
 | Conector | Jack 3.5mm |
-| Cable | Desmontable, 2 pines 0.75mm, 120cm | compatible con módulos Bluetooth KZ para convertirlo en inalámbrico.
+| Cable | Desmontable, 2 pines 0.75mm, 120cm. Compatible con módulos Bluetooth KZ |
 
 ## ¿Para quién es ideal?
 
-Para quien está entrando al mundo del audio y quiere un IEM real — no un audífono genérico. Ideal para monitoreo en escenario, gaming, escuchar tu musica favorita y llamadas del día a día.
+Para quien está entrando al mundo del audio y quiere un IEM real — no un audífono genérico. Ideal para música, gaming casual, llamadas del día a día y monitoreo en escenario.
 
 ## Contenido del paquete
 

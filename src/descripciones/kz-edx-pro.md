@@ -13,11 +13,12 @@ Más driver, más sonido. El KZ EDX Pro lleva el sistema de doble circuito magn�
 | Característica | Detalle |
 |----------------|---------|
 | Driver | Dinámico de doble circuito magnético, 10mm |
+| Configuración | 2 drivers |
 | Respuesta de frecuencia | 10 Hz – 20,000 Hz |
 | Impedancia | 24Ω |
 | Sensibilidad | 112 dB |
 | Conector | Jack 3.5mm |
-| Cable | 5N OFC desmontable, 2 pines 0.75mm, 125cm |
+| Cable | 5N OFC desmontable, 2 pines 0.75mm, 125cm. Compatible con módulos Bluetooth KZ |
 
 ## ¿Para quién es ideal?
 

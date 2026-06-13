@@ -13,11 +13,12 @@ El EDX Pro X es la evolución equilibrada de la serie EDX. Donde el EDX Pro va c
 | Característica | Detalle |
 |----------------|---------|
 | Driver | 1 Driver Dinámico Super Lineal |
+| Configuración | 2 drivers |
 | Respuesta de frecuencia | 20 Hz – 40,000 Hz |
 | Impedancia | 23Ω |
 | Sensibilidad | 108 dB |
 | Conector | Jack 3.5mm |
-| Cable | OFC desmontable, 2 pines 0.75mm, 120cm |
+| Cable | OFC desmontable, 2 pines 0.75mm, 120cm. Compatible con módulos Bluetooth KZ |
 
 ## ¿Para quién es ideal?
 

@@ -226,8 +226,8 @@
       ]
     },
     {
-      "id": "kz-zsx",
-      "nombre": "KZ ZSX",
+      "id": "kz-zsx-pro-terminator-ii",
+      "nombre": "KZ ZSX Pro Terminator II",
       "precio": 595,
       "g1": "#1e1b4b",
       "g2": "#4338ca",
@@ -570,7 +570,7 @@
       "kz-zs10-pro-x",
       "kz-zs10-pro-2",
       "kz-terminator-zsx",
-      "kz-zsx",
+      "kz-zsx-pro-terminator-ii",
       "kz-zs12-pro-x",
       "kz-as16-pro-x",
       "kz-zax",
@@ -660,7 +660,7 @@
       "kz-zs10-pro-x",
       "kz-zs10-pro-2",
       "kz-terminator-zsx",
-      "kz-zsx",
+      "kz-zsx-pro-terminator-ii",
       "kz-zs12-pro-x",
       "kz-as16-pro-x",
       "kz-zax",
