@@ -112,6 +112,10 @@ async function enviarPedido() {
   activarPaso(3);
   await new Promise(r => setTimeout(r, 900));
 
+  carrito = [];
+  guardarCarrito();
+  actualizarContador();
+
   mostrarPantalla('confirm');
   const esTransferencia = formaPagoSeleccionada === 'transferencia';
   document.getElementById('confirm-msg-entrega').style.display      = esTransferencia ? 'none'  : 'block';
