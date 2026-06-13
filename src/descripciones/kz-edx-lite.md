@@ -17,7 +17,7 @@ El in-ear de entrada que suena mejor de lo que su precio sugiere. El KZ EDX Lite
 | Impedancia | 23Ω |
 | Sensibilidad | 108 dB |
 | Conector | Jack 3.5mm |
-| Cable | Desmontable, 2 pines 0.75mm, 120cm |
+| Cable | Desmontable, 2 pines 0.75mm, 120cm | compatible con módulos Bluetooth KZ para convertirlo en inalámbrico.
 
 ## ¿Para quién es ideal?
 
