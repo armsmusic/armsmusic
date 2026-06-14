@@ -12,7 +12,8 @@
       "variantes": [
         "Crystal",
         "Gray"
-      ]
+      ],
+      "seoDescripcion": "KZ EDX Lite — in-ear de 2 drivers con sonido equilibrado y cable desmontable. Tienda en Guatemala, envío a todo el país y pago contra entrega."
     },
     {
       "id": "qkz-ak3",
@@ -25,7 +26,8 @@
         "Negro",
         "Verde",
         "Purple"
-      ]
+      ],
+      "seoDescripcion": "QKZ AK3 — in-ear de 2 drivers con micrófono integrado y graves contundentes. Disponible en Guatemala con envío a todo el país."
     },
     {
       "id": "kz-edx-pro",
@@ -38,7 +40,8 @@
         "Negro",
         "Verde",
         "Crystal"
-      ]
+      ],
+      "seoDescripcion": "KZ EDX Pro — in-ear de 2 drivers con doble circuito magnético y graves profundos. Envío a todo el país · Pago contra entrega · Guatemala."
     },
     {
       "id": "kz-edx-pro-x",
@@ -54,7 +57,8 @@
         "Verde",
         "Crystal",
         "Gray"
-      ]
+      ],
+      "seoDescripcion": "KZ EDX Pro X — in-ear de 2 drivers con firma balanceada para monitoreo y mezcla. En stock en Guatemala. Envío a todo el país."
     },
     {
       "id": "qkz-ak6-aers",
@@ -66,7 +70,8 @@
       "variantes": [
         "Negro",
         "Blanco"
-      ]
+      ],
+      "seoDescripcion": "QKZ AK6 Aers — in-ear de 2 drivers con 122 dB de sensibilidad y bajos potentes. Pide en línea, pago contra entrega y envío a toda Guatemala."
     },
     {
       "id": "qkz-zen",
@@ -79,7 +84,8 @@
         "Negro",
         "Purple",
         "Blue"
-      ]
+      ],
+      "seoDescripcion": "QKZ Zen — in-ear deportivo de 2 drivers con driver de 11mm para actividad física. Ordena en línea, pago contra entrega, llega a toda Guatemala."
     },
     {
       "id": "kz-castor",
@@ -91,7 +97,8 @@
       "variantes": [
         "Negro",
         "Silver"
-      ]
+      ],
+      "seoDescripcion": "KZ Castor — in-ear de 4 drivers con curva Harman y 16 perfiles de sonido. Compra en línea, paga cuando llega, envíos a toda Guatemala."
     },
     {
       "id": "kz-d-fi",
@@ -103,7 +110,8 @@
       "variantes": [
         "Gray",
         "Silver"
-      ]
+      ],
+      "seoDescripcion": "KZ D-Fi — in-ear de 2 drivers con carcasa metálica y 4 switches de afinación. Haz tu pedido en línea, pago contra entrega a toda Guatemala."
     },
     {
       "id": "kz-angelears",
@@ -111,7 +119,8 @@
       "precio": 229,
       "g1": "#1a1a2e",
       "g2": "#0f3460",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "KZ Angelears — in-ear de 2 drivers con imán interno y switches de afinación. Tienda en Guatemala, envío a todo el país y pago contra entrega."
     },
     {
       "id": "kz-zvx",
@@ -123,7 +132,8 @@
       "variantes": [
         "Negro",
         "Silver"
-      ]
+      ],
+      "seoDescripcion": "KZ ZVX — in-ear de 2 drivers con diafragma de 4.8 micras y carcasa CNC de metal. Disponible en Guatemala con envío a todo el país."
     },
     {
       "id": "kz-castor-pro",
@@ -137,7 +147,8 @@
       "variantes": [
         "Negro",
         "Silver"
-      ]
+      ],
+      "seoDescripcion": "KZ Castor Pro — in-ear de 4 drivers doble 10mm con 4 switches y crossover profesional. Envío a todo el país · Pago contra entrega · Guatemala."
     },
     {
       "id": "kz-zsn-pro-2",
@@ -150,7 +161,8 @@
         "Negro",
         "Dorado",
         "Silver"
-      ]
+      ],
+      "seoDescripcion": "KZ ZSN Pro 2 — in-ear híbrido de 4 drivers con placa de zinc y cable plateado. En stock en Guatemala. Envío a todo el país."
     },
     {
       "id": "kz-zst",
@@ -162,7 +174,8 @@
       "variantes": [
         "Negro",
         "Purple"
-      ]
+      ],
+      "seoDescripcion": "KZ ZST — in-ear híbrido de 4 drivers 1DD+1BA con graves naturales y agudos precisos. Pide en línea, pago contra entrega y envío a toda Guatemala."
     },
     {
       "id": "kz-zsn-pro-x",
@@ -174,7 +187,8 @@
       "variantes": [
         "Negro",
         "Dorado"
-      ]
+      ],
+      "seoDescripcion": "KZ ZSN Pro X — in-ear híbrido de 4 drivers con espacio magnético negro, 112 dB. Ordena en línea, pago contra entrega, llega a toda Guatemala."
     },
     {
       "id": "cca-polaris",
@@ -184,7 +198,8 @@
       "descuento": "-14%",
       "g1": "#1a1a2e",
       "g2": "#0f3460",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "CCA Polaris — in-ear de 2 drivers calibrado Harman con 4 switches y carcasa espejo. Compra en línea, paga cuando llega, envíos a toda Guatemala."
     },
     {
       "id": "kz-zex",
@@ -192,7 +207,8 @@
       "precio": 325,
       "g1": "#1c1917",
       "g2": "#3d3530",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "KZ ZEX — in-ear de 4 drivers con tecnología electrostática electret y driver dual. Haz tu pedido en línea, pago contra entrega a toda Guatemala."
     },
     {
       "id": "kz-zs10-pro-x",
@@ -202,7 +218,8 @@
       "descuento": "-15%",
       "g1": "#1c1917",
       "g2": "#3d3530",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "KZ ZS10 Pro X — in-ear híbrido de 10 drivers 1DD+4BA con armaduras doradas 50024. Tienda en Guatemala, envío a todo el país y pago contra entrega."
     },
     {
       "id": "kz-zs10-pro-2",
@@ -210,7 +227,8 @@
       "precio": 495,
       "g1": "#1a1a2e",
       "g2": "#0f3460",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "KZ ZS10 Pro 2 — in-ear híbrido de 10 drivers con 4 switches y nuevos BA 31736. Disponible en Guatemala con envío a todo el país."
     },
     {
       "id": "kz-terminator-zsx",
@@ -223,7 +241,8 @@
         "Negro",
         "Verde",
         "Purple"
-      ]
+      ],
+      "seoDescripcion": "KZ Terminator ZSX — in-ear híbrido de 12 drivers 1DD+5BA con placa de zinc. Envío a todo el país · Pago contra entrega · Guatemala."
     },
     {
       "id": "kz-zsx-pro-terminator-ii",
@@ -231,7 +250,8 @@
       "precio": 595,
       "g1": "#1e1b4b",
       "g2": "#4338ca",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "KZ ZSX Pro Terminator II — in-ear híbrido de 12 drivers con arquitectura KZ 2022. En stock en Guatemala. Envío a todo el país."
     },
     {
       "id": "kz-zs12-pro-x",
@@ -239,7 +259,8 @@
       "precio": 595,
       "g1": "#064e3b",
       "g2": "#047857",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "KZ ZS12 Pro X — in-ear híbrido de 12 drivers con carcasa metálica y switches avanzados. Pide en línea, pago contra entrega y envío a toda Guatemala."
     },
     {
       "id": "kz-as16-pro-x",
@@ -249,7 +270,8 @@
       "descuento": "-20%",
       "g1": "#064e3b",
       "g2": "#047857",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "KZ AS16 Pro X — in-ear de 16 BA de tercera generación para monitoreo profesional. Ordena en línea, pago contra entrega, llega a toda Guatemala."
     },
     {
       "id": "kz-zax",
@@ -261,7 +283,8 @@
       "variantes": [
         "Negro",
         "Silver"
-      ]
+      ],
+      "seoDescripcion": "KZ ZAX — in-ear híbrido de 16 drivers 1DD+7BA con diafragma PEK y armaduras 50024. Compra en línea, paga cuando llega, envíos a toda Guatemala."
     },
     {
       "id": "kz-as24",
@@ -269,7 +292,8 @@
       "precio": 1495,
       "g1": "#1e1b4b",
       "g2": "#4338ca",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "KZ AS24 — in-ear de 24 BA con 12 drivers por lado y 8 switches de afinación. Haz tu pedido en línea, pago contra entrega a toda Guatemala."
     },
     {
       "id": "kz-sonata",
@@ -277,7 +301,8 @@
       "precio": 1795,
       "g1": "#1a1a2e",
       "g2": "#0f3460",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "KZ Sonata — in-ear flagship de 28 BA con crossover de 4 vías y tubo acústico 3D. Tienda en Guatemala, envío a todo el país y pago contra entrega."
     },
     {
       "id": "debra-er-mini",
@@ -285,7 +310,8 @@
       "precio": 775,
       "g1": "#27272a",
       "g2": "#52525b",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Debra ER Mini — sistema de monitoreo inalámbrico in-ear UHF con transmisor y receptor. Disponible en Guatemala con envío a todo el país."
     },
     {
       "id": "sky-monitor",
@@ -295,7 +321,8 @@
       "descuento": "-14%",
       "g1": "#1e1b4b",
       "g2": "#4f46e5",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "SKY Monitor — sistema inalámbrico in-ear 2.4 GHz con audio 24bit/48KHz, baja latencia. Envío a todo el país · Pago contra entrega · Guatemala."
     },
     {
       "id": "amplificador-ha-400",
@@ -305,7 +332,8 @@
       "descuento": "-17%",
       "g1": "#27272a",
       "g2": "#52525b",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Amplificador HA-400 — distribuidora de 4 canales con volumen independiente para escenario. En stock en Guatemala. Envío a todo el país."
     },
     {
       "id": "amplificador-ha-800",
@@ -313,7 +341,8 @@
       "precio": 395,
       "g1": "#1e1b4b",
       "g2": "#4f46e5",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Amplificador HA-800 — distribuidora de 8 canales con amplificador 4580 de bajo ruido. Pide en línea, pago contra entrega y envío a toda Guatemala."
     },
     {
       "id": "pm1-monitor-personal",
@@ -321,7 +350,8 @@
       "precio": 249,
       "g1": "#27272a",
       "g2": "#52525b",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "PM1 Monitor Personal — control de volumen pasivo XLR a Jack 3.5mm sin baterías. Ordena en línea, pago contra entrega, llega a toda Guatemala."
     },
     {
       "id": "p2-monitor-personal",
@@ -329,7 +359,8 @@
       "precio": 295,
       "g1": "#1e1b4b",
       "g2": "#4f46e5",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "P2 Monitor Personal — amplificador activo de monitoreo XLR/TRS con limitador de picos. Compra en línea, paga cuando llega, envíos a toda Guatemala."
     },
     {
       "id": "transmisor-instrumentos-sky",
@@ -337,7 +368,8 @@
       "precio": 275,
       "g1": "#1a1a2e",
       "g2": "#312e81",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Transmisor SKY — sistema inalámbrico para guitarra, bajo o teclado en escenario. Haz tu pedido en línea, pago contra entrega a toda Guatemala."
     },
     {
       "id": "transmisor-audio-instrumentos",
@@ -345,7 +377,8 @@
       "precio": 249,
       "g1": "#1c1917",
       "g2": "#44403c",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Transmisor inalámbrico audio/instrumentos — señal estable en escenario sin cables. Tienda en Guatemala, envío a todo el país y pago contra entrega."
     },
     {
       "id": "transmisor-para-microfono",
@@ -353,7 +386,8 @@
       "precio": 249,
       "g1": "#1a1a2e",
       "g2": "#312e81",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Transmisor inalámbrico para micrófono — presencia vocal en escenario sin cables. Disponible en Guatemala con envío a todo el país."
     },
     {
       "id": "joyo-momix",
@@ -361,7 +395,8 @@
       "precio": 995,
       "g1": "#1a1a2e",
       "g2": "#312e81",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Joyo Momix — mezcladora e interfaz portátil con XLR phantom 48V para streaming. Envío a todo el país · Pago contra entrega · Guatemala."
     },
     {
       "id": "joyo-momix-cab",
@@ -369,7 +404,8 @@
       "precio": 295,
       "g1": "#1c1917",
       "g2": "#44403c",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Joyo Momix CAB — interfaz de bolsillo con Jack 1/4\" y USB-C o Lightning. En stock en Guatemala. Envío a todo el país."
     },
     {
       "id": "joyo-interface-jw-05r",
@@ -379,7 +415,8 @@
       "descuento": "-15%",
       "g1": "#1a1a2e",
       "g2": "#312e81",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Joyo Interface JW-05R — interfaz inalámbrica para guitarra o bajo directo al dispositivo. Pide en línea, pago contra entrega y envío a toda Guatemala."
     },
     {
       "id": "irig-mini-interfaz",
@@ -387,7 +424,8 @@
       "precio": 149,
       "g1": "#1c1917",
       "g2": "#44403c",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Irig Mini Interfaz — interfaz compacta para instrumentos o micrófono en teléfono o tablet. Ordena en línea, pago contra entrega, llega a toda Guatemala."
     },
     {
       "id": "microfono-sm57",
@@ -395,7 +433,8 @@
       "precio": 299,
       "g1": "#1c1917",
       "g2": "#44403c",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Micrófono SM57 — dinámico cardioide para instrumentos con respuesta modelada. Compra en línea, paga cuando llega, envíos a toda Guatemala."
     },
     {
       "id": "microfono-beta-58a",
@@ -403,7 +442,8 @@
       "precio": 299,
       "g1": "#1a1a2e",
       "g2": "#312e81",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Micrófono BETA 58A — supercardiode vocal con 160 dB SPL y mayor rechazo de feedback. Haz tu pedido en línea, pago contra entrega a toda Guatemala."
     },
     {
       "id": "microfono-sm58",
@@ -411,7 +451,8 @@
       "precio": 299,
       "g1": "#1c1917",
       "g2": "#44403c",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Micrófono SM58 — dinámico cardioide vocal con realce en medios y rejilla antipop. Tienda en Guatemala, envío a todo el país y pago contra entrega."
     },
     {
       "id": "microfono-lavariel",
@@ -419,7 +460,8 @@
       "precio": 195,
       "g1": "#1a1a2e",
       "g2": "#312e81",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Micrófono Lavalier K6 — inalámbrico 2.4GHz con 70h de autonomía y monitor IEM. Disponible en Guatemala con envío a todo el país."
     },
     {
       "id": "extension-5m-inears",
@@ -430,7 +472,8 @@
       "g1": "#0a2a1a",
       "g2": "#1a6b3a",
       "svgTipo": "cable5m",
-      "subtitulo": "Plug 1/4\" a Jack 3.5mm"
+      "subtitulo": "Plug 1/4\" a Jack 3.5mm",
+      "seoDescripcion": "Extensión 5m para in-ears — cable Plug 1/4\" a Jack 3.5mm para libertad de movimiento. Envío a todo el país · Pago contra entrega · Guatemala."
     },
     {
       "id": "extension-10m-inears",
@@ -441,7 +484,8 @@
       "g1": "#0a1a2a",
       "g2": "#1a3a6b",
       "svgTipo": "cable10m",
-      "subtitulo": "Plug 1/4\" a Jack 3.5mm"
+      "subtitulo": "Plug 1/4\" a Jack 3.5mm",
+      "seoDescripcion": "Extensión 10m para in-ears — cable Plug 1/4\" a Jack 3.5mm para escenarios grandes. En stock en Guatemala. Envío a todo el país."
     },
     {
       "id": "cable-plug-1-4",
@@ -449,7 +493,8 @@
       "precio": 25,
       "g1": "#1a0a0a",
       "g2": "#6b1a1a",
-      "svgTipo": "cable30cm"
+      "svgTipo": "cable30cm",
+      "seoDescripcion": "Cable Plug 1/4\" a Plug 1/4\" — conexión directa entre instrumentos y consolas. Pide en línea, pago contra entrega y envío a toda Guatemala."
     },
     {
       "id": "kz-az09",
@@ -457,7 +502,8 @@
       "precio": 295,
       "g1": "#064e3b",
       "g2": "#047857",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "KZ AZ09 — módulo Bluetooth 5.2 que convierte tus KZ en inalámbricos sin cambiar el audífono. Ordena en línea, pago contra entrega, llega a toda Guatemala."
     },
     {
       "id": "kz-ae01",
@@ -465,7 +511,8 @@
       "precio": 329,
       "g1": "#1c1917",
       "g2": "#3d3530",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "KZ AE01 — módulo Bluetooth 5.4 True Wireless con cancelación ENC y modo gaming. Compra en línea, paga cuando llega, envíos a toda Guatemala."
     },
     {
       "id": "kz-az15",
@@ -473,7 +520,8 @@
       "precio": 449,
       "g1": "#1e1b4b",
       "g2": "#4338ca",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "KZ AZ15 — módulo Bluetooth 5.2 con chip Qualcomm, aptX sin pérdidas, 54h de batería. Haz tu pedido en línea, pago contra entrega a toda Guatemala."
     },
     {
       "id": "cables-repuesto-kz",
@@ -483,7 +531,8 @@
       "descuento": "-20%",
       "g1": "#064e3b",
       "g2": "#065f46",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Cables de Repuesto KZ — OFC desmontable compatible con todos los KZ y QKZ 2 pines. Tienda en Guatemala, envío a todo el país y pago contra entrega."
     },
     {
       "id": "kz-784-core",
@@ -491,7 +540,8 @@
       "precio": 195,
       "g1": "#1e293b",
       "g2": "#334155",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "KZ 784 CORE — cable de 784 núcleos en cobre, oro y plata para mayor claridad. Disponible en Guatemala con envío a todo el país."
     },
     {
       "id": "kz-am02-dac",
@@ -499,7 +549,8 @@
       "precio": 159,
       "g1": "#064e3b",
       "g2": "#065f46",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "KZ AM02 DAC — convertidor Tipo C que mejora el audio de tus in-ears en Android o PC. Envío a todo el país · Pago contra entrega · Guatemala."
     },
     {
       "id": "qkz-t1-200-core",
@@ -514,7 +565,8 @@
         "Negro",
         "Dorado",
         "Blue"
-      ]
+      ],
+      "seoDescripcion": "QKZ T1 200 CORE — cable de 200 núcleos OFC chapado en plata para KZ y QKZ 2 pines. En stock en Guatemala. Envío a todo el país."
     },
     {
       "id": "estuche-kz",
@@ -522,7 +574,8 @@
       "precio": 30,
       "g1": "#064e3b",
       "g2": "#065f46",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Estuche KZ oficial — case rígido compacto para proteger tus in-ears entre sesiones. Pide en línea, pago contra entrega y envío a toda Guatemala."
     },
     {
       "id": "estuche-in-ears",
@@ -530,7 +583,8 @@
       "precio": 25,
       "g1": "#1e293b",
       "g2": "#334155",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Estuche universal para in-ears — carcasa rígida con forro suave, compatible con KZ y QKZ. Ordena en línea, pago contra entrega, llega a toda Guatemala."
     },
     {
       "id": "adaptador-tipo-c",
@@ -538,7 +592,8 @@
       "precio": 25,
       "g1": "#064e3b",
       "g2": "#065f46",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Adaptador Tipo C a Jack 3.5mm — conecta tus in-ears a Android, iPad Pro o laptop. Compra en línea, paga cuando llega, envíos a toda Guatemala."
     },
     {
       "id": "ear-tips-espuma",
@@ -546,7 +601,8 @@
       "precio": 29,
       "g1": "#1e293b",
       "g2": "#334155",
-      "svgTipo": "iem"
+      "svgTipo": "iem",
+      "seoDescripcion": "Ear Tips de espuma para in-ears — mejor sellado, aislamiento y comodidad en sesiones largas. Haz tu pedido en línea, pago contra entrega a toda Guatemala."
     }
   ],
   "secciones": {

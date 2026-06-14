@@ -8,7 +8,7 @@ layout: base.njk
 eleventyComputed:
   titulo: "{{ prod.nombre }} — ARMS Music"
   seoTitulo: "{{ prod.nombre }} Guatemala | ARMS Music"
-  seoDescripcion: "Compra {{ prod.nombre }} Guatemala. Pago contra entrega, envíos a todo el país."
+  seoDescripcion: "{{ prod.seoDescripcion if prod.seoDescripcion else 'Compra ' + prod.nombre + ' Guatemala. Pago contra entrega, envíos a todo el país.' }}"
   ogType: "product"
   schemaJson: "{ \"@context\": \"https://schema.org\", \"@type\": \"Product\", \"name\": \"{{ prod.nombre }}\", \"description\": \"{{ prod.subtitulo if prod.subtitulo else prod.nombre }}\", \"brand\": { \"@type\": \"Brand\", \"name\": \"ARMS Music\" }, \"offers\": { \"@type\": \"Offer\", \"price\": {{ prod.precio }}, \"priceCurrency\": \"GTQ\", \"availability\": \"https://schema.org/InStock\", \"seller\": { \"@type\": \"Organization\", \"name\": \"ARMS Music\" } } }"
 ---
