@@ -25,3 +25,9 @@ El micrófono vocal que se volvió leyenda, reinterpretado para todos. Este din�
 ## ¿Para quién es ideal?
 
 Para el vocalista que está dando sus primeros pasos y quiere sonar como un profesional desde el primer ensayo. No necesitas gastar una fortuna para tener un micrófono que te haga justicia — el SM58 está listo para subir al escenario contigo desde el día uno.
+
+## Contenido del paquete
+
+- 1 Micrófono SM58
+- Adaptador de soporte
+- Funda protectora

@@ -26,3 +26,9 @@ Más rechazo de feedback, más presencia vocal. Este micrófono dinámico superc
 ## ¿Para quién es ideal?
 
 Si llevas tiempo soñando con subir a un escenario pero nunca has tenido el micrófono correcto — este es tu momento. El BETA 58A te da calidad de escenario profesional desde tu primera presentación, sin vaciar la billetera en una marca internacional.
+
+## Contenido del paquete
+
+- 1 Micrófono BETA-58A
+- Adaptador de soporte
+- Funda protectora

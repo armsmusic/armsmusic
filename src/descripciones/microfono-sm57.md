@@ -25,3 +25,9 @@ El diseño que definió el estándar del audio en vivo, ahora al alcance de todo
 ## ¿Para quién es ideal?
 
 ¿Tu primera banda? ¿Tu primer home studio? El SM57 es el punto de partida que eligen los músicos que toman en serio su sonido desde el día uno — calidad de estudio real, sin el precio que normalmente viene con ella.
+
+## Contenido del paquete
+
+- 1 Micrófono SM57
+- Adaptador de soporte
+- Funda protectora
