@@ -115,20 +115,6 @@
             <li class="nav-item"><a class="nav-link text-body" href="#inears">Categorías</a></li>
             <li class="nav-item"><a class="nav-link text-body" href="#contacto">Contacto</a></li>
 
-            <!-- Search input mobile (dentro del menú colapsado) -->
-            <li class="nav-item d-lg-none mt-2">
-              <div style="position:relative;">
-                <svg style="position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.35);pointer-events:none;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                <input
-                  id="search-input-mobile"
-                  type="search"
-                  placeholder="Buscar producto..."
-                  autocomplete="off" autocorrect="off" spellcheck="false"
-                  aria-label="Buscar productos"
-                  style="width:100%; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:2rem; padding:0.45rem 0.9rem 0.45rem 2.2rem; color:#fff; font-family:'Lexend',sans-serif; font-size:0.875rem; outline:none; -webkit-appearance:none;"
-                />
-              </div>
-            </li>
           </ul>
 
           <!-- Desktop: search + carrito -->
@@ -157,40 +143,16 @@
   <!-- ============================================================
        PANEL DE BÚSQUEDA
   ============================================================ -->
-  <div id="search-panel" aria-label="Buscar y filtrar productos" style="display:none; position:fixed; top:0; left:0; right:0; z-index:1028; padding-top:80px;">
+  <div id="search-panel" aria-label="Buscar productos" style="display:none; position:fixed; top:0; left:0; right:0; z-index:1028; padding-top:80px;">
     <div style="background:rgba(14,13,20,0.97); backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%); border-bottom:1px solid rgba(139,120,255,0.18); box-shadow:0 8px 32px rgba(0,0,0,0.55); padding:0.75rem 0 0.85rem;">
       <div class="container">
-        <div style="display:flex; align-items:center; gap:0.6rem;">
-          <div style="position:relative; flex:1;">
-            <svg style="position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.35);pointer-events:none;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input id="search-input-panel" type="search" placeholder="Buscar producto..." autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Buscar productos" style="width:100%; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:2rem; padding:0.5rem 2.2rem 0.5rem 2.3rem; color:#fff; font-family:'Lexend',sans-serif; font-size:0.9rem; outline:none; -webkit-appearance:none; transition:border-color .2s, box-shadow .2s;" />
-            <button id="search-clear-panel" aria-label="Limpiar" style="position:absolute;right:0.55rem;top:50%;transform:translateY(-50%);display:none;background:rgba(255,255,255,0.14);border:none;border-radius:50%;width:18px;height:18px;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,0.7);font-size:9px;padding:0;">✕</button>
-          </div>
-          <button id="btn-precio-toggle" aria-expanded="false" style="display:inline-flex;align-items:center;gap:0.35rem;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:2rem;padding:0.5rem 0.9rem;color:rgba(255,255,255,0.6);font-family:'Lexend',sans-serif;font-size:0.8rem;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .2s ease;flex-shrink:0;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
-            Precio
-            <span id="precio-badge-label" style="display:none;background:var(--arms-purple);color:#fff;border-radius:99px;font-size:0.65rem;padding:0.05rem 0.4rem;font-weight:700;line-height:1.4;"></span>
-          </button>
-          <span id="resultado-count" style="display:none;font-size:0.75rem;color:rgba(255,255,255,0.4);white-space:nowrap;" aria-live="polite"></span>
+        <div style="position:relative;">
+          <svg style="position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.35);pointer-events:none;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="search-input-panel" type="search" placeholder="Buscar producto..." autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Buscar productos" style="width:100%; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:2rem; padding:0.5rem 2.2rem 0.5rem 2.3rem; color:#fff; font-family:'Lexend',sans-serif; font-size:0.9rem; outline:none; -webkit-appearance:none; transition:border-color .2s, box-shadow .2s;" />
+          <button id="search-clear-panel" aria-label="Limpiar" style="position:absolute;right:0.55rem;top:50%;transform:translateY(-50%);display:none;background:rgba(255,255,255,0.14);border:none;border-radius:50%;width:18px;height:18px;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,0.7);font-size:9px;padding:0;">✕</button>
         </div>
-
-        <!-- Panel precio -->
-        <div id="panel-precio" style="display:none; padding:0.75rem 0 0.25rem;">
-          <div class="precio-labels">
-            <span class="precio-rango" id="lbl-precio-rango">Todos los precios</span>
-            <button id="btn-precio-reset">Limpiar</button>
-          </div>
-          <div class="slider-dual-wrap">
-            <div class="slider-track-bg"></div>
-            <div class="slider-track-fill" id="slider-track-fill"></div>
-            <input type="range" id="range-min" min="0" max="2000" value="0" step="25" />
-            <input type="range" id="range-max" min="0" max="2000" value="2000" step="25" />
-          </div>
-          <div class="precio-labels" style="margin-top:0.4rem; margin-bottom:0;">
-            <span style="font-size:0.75rem;">Q<span id="lbl-precio-min">0</span></span>
-            <span style="font-size:0.75rem;">Q<span id="lbl-precio-max">2000</span></span>
-          </div>
-        </div>
+        <!-- Autocomplete dropdown -->
+        <div id="search-dropdown" style="display:none; margin-top:0.5rem; max-height:60vh; overflow-y:auto; border-radius:0.75rem; border:1px solid rgba(139,120,255,0.18); background:rgba(22,21,30,0.98);"></div>
       </div>
     </div>
   </div>
@@ -463,6 +425,7 @@
   <!-- JS propios: carrito primero, checkout después -->
   <script src="/assets/js/carrito.js" defer></script>
   <script src="/assets/js/checkout.js" defer></script>
+  <script src="/assets/js/buscar.js" defer></script>
 
 </body>
 </html>
