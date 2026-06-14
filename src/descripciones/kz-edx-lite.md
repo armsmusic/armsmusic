@@ -14,8 +14,8 @@ El in-ear de entrada que suena mejor de lo que su precio sugiere. El KZ EDX Lite
 
 | Característica | Detalle |
 |----------------|---------|
-| Driver | 1 Driver Dinámico Super Lineal |
 | Configuración | 2 drivers |
+| Driver | 1 Driver Dinámico Super Lineal |
 | Respuesta de frecuencia | 20 Hz – 40,000 Hz |
 | Impedancia | 23Ω |
 | Sensibilidad | 108 dB |

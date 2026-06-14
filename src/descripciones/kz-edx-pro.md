@@ -1,10 +1,10 @@
-Más driver, más sonido. El KZ EDX Pro lleva el sistema de doble circuito magnético de 10mm — una actualización real sobre el EDX Lite que se siente en los graves: más profundos, más controlados, sin distorsión.
+Más driver, más sonido. El KZ EDX Pro lleva el sistema de doble circuito magnético de 10mm — una tecnología que se siente directamente en los graves: más profundos, más controlados, sin distorsión.
 
 ## ¿Por qué elegir el KZ EDX Pro?
 
 **Driver dinámico de doble circuito magnético:** El núcleo del EDX Pro. El doble imán amplifica la respuesta magnética del driver, entregando graves más contundentes y una escena sonora más amplia — sin perder claridad en medios y agudos.
 
-**Carcasa de resina con detalles metálicos:** Más robusta que el EDX Lite. Diseñada para aguantar el uso diario en escenario o estudio sin perder su forma.
+**Carcasa de resina con detalles metálicos:** Resistente al uso diario en escenario o estudio. Diseñada para mantener su forma sesión tras sesión.
 
 **Cable 5N OFC desmontable:** Cobre libre de oxígeno de 5 capas. Minimiza la pérdida de señal y es compatible con módulos Bluetooth KZ para convertirlo en inalámbrico.
 
@@ -12,8 +12,8 @@ Más driver, más sonido. El KZ EDX Pro lleva el sistema de doble circuito magn�
 
 | Característica | Detalle |
 |----------------|---------|
-| Driver | Dinámico de doble circuito magnético, 10mm |
 | Configuración | 2 drivers |
+| Driver | Dinámico de doble circuito magnético, 10mm |
 | Respuesta de frecuencia | 10 Hz – 20,000 Hz |
 | Impedancia | 24Ω |
 | Sensibilidad | 112 dB |

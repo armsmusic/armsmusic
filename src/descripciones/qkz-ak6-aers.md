@@ -12,8 +12,8 @@ Graves que se sienten. El QKZ AK6 Aers lleva la línea AK6 un paso más allá co
 
 | Característica | Detalle |
 |----------------|---------|
-| Driver | Dinámico, 10mm |
 | Configuración | 2 drivers |
+| Driver | Dinámico, 10mm |
 | Respuesta de frecuencia | 20 Hz – 20,000 Hz |
 | Impedancia | 18Ω |
 | Sensibilidad | 122 dB |

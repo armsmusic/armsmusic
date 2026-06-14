@@ -12,8 +12,8 @@ El punto de entrada al mundo de los in-ears. El QKZ AK3 es un in-ear con cable f
 
 | Característica | Detalle |
 |----------------|---------|
-| Driver | Dinámico de circuito magnético dual, 10mm |
 | Configuración | 2 drivers |
+| Driver | Dinámico de circuito magnético dual, 10mm |
 | Respuesta de frecuencia | 20 Hz – 20,000 Hz |
 | Impedancia | 17Ω |
 | Sensibilidad | 109 dB |
