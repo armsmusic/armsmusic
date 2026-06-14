@@ -502,8 +502,8 @@
       "svgTipo": "iem"
     },
     {
-      "id": "cable-high-quality-kz",
-      "nombre": "Cable High Quality para KZ/QKZ",
+      "id": "qkz-t1-200-core",
+      "nombre": "QKZ T1 200 CORE | Cable Actualizacion KZ/QKZ",
       "precio": 149,
       "precioOriginal": 189,
       "descuento": "-21%",
@@ -608,7 +608,7 @@
       "cables-repuesto-kz",
       "kz-784-core",
       "kz-am02-dac",
-      "cable-high-quality-kz",
+      "qkz-t1-200-core",
       "estuche-kz",
       "estuche-in-ears",
       "adaptador-tipo-c",
@@ -686,7 +686,7 @@
     "accesorios-inears": [
       "kz-784-core",
       "kz-am02-dac",
-      "cable-high-quality-kz",
+      "qkz-t1-200-core",
       "estuche-kz",
       "estuche-in-ears",
       "adaptador-tipo-c",
