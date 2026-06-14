@@ -29,7 +29,7 @@ El sello físico de tus in-ears KZ no cambia — el cable no afecta el aislamien
 
 ## ¿Para quién es ideal?
 
-Para quien usa Android, tablet o laptop con USB-C y quiere conectar sus in-ears KZ sin adaptador. También ideal para quien quiere mejorar la calidad de audio sin cambiar los audífonos — el chip DAC del cable hace el trabajo que el convertidor del teléfono no hace bien.
+Para quien usa Android, Iphone o laptop con USB-C y quiere conectar sus in-ears KZ sin adaptador. También ideal para quien quiere mejorar la calidad de audio sin cambiar los audífonos — el chip DAC del cable hace el trabajo que el convertidor del teléfono no hace bien.
 
 ## Contenido del paquete
 
