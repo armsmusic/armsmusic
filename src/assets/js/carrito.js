@@ -127,15 +127,24 @@ function checkBottomNav() {
   if (bs) bs.style.display = isMobile ? 'block' : 'none';
 }
 
-// ── MENÚ HAMBURGUESA ──────────────────────────────────────────
-document.addEventListener('click', function(e) {
-  const nav     = document.getElementById('navbarNav');
-  const toggler = document.querySelector('.navbar-toggler');
-  if (!nav || !toggler) return;
-  if (nav.classList.contains('show') && !nav.contains(e.target) && !toggler.contains(e.target)) {
-    bootstrap.Collapse.getOrCreateInstance(nav).hide();
-  }
-});
+// ── MENÚ NAV DRAWER ───────────────────────────────────────────
+function abrirMenuNav() {
+  document.getElementById('menu-nav-overlay').style.display = 'block';
+  document.getElementById('menu-nav-drawer').style.transform = 'translateX(0)';
+}
+
+function cerrarMenuNav() {
+  document.getElementById('menu-nav-overlay').style.display = 'none';
+  document.getElementById('menu-nav-drawer').style.transform = 'translateX(-100%)';
+}
+
+function toggleAudioSubmenu() {
+  const sub   = document.getElementById('audio-submenu');
+  const arrow = document.getElementById('audio-submenu-arrow');
+  const open  = sub.style.display === 'block';
+  sub.style.display   = open ? 'none' : 'block';
+  arrow.style.transform = open ? '' : 'rotate(90deg)';
+}
 
 // ── MENÚ CATEGORÍAS BOTTOM NAV ────────────────────────────────
 function toggleCategoriasMenu() {
@@ -165,10 +174,7 @@ document.addEventListener('click', function(e) {
 
 function navegarSeccion(sectionId) {
   cerrarCategoriasMenu();
-  const navbarNav = document.getElementById('navbarNav');
-  if (navbarNav && navbarNav.classList.contains('show')) {
-    bootstrap.Collapse.getOrCreateInstance(navbarNav).hide();
-  }
+  cerrarMenuNav();
   const bar    = document.getElementById('cat-tabs-bar');
   const target = document.getElementById(sectionId);
   if (!target) return;
@@ -681,18 +687,6 @@ document.querySelectorAll('[data-section-header]').forEach(h => headerObserver.o
   }
   recalcTop();
   window.addEventListener('resize', recalcTop, { passive: true });
-
-  const navbarNav = document.getElementById('navbarNav');
-  if (navbarNav) {
-    navbarNav.addEventListener('shown.bs.collapse',  recalcTop);
-    navbarNav.addEventListener('hidden.bs.collapse', recalcTop);
-    navbarNav.addEventListener('show.bs.collapse',   () => requestAnimationFrame(recalcTop));
-    navbarNav.addEventListener('hide.bs.collapse',   () => {
-      let frames = 0;
-      const raf = () => { recalcTop(); if (++frames < 20) requestAnimationFrame(raf); };
-      requestAnimationFrame(raf);
-    });
-  }
 
   window.addEventListener('scroll', () => {
     bar.classList.toggle('scrolled', window.scrollY > 160);
