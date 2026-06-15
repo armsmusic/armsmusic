@@ -10,6 +10,6 @@ eleventyComputed:
   seoTitulo: "{{ prod.seoTitulo if prod.seoTitulo else prod.nombre + ' Guatemala | ARMS Music' }}"
   seoDescripcion: "{{ prod.seoDescripcion if prod.seoDescripcion else 'Compra ' + prod.nombre + ' Guatemala. Pago contra entrega, envíos a todo el país.' }}"
   ogType: "product"
-  schemaJson: "{ \"@context\": \"https://schema.org\", \"@type\": \"Product\", \"name\": \"{{ prod.nombre }}\", \"description\": \"{{ prod.subtitulo if prod.subtitulo else prod.nombre }}\", \"brand\": { \"@type\": \"Brand\", \"name\": \"ARMS Music\" }, \"offers\": { \"@type\": \"Offer\", \"price\": {{ prod.precio }}, \"priceCurrency\": \"GTQ\", \"availability\": \"https://schema.org/InStock\", \"seller\": { \"@type\": \"Organization\", \"name\": \"ARMS Music\" } } }"
+  schemaJson: "{ \"@context\": \"https://schema.org\", \"@type\": \"Product\", \"name\": \"{{ prod.nombre }}\", \"description\": \"{{ prod.seoDescripcion if prod.seoDescripcion else prod.nombre }}\", \"image\": \"https://armsmusic.com/assets/img/productos/{{ prod.imagenes[0] }}\", \"url\": \"https://armsmusic.com/{{ prod.pilar }}/{{ prod.id }}/\", \"offers\": { \"@type\": \"Offer\", \"price\": {{ prod.precio }}, \"priceCurrency\": \"GTQ\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://armsmusic.com/{{ prod.pilar }}/{{ prod.id }}/\", \"seller\": { \"@type\": \"Organization\", \"name\": \"ARMS Music\" } } }"
 ---
 {% include "producto.njk" %}
