@@ -13,6 +13,7 @@
 {% set pilar         = prod.pilar %}
 {% set relacionados  = prod.relacionados %}
 {% set imagenes      = prod.imagenes %}
+{% set imagenesVariantes = prod.imagenesVariantes %}
 
 {# Pilar label y URL #}
 {% if pilar == "in-ears" %}
@@ -96,6 +97,7 @@
               {% for varName in variantes %}
               <button
                 onclick="seleccionarVariante(this, '{{ nombre }}', '{{ varName }}', {{ precio }})"
+                data-img="/assets/img/productos/{{ imagenesVariantes[varName] if imagenesVariantes[varName] else imagenes[0] }}"
                 style="padding:0.35rem 0.85rem; border-radius:0.5rem; font-size:0.82rem; font-weight:600; cursor:pointer; {{ vs[varName] }}; transition:all .15s ease;"
                 {% if loop.first %}class="var-btn-active"{% endif %}>
                 {{ varName }}
@@ -111,6 +113,7 @@
               class="btn btn-agregar btn-agregar-lg"
               id="{{ btnId }}"
               data-product-name="{{ nombre }} - {{ variantes[0] }}"
+              data-img="/assets/img/productos/{{ imagenesVariantes[variantes[0]] if imagenesVariantes[variantes[0]] else imagenes[0] }}"
               onclick="agregarAlCarrito('{{ nombre }} - {{ variantes[0] }}', {{ precio }}, this)">
               <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
             </button>
@@ -118,6 +121,7 @@
             <button
               class="btn btn-agregar btn-agregar-lg"
               data-product-name="{{ nombre }}"
+              data-img="/assets/img/productos/{{ imagenes[0] }}"
               onclick="agregarAlCarrito('{{ nombre }}', {{ precio }}, this)">
               <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
             </button>

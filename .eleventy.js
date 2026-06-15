@@ -53,6 +53,20 @@ function leerOgImagen(id) {
   return imgs.length ? `${id}/og/${imgs[0]}` : null;
 }
 
+// ── Leer imágenes por variante desde subcarpeta variantes/ ────
+function leerImagenesVariantes(id) {
+  const carpeta = path.join(__dirname, 'src', 'assets', 'img', 'productos', id, 'variantes');
+  if (!fs.existsSync(carpeta)) return {};
+  const mapa = {};
+  fs.readdirSync(carpeta)
+    .filter(f => IMG_EXTS.has(path.extname(f).toLowerCase()))
+    .forEach(f => {
+      const nombre = path.basename(f, path.extname(f)); // "Negro", "Con Micrófono", etc.
+      mapa[nombre] = `${id}/variantes/${f}`;
+    });
+  return mapa;
+}
+
 // ── Resolver IDs a objetos completos ─────────────────────────
 function resolverSeccion(seccion) {
   const indice = {};
@@ -66,8 +80,9 @@ function resolverSeccion(seccion) {
     return {
       ...prod,
       descripcion: descMd || prod.descripcion || null,
-      imagenes:       leerImagenes(id),
-      ogImagenProducto: leerOgImagen(id),
+      imagenes:          leerImagenes(id),
+      ogImagenProducto:  leerOgImagen(id),
+      imagenesVariantes: leerImagenesVariantes(id),
       extra:       extra.includes(id)
     };
   }).filter(Boolean);

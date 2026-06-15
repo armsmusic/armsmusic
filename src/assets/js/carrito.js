@@ -317,11 +317,13 @@ function agregarAlCarrito(nombre, precio, btnEl) {
   }
 
   animarAgregar(btnEl, () => {
+    const imagen = btnEl ? (btnEl.getAttribute('data-img') || '') : '';
     const idx = carrito.findIndex(i => i.nombre === nombre);
     if (idx > -1) {
       carrito[idx].cantidad++;
+      if (imagen && !carrito[idx].imagen) carrito[idx].imagen = imagen;
     } else {
-      carrito.push({ nombre, precio, cantidad: 1 });
+      carrito.push({ nombre, precio, cantidad: 1, imagen });
     }
     guardarCarrito();
     actualizarContador();
@@ -408,24 +410,31 @@ function renderCarrito() {
   footer.style.display = 'block';
 
   lista.innerHTML = carrito.map((item, idx) => `
-    <div style="padding:0.85rem 0; border-bottom:1px solid rgba(255,255,255,0.06);">
-      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:0.5rem; margin-bottom:0.5rem;">
-        <p style="margin:0; font-weight:600; color:#fff; font-size:0.9rem; line-height:1.3; flex:1; word-break:break-word;">${item.nombre}</p>
-        <button onclick="eliminarItem(${idx})" aria-label="Eliminar ${item.nombre}" style="
-          background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1);
-          border-radius:50%; width:24px; height:24px; min-width:24px;
-          color:rgba(255,255,255,0.5); cursor:pointer; font-size:0.8rem;
-          display:flex; align-items:center; justify-content:center;
-          transition:background .15s ease, color .15s ease; flex-shrink:0;
-        " onmouseover="this.style.background='rgba(239,68,68,0.2)';this.style.color='#f87171'"
-           onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.color='rgba(255,255,255,0.5)'">✕</button>
+    <div style="padding:0.85rem 0; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; gap:0.75rem; align-items:flex-start;">
+      <div style="width:60px; height:60px; min-width:60px; border-radius:0.5rem; overflow:hidden; background:rgba(255,255,255,0.05); flex-shrink:0;">
+        ${item.imagen
+          ? `<img src="${item.imagen}" alt="${item.nombre}" style="width:100%; height:100%; object-fit:cover;" loading="lazy" onerror="this.style.display='none'">`
+          : ''}
       </div>
-      <div style="display:flex; align-items:center; gap:0.5rem;">
-        <span style="color:rgba(255,255,255,0.45); font-size:0.8rem; flex:1;">Q${item.precio.toLocaleString()} c/u</span>
-        <button onclick="cambiarCantidad(${idx}, -1)" style="width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); color:#fff; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">−</button>
-        <span style="min-width:18px; text-align:center; color:#fff; font-weight:600; font-size:0.9rem;">${item.cantidad}</span>
-        <button onclick="cambiarCantidad(${idx}, 1)"  style="width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); color:#fff; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">+</button>
-        <p style="margin:0; font-weight:700; color:#fff; min-width:52px; text-align:right; font-size:0.92rem; flex-shrink:0;">Q${(item.precio * item.cantidad).toLocaleString()}</p>
+      <div style="flex:1; min-width:0;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:0.5rem; margin-bottom:0.5rem;">
+          <p style="margin:0; font-weight:600; color:#fff; font-size:0.9rem; line-height:1.3; flex:1; word-break:break-word;">${item.nombre}</p>
+          <button onclick="eliminarItem(${idx})" aria-label="Eliminar ${item.nombre}" style="
+            background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1);
+            border-radius:50%; width:24px; height:24px; min-width:24px;
+            color:rgba(255,255,255,0.5); cursor:pointer; font-size:0.8rem;
+            display:flex; align-items:center; justify-content:center;
+            transition:background .15s ease, color .15s ease; flex-shrink:0;
+          " onmouseover="this.style.background='rgba(239,68,68,0.2)';this.style.color='#f87171'"
+             onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.color='rgba(255,255,255,0.5)'">✕</button>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <span style="color:rgba(255,255,255,0.45); font-size:0.8rem; flex:1;">Q${item.precio.toLocaleString()} c/u</span>
+          <button onclick="cambiarCantidad(${idx}, -1)" style="width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); color:#fff; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">−</button>
+          <span style="min-width:18px; text-align:center; color:#fff; font-weight:600; font-size:0.9rem;">${item.cantidad}</span>
+          <button onclick="cambiarCantidad(${idx}, 1)"  style="width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); color:#fff; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">+</button>
+          <p style="margin:0; font-weight:700; color:#fff; min-width:52px; text-align:right; font-size:0.92rem; flex-shrink:0;">Q${(item.precio * item.cantidad).toLocaleString()}</p>
+        </div>
       </div>
     </div>
   `).join('');
@@ -539,6 +548,9 @@ function seleccionarVariante(btn, nombreBase, variante, precio) {
 
   if (btnAdd) {
     btnAdd.setAttribute('data-product-name', fullName);
+    // Propagar imagen de la variante seleccionada al botón Agregar
+    const imgVariante = btn.getAttribute('data-img');
+    if (imgVariante) btnAdd.setAttribute('data-img', imgVariante);
     if (agotado) {
       btnAdd.disabled      = true;
       btnAdd.innerHTML     = 'Agotado';
