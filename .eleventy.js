@@ -43,6 +43,16 @@ function leerImagenes(id) {
     .map(f => `${id}/${f}`);
 }
 
+// ── Leer imagen OG desde subcarpeta og/ del producto ─────────
+function leerOgImagen(id) {
+  const carpeta = path.join(__dirname, 'src', 'assets', 'img', 'productos', id, 'og');
+  if (!fs.existsSync(carpeta)) return null;
+  const imgs = fs.readdirSync(carpeta)
+    .filter(f => IMG_EXTS.has(path.extname(f).toLowerCase()))
+    .sort();
+  return imgs.length ? `${id}/og/${imgs[0]}` : null;
+}
+
 // ── Resolver IDs a objetos completos ─────────────────────────
 function resolverSeccion(seccion) {
   const indice = {};
@@ -56,7 +66,8 @@ function resolverSeccion(seccion) {
     return {
       ...prod,
       descripcion: descMd || prod.descripcion || null,
-      imagenes:    leerImagenes(id),
+      imagenes:       leerImagenes(id),
+      ogImagenProducto: leerOgImagen(id),
       extra:       extra.includes(id)
     };
   }).filter(Boolean);
