@@ -198,8 +198,10 @@ function navegarSeccion(sectionId) {
 
 // ── ABRIR / CERRAR DRAWER ─────────────────────────────────────
 function abrirCarrito() {
+  const drawer = document.getElementById('cart-drawer');
   document.getElementById('cart-overlay').style.display = 'block';
-  document.getElementById('cart-drawer').style.transform = 'translateX(0)';
+  drawer.style.transform = 'translateX(0)';
+  drawer.style.boxShadow = '-20px 0 60px rgba(0,0,0,0.5)';
   const waf = document.querySelector('.whatsapp-float');
   if (waf) waf.style.display = 'none';
   document.getElementById('cart-items').scrollTop = 0;
@@ -208,8 +210,10 @@ function abrirCarrito() {
 }
 
 function cerrarCarrito() {
+  const drawer = document.getElementById('cart-drawer');
   document.getElementById('cart-overlay').style.display = 'none';
-  document.getElementById('cart-drawer').style.transform = 'translateX(100%)';
+  drawer.style.transform = 'translateX(100%)';
+  drawer.style.boxShadow = 'none';
   const waf = document.querySelector('.whatsapp-float');
   if (waf) waf.style.display = 'flex';
   const pulse = document.getElementById('confirm-wa-pulse');
