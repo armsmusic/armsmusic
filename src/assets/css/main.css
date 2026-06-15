@@ -567,21 +567,3 @@ footer { border-top: 1px solid var(--bs-border-color); background: rgba(102,0,25
 @media (max-width: 991.98px) {
   
 }
-
-/* ── BOTTOM NAV — Firefox fix ────────────────────────────────
-   Firefox móvil tiene un bug con position:fixed + backdrop-filter
-   que causa que el nav se "despegue" durante scroll rápido.
-   Solución: fondo sólido como base, backdrop-filter solo en
-   navegadores que lo soportan correctamente (Chrome/Safari).
-──────────────────────────────────────────────────────────── */
-#bottom-nav {
-  background: rgba(18, 18, 18, 0.98);
-}
-
-@supports (backdrop-filter: blur(1px)) and (not (-moz-appearance: none)) {
-  #bottom-nav {
-    background: rgba(18, 18, 18, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
-}
