@@ -54,8 +54,12 @@
 
   function intentarInicializar() {
     if (!fuseLoaded || !indexLoaded) return;
-    fuse = new Fuse(catalogo.map(p => ({ ...p, _nombre: normalizar(p.nombre) })), {
-      keys: ['_nombre', 'nombre'],
+    fuse = new Fuse(catalogo.map(p => ({
+      ...p,
+      _nombre: normalizar(p.nombre),
+      _nombreCompacto: normalizarCompacto(p.nombre)
+    })), {
+      keys: ['_nombre', '_nombreCompacto', 'nombre'],
       threshold: 0.4,
       distance: 80,
       minMatchCharLength: 2,
@@ -125,7 +129,11 @@
   }
 
   function normalizar(str) {
-    return String(str).replace(/-/g, ' ');
+    return String(str).toLowerCase().replace(/-/g, ' ').trim();
+  }
+
+  function normalizarCompacto(str) {
+    return String(str).toLowerCase().replace(/-/g, '').replace(/\s+/g, '');
   }
 
   function escapeHtml(str) {
