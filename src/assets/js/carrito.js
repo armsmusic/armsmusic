@@ -129,13 +129,17 @@ function checkBottomNav() {
 
 // ── MENÚ NAV DRAWER ───────────────────────────────────────────
 function abrirMenuNav() {
+  const drawer = document.getElementById('menu-nav-drawer');
   document.getElementById('menu-nav-overlay').style.display = 'block';
-  document.getElementById('menu-nav-drawer').style.transform = 'translateX(0)';
+  drawer.style.transform  = 'translateX(0)';
+  drawer.style.boxShadow  = '20px 0 60px rgba(0,0,0,0.5)';
 }
 
 function cerrarMenuNav() {
+  const drawer = document.getElementById('menu-nav-drawer');
   document.getElementById('menu-nav-overlay').style.display = 'none';
-  document.getElementById('menu-nav-drawer').style.transform = 'translateX(-100%)';
+  drawer.style.transform  = 'translateX(-100%)';
+  drawer.style.boxShadow  = 'none';
 }
 
 function toggleAudioSubmenu() {
