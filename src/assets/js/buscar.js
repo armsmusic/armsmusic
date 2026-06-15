@@ -54,8 +54,8 @@
 
   function intentarInicializar() {
     if (!fuseLoaded || !indexLoaded) return;
-    fuse = new Fuse(catalogo, {
-      keys: ['nombre'],
+    fuse = new Fuse(catalogo.map(p => ({ ...p, _nombre: normalizar(p.nombre) })), {
+      keys: ['_nombre', 'nombre'],
       threshold: 0.4,
       distance: 80,
       minMatchCharLength: 2,
@@ -75,7 +75,7 @@
       return;
     }
 
-    const resultados = fuse.search(query, { limit: 7 });
+    const resultados = fuse.search(normalizar(query), { limit: 7 });
 
     if (resultados.length === 0) {
       searchDropdown.innerHTML = `
@@ -122,6 +122,10 @@
 
   function ocultarDropdown() {
     if (searchDropdown) searchDropdown.style.display = 'none';
+  }
+
+  function normalizar(str) {
+    return String(str).replace(/-/g, ' ');
   }
 
   function escapeHtml(str) {
@@ -282,7 +286,7 @@
       }
 
       let items = queryActual.length >= 2
-        ? fuse.search(queryActual).map(r => r.item)
+        ? fuse.search(normalizar(queryActual)).map(r => r.item)
         : [...catalogo];
 
       // Filtrar por precio
