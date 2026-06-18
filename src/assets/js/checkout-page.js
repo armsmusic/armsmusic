@@ -189,7 +189,7 @@ async function enviarPedido() {
 
       // Pixel InitiateCheckout ya fue disparado en el drawer
       // Redirigir a confirmación
-      window.location.href = '/orden-confirmada/';
+      window.location.replace('/orden-confirmada/');
     }
   } catch(e) {
     ocultarProgreso();
