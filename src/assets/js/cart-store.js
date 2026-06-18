@@ -382,3 +382,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (carrito.length > 0) actualizarContador();
   cargarStock();
 });
+
+// Manejar restauración desde bfcache (gesto volver)
+window.addEventListener('pageshow', (e) => {
+  if (e.persisted) {
+    carrito = JSON.parse(localStorage.getItem('arms-carrito') || '[]');
+    actualizarContador();
+    _publicar('arms:carrito:cerrar');
+  }
+});

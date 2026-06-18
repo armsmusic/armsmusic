@@ -176,3 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Render inicial si hay items
   if (carrito && carrito.length > 0) renderCarrito();
 });
+
+document.addEventListener('arms:carrito:cerrar', () => {
+  cerrarCarrito();
+});
