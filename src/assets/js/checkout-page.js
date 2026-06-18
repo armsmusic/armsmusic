@@ -1,198 +1,57 @@
 /* =============================================================
-   ARMS Music — Checkout / Formulario de Pedido
-   Depende de: carrito.js (carrito, stockGlobal, SHEETS_URL, WA_NUMBER)
+   ARMS Music — checkout-page.js
+   Formulario de checkout — página dedicada /checkout/
+   - 100% autónomo, NO depende de carrito.js ni ningún otro archivo
+   - Lee el carrito directamente de localStorage
+   - Envía pedido a Google Sheets
+   - Redirige a /orden-confirmada/ con datos en sessionStorage
 ============================================================= */
 
-// ── IR AL FORMULARIO ──────────────────────────────────────────
-function irAFormulario() {
-  mostrarPantalla('form');
-  const total = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
-  document.getElementById('form-total').textContent = 'Q' + total.toLocaleString();
-  document.getElementById('form-summary').innerHTML = carrito.map(i =>
-    `<div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
-      <span style="color:rgba(255,255,255,0.7); font-size:0.875rem;">${i.nombre} x${i.cantidad}</span>
-      <span style="color:#fff; font-size:0.875rem; font-weight:600;">Q${(i.precio * i.cantidad).toLocaleString()}</span>
-    </div>`
-  ).join('');
-  const formScroll = document.querySelector('#screen-form [style*="overflow-y"]');
-  if (formScroll) formScroll.scrollTop = 0;
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbze1iJnwYamzr43o2tDw7D0zhM9KAzLK11WROV4C5e4p6JgTlN3O3-d06R3rhi7-EVKDg/exec';
+const WA_NUMBER  = '50234646667';
+
+// ── LEER CARRITO ──────────────────────────────────────────────
+function getCarrito() {
+  return JSON.parse(localStorage.getItem('arms-carrito') || '[]');
 }
 
-function volverAlCarrito() {
-  mostrarPantalla('cart');
-  document.getElementById('cart-items').scrollTop = 0;
-  renderCarrito();
-}
+// ── INIT — verificar carrito al cargar ────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const carrito = getCarrito();
 
-// ── GENERAR MENSAJE WHATSAPP ──────────────────────────────────
-function generarMensajeWA(datos) {
-  const lineas = carrito.map(i => `• ${i.nombre} x${i.cantidad} — Q${(i.precio * i.cantidad).toLocaleString()}`).join('\n');
-  const total  = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
-  return encodeURIComponent(
-    `🛒 *NUEVO PEDIDO - ARMS Music*\n\n` +
-    `👤 *Cliente:* ${datos.nombre}\n` +
-    `📞 *Teléfono:* ${datos.telefono}\n` +
-    `📍 *Dirección:* ${datos.direccion}\n` +
-    `🗺️ *Departamento:* ${datos.departamento}\n` +
-    `🏙️ *Municipio:* ${datos.municipio}\n` +
-    (datos.notas ? `📝 *Notas:* ${datos.notas}\n` : '') +
-    `💳 *Forma de pago:* ${datos.pago}\n` +
-    `\n🎧 *Productos:*\n${lineas}\n\n` +
-    `💰 *Total: Q${total.toLocaleString()}*`
-  );
-}
-
-// ── ENVIAR PEDIDO ─────────────────────────────────────────────
-async function enviarPedido() {
-  const nombre       = document.getElementById('f-nombre').value.trim();
-  const telefono     = document.getElementById('f-telefono').value.trim();
-  const direccion    = document.getElementById('f-direccion').value.trim();
-  const departamento = document.getElementById('f-departamento').value.trim();
-  const municipio    = document.getElementById('f-municipio').value.trim();
-  const notas        = document.getElementById('f-notas').value.trim();
-  const errorEl      = document.getElementById('form-error');
-  const btnEl        = document.getElementById('btn-enviar');
-
-  const errores = [];
-  if (!nombre || nombre.length < 3)       errores.push('El nombre debe tener al menos 3 caracteres.');
-  if (!direccion || direccion.length < 6) errores.push('La dirección debe tener al menos 6 caracteres.');
-  if (!departamento)                       errores.push('Selecciona un departamento.');
-  if (!municipio)                          errores.push('Selecciona un municipio.');
-
-  const soloDigitos = telefono.replace(/\D/g, '');
-  if (soloDigitos.length !== 8) errores.push('El teléfono debe tener exactamente 8 dígitos.');
-
-  if (errores.length > 0) {
-    errorEl.innerHTML = errores.map(e => `<div>⚠️ ${e}</div>`).join('');
-    errorEl.style.display = 'block';
-    if (soloDigitos.length !== 8) {
-      const telInput = document.getElementById('f-telefono');
-      telInput.style.borderColor = '#ef4444';
-      telInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    return;
-  }
-  errorEl.style.display = 'none';
-  document.getElementById('f-telefono').style.borderColor = '';
-
-  const total    = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
-  const productos = carrito.map(i => `${i.nombre} x${i.cantidad} (Q${(i.precio * i.cantidad).toLocaleString()})`).join(', ');
-  const datos    = { nombre, telefono, direccion, departamento, municipio, notas, pago: PAGO_CONFIG[formaPagoSeleccionada].text };
-
-  const msgWA = generarMensajeWA(datos);
-  const waURL = `https://wa.me/${WA_NUMBER}?text=${msgWA}`;
-  document.getElementById('btn-whatsapp').href     = waURL;
-  document.getElementById('confirm-whatsapp').href = waURL;
-
-  btnEl.disabled    = true;
-  btnEl.textContent = '⏳ Enviando pedido...';
-  resetearProgreso();
-  mostrarPantalla('progress');
-  setTimeout(() => activarPaso(1), 300);
-
-  try {
-    const payload = { nombre, telefono, direccion, departamento, municipio, notas, pago: PAGO_CONFIG[formaPagoSeleccionada].text, productos, total: 'Q' + total.toLocaleString() };
-    const url     = SHEETS_URL + '?pedido=' + encodeURIComponent(JSON.stringify(payload));
-    setTimeout(() => activarPaso(2), 1200);
-    const res  = await fetch(url);
-    const data = await res.json();
-    if (data.ok && data.productos) {
-      data.productos.forEach(p => { stockGlobal[p.nombre] = p.stock; });
-      actualizarBotonesStock();
-    }
-  } catch(e) {
-    mostrarPantalla('form');
-    btnEl.disabled    = false;
-    btnEl.textContent = 'Confirmar pedido';
-    errorEl.innerHTML = '⚠️ Error de conexión. Revisa tu internet e intenta de nuevo.';
-    errorEl.style.display = 'block';
+  // Si el carrito está vacío → redirigir al inicio
+  if (carrito.length === 0) {
+    window.location.href = '/';
     return;
   }
 
-  activarPaso(3);
-  await new Promise(r => setTimeout(r, 900));
-
-  carrito = [];
-  guardarCarrito();
-  actualizarContador();
-
-  mostrarPantalla('confirm');
-  const esTransferencia = formaPagoSeleccionada === 'transferencia';
-  document.getElementById('confirm-msg-entrega').style.display      = esTransferencia ? 'none'  : 'block';
-  document.getElementById('confirm-msg-transferencia').style.display = esTransferencia ? 'block' : 'none';
-  document.getElementById('confirm-whatsapp-label').textContent      = esTransferencia ? 'Solicitar Cuenta por WhatsApp' : 'Confirmar por WhatsApp';
-  const pulse = document.getElementById('confirm-wa-pulse');
-  pulse.style.animationPlayState = esTransferencia ? 'running' : 'paused';
-  pulse.style.opacity            = esTransferencia ? '1'       : '0';
-  pulse.style.visibility         = esTransferencia ? 'visible' : 'hidden';
-}
-
-// ── PANTALLA DE PROGRESO ──────────────────────────────────────
-const PASOS = {
-  1: { titulo: 'Colocando tu pedido...', sub: 'Registrando tu orden',      pct: 20,  icono: '📋' },
-  2: { titulo: 'Verificando stock...',   sub: 'Revisando disponibilidad',  pct: 60,  icono: '🔍' },
-  3: { titulo: '¡Pedido exitoso!',       sub: '¡Tu pedido fue procesado!', pct: 100, icono: '🎉' }
-};
-
-function activarPaso(paso) {
-  const p     = PASOS[paso];
-  const title = document.getElementById('progress-title');
-  const sub   = document.getElementById('progress-sub');
-  const pct   = document.getElementById('progress-pct');
-  const bar   = document.getElementById('progress-bar-fill');
-  const spin  = document.getElementById('progress-spinner');
-
-  title.style.opacity = '0';
-  sub.style.opacity   = '0';
-
-  setTimeout(() => {
-    title.textContent    = p.titulo;
-    sub.textContent      = p.sub;
-    spin.textContent     = p.icono;
-    pct.textContent      = p.pct + '%';
-    bar.style.width      = p.pct + '%';
-    pct.style.color      = paso === 3 ? '#10B981' : paso === 2 ? '#f97316' : '#6600FF';
-    spin.style.animation = paso === 3 ? 'none' : 'spin-icon 1.5s linear infinite';
-    title.style.opacity  = '1';
-    sub.style.opacity    = '1';
-  }, 300);
-}
-
-function resetearProgreso() {
-  const bar  = document.getElementById('progress-bar-fill');
-  const pct  = document.getElementById('progress-pct');
-  const spin = document.getElementById('progress-spinner');
-  bar.style.transition = 'none';
-  bar.style.width      = '0%';
-  pct.textContent      = '0%';
-  pct.style.color      = '#6600FF';
-  spin.textContent     = '📦';
-  spin.style.animation = 'spin-icon 1.5s linear infinite';
-  document.getElementById('progress-title').textContent = 'Colocando tu pedido...';
-  document.getElementById('progress-title').style.opacity = '1';
-  document.getElementById('progress-sub').textContent    = 'Registrando tu orden';
-  document.getElementById('progress-sub').style.opacity  = '1';
-  setTimeout(() => { bar.style.transition = 'width 1.2s cubic-bezier(0.4,0,0.2,1)'; }, 50);
-}
-
-// ── FINALIZAR COMPRA ──────────────────────────────────────────
-function finalizarCompra() {
-  carrito = [];
-  guardarCarrito();
-  actualizarContador();
-  cerrarCarrito();
-  const pulse = document.getElementById('confirm-wa-pulse');
-  if (pulse) { pulse.style.animationPlayState = 'paused'; pulse.style.opacity = '0'; pulse.style.visibility = 'hidden'; }
-  ['f-nombre','f-telefono','f-direccion','f-notas'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-  const deptoEl = document.getElementById('f-departamento');
-  if (deptoEl) deptoEl.value = '';
-  actualizarMunicipios();
-  const btnEl = document.getElementById('btn-enviar');
-  if (btnEl) { btnEl.disabled = false; btnEl.textContent = '✅ Finalizar pedido'; }
+  renderResumen(carrito);
   seleccionarPago('entrega');
+});
+
+// ── RENDER RESUMEN ────────────────────────────────────────────
+function renderResumen(carrito) {
+  const summaryEl = document.getElementById('checkout-summary');
+  const totalEl   = document.getElementById('checkout-total');
+  if (!summaryEl || !totalEl) return;
+
+  summaryEl.innerHTML = carrito.map(item => `
+    <div class="checkout-item">
+      <div class="checkout-item-img">
+        ${item.imagen
+          ? `<img src="${item.imagen}" alt="${item.nombre}" loading="lazy" onerror="this.style.display='none'">`
+          : ''}
+      </div>
+      <div class="checkout-item-info">
+        <p class="checkout-item-nombre">${item.nombre}</p>
+        <p class="checkout-item-qty">x${item.cantidad}</p>
+      </div>
+      <p class="checkout-item-precio">Q${(item.precio * item.cantidad).toLocaleString()}</p>
+    </div>
+  `).join('');
+
+  const total = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  totalEl.textContent = 'Q' + total.toLocaleString();
 }
 
 // ── FORMA DE PAGO ─────────────────────────────────────────────
@@ -210,7 +69,7 @@ function seleccionarPago(tipo) {
     const radio = document.getElementById(cfg.radio);
     const activo = key === tipo;
     if (lbl) {
-      lbl.style.background  = activo ? `rgba(${key==='entrega'?'16,185,129':'102,0,255'},0.12)` : 'rgba(255,255,255,0.03)';
+      lbl.style.background  = activo ? `rgba(${key === 'entrega' ? '16,185,129' : '102,0,255'},0.12)` : 'rgba(255,255,255,0.03)';
       lbl.style.borderColor = activo ? cfg.color : 'rgba(255,255,255,0.1)';
     }
     if (radio) {
@@ -225,18 +84,165 @@ function seleccionarPago(tipo) {
     : 'Depósito o transferencia bancaria';
 }
 
-function scrollAFormaPago() {
-  setTimeout(() => {
-    const el = document.getElementById('forma-pago-label');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 100);
-}
-
 function limpiarErrorTelefono() {
   const tel = document.getElementById('f-telefono');
   const err = document.getElementById('error-telefono');
   if (tel) tel.style.borderColor = 'rgba(255,255,255,0.1)';
   if (err) err.style.display     = 'none';
+}
+
+// ── GENERAR MENSAJE WHATSAPP ──────────────────────────────────
+function generarMensajeWA(carrito, datos) {
+  const lineas = carrito.map(i => `• ${i.nombre} x${i.cantidad} — Q${(i.precio * i.cantidad).toLocaleString()}`).join('\n');
+  const total  = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  return encodeURIComponent(
+    `🛒 *NUEVO PEDIDO - ARMS Music*\n\n` +
+    `👤 *Cliente:* ${datos.nombre}\n` +
+    `📞 *Teléfono:* ${datos.telefono}\n` +
+    `📍 *Dirección:* ${datos.direccion}\n` +
+    `🗺️ *Departamento:* ${datos.departamento}\n` +
+    `🏙️ *Municipio:* ${datos.municipio}\n` +
+    (datos.notas ? `📝 *Notas:* ${datos.notas}\n` : '') +
+    `💳 *Forma de pago:* ${datos.pago}\n` +
+    `\n🎧 *Productos:*\n${lineas}\n\n` +
+    `💰 *Total: Q${total.toLocaleString()}*`
+  );
+}
+
+// ── HONEYPOT ──────────────────────────────────────────────────
+function verificarHoneypot() {
+  const hp = document.getElementById('f-website');
+  return !hp || hp.value === '';
+}
+
+// ── ENVIAR PEDIDO ─────────────────────────────────────────────
+async function enviarPedido() {
+  // Verificar honeypot
+  if (!verificarHoneypot()) return;
+
+  const carrito = getCarrito();
+  if (carrito.length === 0) { window.location.href = '/'; return; }
+
+  const nombre       = document.getElementById('f-nombre').value.trim();
+  const telefono     = document.getElementById('f-telefono').value.trim();
+  const direccion    = document.getElementById('f-direccion').value.trim();
+  const departamento = document.getElementById('f-departamento').value.trim();
+  const municipio    = document.getElementById('f-municipio').value.trim();
+  const notas        = document.getElementById('f-notas').value.trim();
+  const errorEl      = document.getElementById('form-error');
+  const btnEl        = document.getElementById('btn-enviar');
+
+  // Validación
+  const errores = [];
+  if (!nombre || nombre.length < 3)       errores.push('El nombre debe tener al menos 3 caracteres.');
+  if (!direccion || direccion.length < 6) errores.push('La dirección debe tener al menos 6 caracteres.');
+  if (!departamento)                       errores.push('Selecciona un departamento.');
+  if (!municipio)                          errores.push('Selecciona un municipio.');
+
+  const soloDigitos = telefono.replace(/\D/g, '');
+  if (soloDigitos.length !== 8) errores.push('El teléfono debe tener exactamente 8 dígitos.');
+
+  if (errores.length > 0) {
+    errorEl.innerHTML    = errores.map(e => `<div>⚠️ ${e}</div>`).join('');
+    errorEl.style.display = 'block';
+    if (soloDigitos.length !== 8) {
+      const telInput = document.getElementById('f-telefono');
+      telInput.style.borderColor = '#ef4444';
+      telInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return;
+  }
+  errorEl.style.display = 'none';
+
+  const total    = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  const productos = carrito.map(i => `${i.nombre} x${i.cantidad} (Q${(i.precio * i.cantidad).toLocaleString()})`).join(', ');
+  const datos    = { nombre, telefono, direccion, departamento, municipio, notas, pago: PAGO_CONFIG[formaPagoSeleccionada].text };
+  const msgWA    = generarMensajeWA(carrito, datos);
+  const waURL    = `https://wa.me/${WA_NUMBER}?text=${msgWA}`;
+
+  btnEl.disabled    = true;
+  btnEl.textContent = '⏳ Enviando pedido...';
+  mostrarProgreso(1);
+
+  try {
+    const payload = { nombre, telefono, direccion, departamento, municipio, notas, pago: datos.pago, productos, total: 'Q' + total.toLocaleString() };
+    const url     = SHEETS_URL + '?pedido=' + encodeURIComponent(JSON.stringify(payload));
+    setTimeout(() => mostrarProgreso(2), 1200);
+    const res  = await fetch(url);
+    const data = await res.json();
+    if (data.ok) {
+      mostrarProgreso(3);
+      await new Promise(r => setTimeout(r, 900));
+
+      // Guardar datos en sessionStorage para la página de confirmación
+      sessionStorage.setItem('arms-pedido', JSON.stringify({
+        nombre,
+        total: 'Q' + total.toLocaleString(),
+        pago: datos.pago,
+        waURL,
+        esTransferencia: formaPagoSeleccionada === 'transferencia',
+        timestamp: Date.now()
+      }));
+
+      // Limpiar carrito
+      localStorage.removeItem('arms-carrito');
+
+      // Pixel InitiateCheckout ya fue disparado en el drawer
+      // Redirigir a confirmación
+      window.location.href = '/orden-confirmada/';
+    }
+  } catch(e) {
+    ocultarProgreso();
+    btnEl.disabled    = false;
+    btnEl.textContent = 'Confirmar pedido';
+    errorEl.innerHTML = '⚠️ Error de conexión. Revisa tu internet e intenta de nuevo.';
+    errorEl.style.display = 'block';
+  }
+}
+
+// ── PANTALLA DE PROGRESO ──────────────────────────────────────
+const PASOS = {
+  1: { titulo: 'Colocando tu pedido...', sub: 'Registrando tu orden',      pct: 20,  icono: '📋' },
+  2: { titulo: 'Verificando stock...',   sub: 'Revisando disponibilidad',  pct: 60,  icono: '🔍' },
+  3: { titulo: '¡Pedido exitoso!',       sub: '¡Tu pedido fue procesado!', pct: 100, icono: '🎉' }
+};
+
+function mostrarProgreso(paso) {
+  const overlay = document.getElementById('progress-overlay');
+  if (!overlay) return;
+  overlay.style.display = 'flex';
+
+  const p     = PASOS[paso];
+  const title = document.getElementById('progress-title');
+  const sub   = document.getElementById('progress-sub');
+  const pct   = document.getElementById('progress-pct');
+  const bar   = document.getElementById('progress-bar-fill');
+  const spin  = document.getElementById('progress-spinner');
+
+  if (paso === 1) {
+    bar.style.transition = 'none';
+    bar.style.width      = '0%';
+    pct.textContent      = '0%';
+    setTimeout(() => { bar.style.transition = 'width 1.2s cubic-bezier(0.4,0,0.2,1)'; }, 50);
+  }
+
+  title.style.opacity = '0';
+  sub.style.opacity   = '0';
+  setTimeout(() => {
+    title.textContent    = p.titulo;
+    sub.textContent      = p.sub;
+    spin.textContent     = p.icono;
+    pct.textContent      = p.pct + '%';
+    bar.style.width      = p.pct + '%';
+    pct.style.color      = paso === 3 ? '#10B981' : paso === 2 ? '#f97316' : '#6600FF';
+    title.style.opacity  = '1';
+    sub.style.opacity    = '1';
+  }, 300);
+}
+
+function ocultarProgreso() {
+  const overlay = document.getElementById('progress-overlay');
+  if (overlay) overlay.style.display = 'none';
 }
 
 // ── MUNICIPIOS DE GUATEMALA ───────────────────────────────────
@@ -279,4 +285,9 @@ function actualizarMunicipios() {
   setTimeout(() => { sel.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
 }
 
-
+function scrollAFormaPago() {
+  setTimeout(() => {
+    const el = document.getElementById('forma-pago-label');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}

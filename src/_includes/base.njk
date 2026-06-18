@@ -293,140 +293,12 @@
           <span style="color:rgba(255,255,255,0.6); font-size:0.9rem;">Total</span>
           <span id="cart-total" style="font-size:1.4rem; font-weight:800; color:#fff;">Q0</span>
         </div>
-        <button onclick="irAFormulario()" class="btn btn-primary w-100" style="border-radius:0.75rem; padding:0.875rem; font-size:1rem;">
+        <button onclick="irACheckout()" class="btn btn-primary w-100" style="border-radius:0.75rem; padding:0.875rem; font-size:1rem;">
           Proceder al pago →
         </button>
       </div>
     </div>
 
-    <!-- Pantalla 2: Formulario -->
-    <div id="screen-form" style="display:none; flex-direction:column; height:100%;">
-      <div style="padding:1.5rem; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; gap:1rem;">
-        <button onclick="volverAlCarrito()" style="background:none; border:none; color:rgba(255,255,255,0.5); cursor:pointer; padding:0; font-size:1.2rem;">←</button>
-        <h5 style="margin:0; font-weight:700; color:#fff;">📋 Datos de entrega</h5>
-      </div>
-      <div style="flex:1; overflow-y:auto; padding:1.25rem;">
-        <div style="background:rgba(255,255,255,0.04); border-radius:0.75rem; padding:1rem; margin-bottom:1.5rem; border:1px solid rgba(255,255,255,0.06);">
-          <p style="font-size:0.8rem; color:rgba(255,255,255,0.4); margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.05em;">Resumen</p>
-          <div id="form-summary"></div>
-          <div style="border-top:1px solid rgba(255,255,255,0.08); margin-top:0.75rem; padding-top:0.75rem; display:flex; justify-content:space-between;">
-            <span style="color:rgba(255,255,255,0.6); font-size:0.9rem;">Total</span>
-            <span id="form-total" style="font-weight:700; color:#fff;"></span>
-          </div>
-        </div>
-        <div style="display:flex; flex-direction:column; gap:1rem;">
-          <div>
-            <label style="font-size:0.85rem; color:rgba(255,255,255,0.6); margin-bottom:0.4rem; display:block;">Nombre completo *</label>
-            <input id="f-nombre" type="text" placeholder="Nombre de quien recibe" style="width:100%; padding:0.75rem 1rem; background:#212121; border:1px solid rgba(255,255,255,0.1); border-radius:0.75rem; color:#fff; font-family:inherit; font-size:0.95rem; outline:none;" />
-          </div>
-          <div>
-            <label style="font-size:0.85rem; color:rgba(255,255,255,0.6); margin-bottom:0.4rem; display:block;">Teléfono *</label>
-            <div id="error-telefono" style="display:none; color:#f87171; font-size:0.8rem; margin-bottom:0.4rem;">⚠️ El teléfono debe tener exactamente 8 dígitos.</div>
-            <input id="f-telefono" type="tel" placeholder="5555-1234" oninput="limpiarErrorTelefono()" style="width:100%; padding:0.75rem 1rem; background:#212121; border:1px solid rgba(255,255,255,0.1); border-radius:0.75rem; color:#fff; font-family:inherit; font-size:0.95rem; outline:none; transition:border-color .2s ease;" />
-          </div>
-          <div>
-            <label style="font-size:0.85rem; color:rgba(255,255,255,0.6); margin-bottom:0.4rem; display:block;">Dirección de entrega *</label>
-            <input id="f-direccion" type="text" placeholder="Calle, zona, avenida, aldea, colonia, etc." style="width:100%; padding:0.75rem 1rem; background:#212121; border:1px solid rgba(255,255,255,0.1); border-radius:0.75rem; color:#fff; font-family:inherit; font-size:0.95rem; outline:none;" />
-          </div>
-          <div>
-            <label style="font-size:0.85rem; color:rgba(255,255,255,0.6); margin-bottom:0.4rem; display:block;">Departamento *</label>
-            <select id="f-departamento" onchange="actualizarMunicipios()" style="width:100%; padding:0.75rem 1rem; background:#212121; border:1px solid rgba(255,255,255,0.1); border-radius:0.75rem; color:#fff; font-family:inherit; font-size:0.95rem; outline:none; appearance:none; -webkit-appearance:none; cursor:pointer; background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22rgba(255,255,255,0.4)%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>'); background-repeat:no-repeat; background-position:right 1rem center;">
-              <option value="" disabled selected>Selecciona un departamento</option>
-              <option>Alta Verapaz</option><option>Baja Verapaz</option><option>Chimaltenango</option>
-              <option>Chiquimula</option><option>El Progreso</option><option>Escuintla</option>
-              <option>Guatemala</option><option>Huehuetenango</option><option>Izabal</option>
-              <option>Jalapa</option><option>Jutiapa</option><option>Petén</option>
-              <option>Quetzaltenango</option><option>Quiché</option><option>Retalhuleu</option>
-              <option>Sacatepéquez</option><option>San Marcos</option><option>Santa Rosa</option>
-              <option>Sololá</option><option>Suchitepéquez</option><option>Totonicapán</option>
-              <option>Zacapa</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:0.85rem; color:rgba(255,255,255,0.6); margin-bottom:0.4rem; display:block;">Municipio *</label>
-            <select id="f-municipio" onchange="scrollAFormaPago()" style="width:100%; padding:0.75rem 1rem; background:#212121; border:1px solid rgba(255,255,255,0.1); border-radius:0.75rem; color:#fff; font-family:inherit; font-size:0.95rem; outline:none; appearance:none; -webkit-appearance:none; cursor:pointer; background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22rgba(255,255,255,0.4)%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>'); background-repeat:no-repeat; background-position:right 1rem center;">
-              <option value="" disabled selected>Primero selecciona un departamento</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:0.85rem; color:rgba(255,255,255,0.6); margin-bottom:0.4rem; display:block;">Notas adicionales</label>
-            <textarea id="f-notas" placeholder="Referencias, instrucciones especiales..." rows="3" style="width:100%; padding:0.75rem 1rem; background:#212121; border:1px solid rgba(255,255,255,0.1); border-radius:0.75rem; color:#fff; font-family:inherit; font-size:0.95rem; outline:none; resize:none;"></textarea>
-          </div>
-          <!-- FORMA DE PAGO -->
-          <div>
-            <label id="forma-pago-label" style="font-size:0.85rem; color:rgba(255,255,255,0.6); margin-bottom:0.75rem; display:block; text-transform:uppercase; letter-spacing:0.06em; font-weight:700;">Forma de pago *</label>
-            <div style="display:flex; flex-direction:column; gap:0.5rem;">
-              <label id="lbl-pago-entrega" onclick="seleccionarPago('entrega')" style="display:flex;align-items:center;gap:0.85rem;background:rgba(16,185,129,0.12);border:1.5px solid #10B981;border-radius:0.75rem;padding:0.875rem 1rem;cursor:pointer;transition:all .2s ease;">
-                <span style="font-size:1.4rem;flex-shrink:0;">🚚</span>
-                <div style="flex:1;"><p style="margin:0;font-weight:600;color:#10B981;font-size:0.9rem;">Pago Contra Entrega</p><p style="margin:0;color:rgba(255,255,255,0.45);font-size:0.78rem;">Pagas cuando recibes tu pedido</p></div>
-                <span id="radio-entrega" style="width:18px;height:18px;border-radius:50%;flex-shrink:0;border:2px solid #10B981;background:#10B981;display:flex;align-items:center;justify-content:center;"><span style="width:7px;height:7px;border-radius:50%;background:#fff;"></span></span>
-              </label>
-              <label id="lbl-pago-transferencia" onclick="seleccionarPago('transferencia')" style="display:flex;align-items:center;gap:0.85rem;background:rgba(255,255,255,0.03);border:1.5px solid rgba(255,255,255,0.1);border-radius:0.75rem;padding:0.875rem 1rem;cursor:pointer;transition:all .2s ease;">
-                <span style="font-size:1.4rem;flex-shrink:0;">🏦</span>
-                <div style="flex:1;"><p style="margin:0;font-weight:600;color:#fff;font-size:0.9rem;">Transferencia / Depósito</p><p id="subtitulo-transferencia" style="margin:0;color:rgba(255,255,255,0.45);font-size:0.78rem;">Depósito o transferencia bancaria</p></div>
-                <span id="radio-transferencia" style="width:18px;height:18px;border-radius:50%;flex-shrink:0;border:2px solid rgba(255,255,255,0.25);background:transparent;"></span>
-              </label>
-              <label style="display:flex;align-items:center;gap:0.85rem;background:rgba(255,255,255,0.02);border:1.5px solid rgba(255,255,255,0.06);border-radius:0.75rem;padding:0.875rem 1rem;cursor:not-allowed;opacity:0.45;">
-                <span style="font-size:1.4rem;flex-shrink:0;">💳</span>
-                <div style="flex:1;"><p style="margin:0;font-weight:600;color:#fff;font-size:0.9rem;">Tarjeta de Débito / Crédito</p><p style="margin:0;color:rgba(255,255,255,0.45);font-size:0.78rem;">(Próximamente)</p></div>
-                <span style="width:18px;height:18px;border-radius:50%;flex-shrink:0;border:2px solid rgba(255,255,255,0.15);background:transparent;"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style="padding:1.25rem; border-top:1px solid rgba(255,255,255,0.08);">
-        <div id="form-error" style="display:none; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); border-radius:0.75rem; padding:0.75rem 1rem; margin-bottom:1rem; color:#f87171; font-size:0.875rem;"></div>
-        <button id="btn-enviar" onclick="enviarPedido()" class="btn btn-primary w-100" style="border-radius:0.75rem; padding:0.875rem; font-size:1rem;">✅ Finalizar pedido</button>
-        <div style="display:flex; gap:0.75rem; margin-top:0.75rem;">
-          <a id="btn-whatsapp" href="#" target="_blank" style="flex:1;display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.75rem;background:#25D366;color:#fff;border-radius:0.75rem;text-decoration:none;font-size:0.875rem;font-weight:600;">📱 WhatsApp</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pantalla 2.5: Progreso -->
-    <div id="screen-progress" style="display:none; flex-direction:column; height:100%; align-items:center; justify-content:center; padding:2rem; text-align:center;">
-      <div id="progress-spinner" style="font-size:4rem; margin-bottom:2rem; animation:spin-icon 1.5s linear infinite; display:inline-block;">📦</div>
-      <h4 id="progress-title" style="color:#fff; font-weight:800; font-size:1.4rem; margin-bottom:0.4rem; min-height:2rem; transition:opacity .3s ease;">Colocando tu pedido...</h4>
-      <p id="progress-sub" style="color:rgba(255,255,255,0.45); font-size:0.85rem; margin-bottom:2.5rem; min-height:1.2rem; transition:opacity .3s ease;">Registrando tu orden</p>
-      <div style="width:100%;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-          <span style="font-size:0.75rem; color:rgba(255,255,255,0.4); font-weight:500;">Progreso</span>
-          <span id="progress-pct" style="font-size:0.85rem; color:#6600FF; font-weight:700;">0%</span>
-        </div>
-        <div style="height:6px; background:rgba(255,255,255,0.08); border-radius:99px; overflow:hidden;">
-          <div id="progress-bar-fill" style="height:100%; width:0%; border-radius:99px; background:linear-gradient(90deg,#6600FF,#10B981); transition:width 1.2s cubic-bezier(0.4,0,0.2,1);"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pantalla 3: Confirmación -->
-    <div id="screen-confirm" style="display:none; flex-direction:column; height:100%; align-items:center; justify-content:center; padding:2rem; text-align:center;">
-      <div id="confirm-icon" style="font-size:4rem; margin-bottom:1.5rem;">✅</div>
-      <h4 id="confirm-title" style="color:#fff; font-weight:800; margin-bottom:0.75rem;">¡Pedido recibido!</h4>
-      <div id="confirm-body" style="width:100%;">
-        <div id="confirm-msg-entrega" style="color:rgba(255,255,255,0.6); margin-bottom:2rem; line-height:1.6;">Hemos recibido tu pedido correctamente.<br>Te contactaremos pronto para coordinar la entrega.</div>
-        <div id="confirm-msg-transferencia" style="display:none; width:100%; margin-bottom:2rem;">
-          <div class="flame-border" style="border-radius:1rem; padding:1.25rem 1.25rem 1.1rem;">
-            <div class="flame-border-inner"></div>
-            <p style="margin:0 0 0.5rem; font-size:1rem; font-weight:800; color:#fbbf24; letter-spacing:-0.01em;">⚠️ Último paso importante</p>
-            <p style="margin:0; color:rgba(255,255,255,0.7); font-size:0.875rem; line-height:1.65; text-align:left;">Solicita los números de cuenta por WhatsApp para agilizar el envío de tu pedido, o espera a que te contactemos al número de teléfono que nos brindaste para enviártelo.</p>
-          </div>
-        </div>
-      </div>
-      <div id="confirm-actions" style="width:100%;">
-        <div style="width:100%; margin-bottom:1.25rem; position:relative;">
-          <span id="confirm-wa-pulse" style="position:absolute;inset:0;border-radius:0.875rem;background:#25D366;animation:whatsapp-pulse 2s ease-out infinite;z-index:0;pointer-events:none;animation-play-state:paused;opacity:0;visibility:hidden;"></span>
-          <a id="confirm-whatsapp" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:0.6rem;padding:0.875rem;background:#25D366;color:#fff;border-radius:0.875rem;text-decoration:none;font-size:0.95rem;font-weight:700;width:100%;box-shadow:0 4px 20px rgba(37,211,102,0.4);transition:transform .2s ease, box-shadow .2s ease;position:relative;z-index:1;"
-            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(37,211,102,0.55)'"
-            onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 20px rgba(37,211,102,0.4)'">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            <span id="confirm-whatsapp-label">Confirmar por WhatsApp</span>
-          </a>
-        </div>
-        <button onclick="finalizarCompra()" class="btn btn-outline-secondary w-100" style="border-radius:0.75rem;">Seguir comprando</button>
-      </div>
-    </div>
 
   </div>
 
@@ -471,9 +343,10 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
-  <!-- JS propios: carrito primero, checkout después -->
-  <script src="/assets/js/carrito.js" defer></script>
-  <script src="/assets/js/checkout.js" defer></script>
+  <!-- JS propios — orden importa: store → drawer → ui → buscar -->
+  <script src="/assets/js/cart-store.js" defer></script>
+  <script src="/assets/js/cart-drawer.js" defer></script>
+  <script src="/assets/js/site-ui.js" defer></script>
   <script src="/assets/js/buscar.js" defer></script>
 
 </body>
