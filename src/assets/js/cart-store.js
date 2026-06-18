@@ -7,7 +7,8 @@
    - NO tiene dependencias externas
 ============================================================= */
 
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbze1iJnwYamzr43o2tDw7D0zhM9KAzLK11WROV4C5e4p6JgTlN3O3-d06R3rhi7-EVKDg/exec';
+const STOCK_URL = '/api/stock';
+const PEDIDO_URL = '/api/pedido';
 const WA_NUMBER  = '50234646667';
 
 let carrito     = JSON.parse(localStorage.getItem('arms-carrito') || '[]');
@@ -47,7 +48,7 @@ function desbloquearBotonesStock() {
 async function cargarStock() {
   bloquearBotonesHastaStock();
   try {
-    const res  = await fetch(SHEETS_URL);
+    const res  = await fetch(STOCK_URL);
     const data = await res.json();
     if (data.ok && data.productos) {
       data.productos.forEach(p => { stockGlobal[p.clave] = p.stock; });

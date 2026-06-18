@@ -7,7 +7,7 @@
    - Redirige a /orden-confirmada/ con datos en sessionStorage
 ============================================================= */
 
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbze1iJnwYamzr43o2tDw7D0zhM9KAzLK11WROV4C5e4p6JgTlN3O3-d06R3rhi7-EVKDg/exec';
+const PEDIDO_URL = '/api/pedido';
 const WA_NUMBER  = '50234646667';
 
 // ── LEER CARRITO ──────────────────────────────────────────────
@@ -166,7 +166,7 @@ async function enviarPedido() {
 
   try {
     const payload = { nombre, telefono, direccion, departamento, municipio, notas, pago: datos.pago, productos, total: 'Q' + total.toLocaleString() };
-    const url     = SHEETS_URL + '?pedido=' + encodeURIComponent(JSON.stringify(payload));
+    const url     = PEDIDO_URL + '?data=' + encodeURIComponent(JSON.stringify(payload));
     setTimeout(() => mostrarProgreso(2), 1200);
     const res  = await fetch(url);
     const data = await res.json();
