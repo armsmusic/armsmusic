@@ -4,10 +4,13 @@
   "description": "ARMS Music — Tienda de audífonos KZ y monitoreo profesional en Guatemala",
   "scripts": {
     "start": "npx @11ty/eleventy --serve",
-    "build": "npx @11ty/eleventy"
+    "build": "npx @11ty/eleventy",
+    "deploy": "npm run build && wrangler deploy",
+    "preview": "npm run build && wrangler dev"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^2.0.1"
+    "@11ty/eleventy": "^2.0.1",
+    "wrangler": "^4.100.0"
   },
   "dependencies": {
     "markdown-it": "^14.1.0"
