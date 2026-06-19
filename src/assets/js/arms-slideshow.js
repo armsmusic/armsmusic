@@ -496,6 +496,12 @@ class SlideshowCarousel extends EffectCarousel {
     circles.forEach(item => {
       const circle = item.querySelector('circle:last-child');
       if (!circle) return;
+
+      // Cancelar cualquier animación WAAPI previa — con fill:'forwards' el efecto
+      // persiste con mayor precedencia que circle.style, dejando el aro de un dot
+      // ya inactivo con un trazo más opaco/grueso que el resto.
+      circle.getAnimations().forEach(anim => anim.cancel());
+
       const len = circle.getTotalLength();
       if (item.getAttribute('aria-current') === 'true') {
         circle.animate(
@@ -552,6 +558,12 @@ class CustomCursor extends HTMLElement {
     this._container = this.parentElement;
     if (!this._container) return;
 
+    this._ring = this.querySelector('.slideshow__cursor-ring circle');
+    if (this._ring) {
+      this._radius = this._ring.r.baseVal.value;
+      this._circumference = 2 * Math.PI * this._radius;
+    }
+
     // Solo en dispositivos con mouse fino (no touch)
     if (!window.matchMedia('(pointer: fine)').matches) return;
 
@@ -562,6 +574,7 @@ class CustomCursor extends HTMLElement {
 
   disconnectedCallback() {
     this._abortController?.abort();
+    this._stopProgressLoop();
   }
 
   _onPointerMove(event) {
@@ -571,12 +584,23 @@ class CustomCursor extends HTMLElement {
     const y = event.clientY - rect.top;
 
     this.style.translate = `${x}px ${y}px`;
-    this.classList.add('is-visible');
     this.classList.toggle('is-half-start', x < rect.width / 2);
+
+    if (!this._visible) {
+      this._visible = true;
+      this.getAnimations().forEach(a => a.cancel());
+      this.animate([{ opacity: 0, scale: 0.5, visibility: 'hidden' }, { opacity: 1, scale: 1, visibility: 'visible' }],
+        { duration: 150, easing: 'ease', fill: 'forwards' });
+      this._startProgressLoop();
+    }
   }
 
   _onPointerLeave() {
-    this.classList.remove('is-visible');
+    this._visible = false;
+    this.getAnimations().forEach(a => a.cancel());
+    this.animate([{ opacity: 1, scale: 1, visibility: 'visible' }, { opacity: 0, scale: 0.5, visibility: 'hidden' }],
+      { duration: 100, easing: 'ease', fill: 'forwards' });
+    this._stopProgressLoop();
   }
 
   _onClick() {
@@ -584,6 +608,28 @@ class CustomCursor extends HTMLElement {
     (this.controlledElement ?? this._container)?.dispatchEvent(
       new CustomEvent(isHalfStart ? 'control:prev' : 'control:next', { bubbles: true })
     );
+  }
+
+  // Sincroniza el aro de progreso con el Player del autoplay mientras el cursor está visible
+  _startProgressLoop() {
+    if (!this._ring || this._rafId) return;
+    const player = this._container.player;
+    const tick = () => {
+      if (player && player._startTime && !player._paused) {
+        const elapsed = player._elapsed + (Date.now() - player._startTime);
+        const progress = Math.min(elapsed / player._duration, 1);
+        this._ring.style.strokeDasharray = `${this._circumference * progress}px, ${this._circumference}px`;
+      }
+      this._rafId = requestAnimationFrame(tick);
+    };
+    this._rafId = requestAnimationFrame(tick);
+  }
+
+  _stopProgressLoop() {
+    if (this._rafId) {
+      cancelAnimationFrame(this._rafId);
+      this._rafId = null;
+    }
   }
 
   get controlledElement() {
