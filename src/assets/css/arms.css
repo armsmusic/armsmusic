@@ -1,0 +1,4187 @@
+/* ==========================================================================
+   ARMS Music — arms.css
+   Base: variables e Impact CSS extraído quirúrgicamente
+   ========================================================================== */
+
+/* ── @font-face Barlow (rutas locales ARMS) ── */
+@font-face {
+  font-family: Barlow;
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("/assets/fonts/barlow/barlow_n7.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: Barlow;
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  src: url("/assets/fonts/barlow/barlow_i7.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: Barlow;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("/assets/fonts/barlow/barlow_n4.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: Barlow;
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url("/assets/fonts/barlow/barlow_i4.woff2") format("woff2");
+}
+
+
+/* ── Reset base de elementos nativos (Impact normalize) ── */
+*, ::before, ::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+button, input, optgroup, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  font-weight: inherit;
+  font-style: inherit;
+  line-height: inherit;
+  text-transform: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+button, select {
+  text-transform: none;
+}
+
+button, [type="button"], [type="reset"], [type="submit"] {
+  -webkit-appearance: button;
+  appearance: button;
+  background-color: transparent;
+  background-image: none;
+  text-align: inherit;
+}
+
+button, label, summary, [role="button"], [type="checkbox"], [type="radio"], [type="submit"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+:root {
+    --spacing-0-5: 0.125rem;
+    --spacing-1: 0.25rem;
+    --spacing-1-5: 0.375rem;
+    --spacing-2: 0.5rem;
+    --spacing-2-5: 0.625rem;
+    --spacing-3: 0.75rem;
+    --spacing-3-5: 0.875rem;
+    --spacing-4: 1rem;
+    --spacing-4-5: 1.125rem;
+    --spacing-5: 1.25rem;
+    --spacing-5-5: 1.375rem;
+    --spacing-6: 1.5rem;
+    --spacing-6-5: 1.625rem;
+    --spacing-7: 1.75rem;
+    --spacing-7-5: 1.875rem;
+    --spacing-8: 2rem;
+    --spacing-8-5: 2.125rem;
+    --spacing-9: 2.25rem;
+    --spacing-9-5: 2.375rem;
+    --spacing-10: 2.5rem;
+    --spacing-11: 2.75rem;
+    --spacing-12: 3rem;
+    --spacing-14: 3.5rem;
+    --spacing-16: 4rem;
+    --spacing-18: 4.5rem;
+    --spacing-20: 5rem;
+    --spacing-24: 6rem;
+    --spacing-28: 7rem;
+    --spacing-32: 8rem;
+    --spacing-36: 9rem;
+    --spacing-40: 10rem;
+    --spacing-44: 11rem;
+    --spacing-48: 12rem;
+    --spacing-52: 13rem;
+    --spacing-56: 14rem;
+    --spacing-60: 15rem;
+    --spacing-64: 16rem;
+    --spacing-72: 18rem;
+    --spacing-80: 20rem;
+    --spacing-96: 24rem;
+    --container-max-width: 1600px;
+    --container-narrow-max-width: 1350px;
+    --container-gutter: var(--spacing-5);
+    --section-outer-spacing-block: var(--spacing-12);
+    --section-inner-max-spacing-block: var(--spacing-10);
+    --section-inner-spacing-inline: var(--container-gutter);
+    --section-stack-spacing-block: var(--spacing-8);
+    --grid-gutter: var(--spacing-5);
+    --product-list-row-gap: var(--spacing-8);
+    --product-list-column-gap: var(--grid-gutter);
+    --input-gap: var(--spacing-2);
+    --input-height: 2.625rem;
+    --input-padding-inline: var(--spacing-4);
+    --sticky-area-height: calc(var(--sticky-announcement-bar-enabled, 0) * var(--announcement-bar-height, 0px) + var(--sticky-header-enabled, 0) * var(--header-height, 0px));
+    --transform-logical-flip: 1;
+    --transform-origin-start: left;
+    --transform-origin-end: right;
+    --heading-font-family: Barlow, sans-serif;
+    --heading-font-weight: 700;
+    --heading-font-style: normal;
+    --heading-text-transform: normal;
+    --heading-letter-spacing: -0.025em;
+    --text-font-family: Barlow, sans-serif;
+    --text-font-weight: 400;
+    --text-font-style: normal;
+    --text-letter-spacing: 0.0em;
+    --text-h0: 3rem;
+    --text-h1: 2.5rem;
+    --text-h2: 2rem;
+    --text-h3: 1.5rem;
+    --text-h4: 1.375rem;
+    --text-h5: 1.125rem;
+    --text-h6: 1rem;
+    --text-xs: 0.6875rem;
+    --text-sm: 0.75rem;
+    --text-base: 0.875rem;
+    --text-lg: 1.125rem;
+    --accent: 26 26 26;
+    --text-primary: 26 26 26;
+    --background-primary: 240 240 240;
+    --dialog-background: 255 255 255;
+    --border-color: var(--text-color, var(--text-primary)) / 0.12;
+    --button-background-primary: 26 26 26;
+    --button-text-primary: 255 255 255;
+    --button-background-secondary: 240 196 23;
+    --button-text-secondary: 26 26 26;
+    --success-background: 224 244 232;
+    --success-text: 0 163 65;
+    --warning-background: 255 246 233;
+    --warning-text: 255 183 74;
+    --error-background: 254 231 231;
+    --error-text: 248 58 58;
+    --on-sale-text: 248 58 58;
+    --on-sale-badge-background: 248 58 58;
+    --on-sale-badge-text: 255 255 255;
+    --sold-out-badge-background: 26 26 26;
+    --sold-out-badge-text: 255 255 255;
+    --primary-badge-background: 128 60 238;
+    --primary-badge-text: 255 255 255;
+    --star-color: 255 183 74;
+    --product-card-background: 255 255 255;
+    --product-card-text: 26 26 26;
+    --header-background: 240 240 240;
+    --header-text: 26 26 26;
+    --header-transparent-text-color: 255 255 255;
+    --header-logo-width: 90px;
+    --footer-background: 255 255 255;
+    --footer-text: 26 26 26;
+    --rounded-xs: 0.25rem;
+    --rounded-sm: 0.375rem;
+    --rounded: 0.75rem;
+    --rounded-lg: 1.5rem;
+    --rounded-full: 9999px;
+    --rounded-block: 1.5rem;
+    --rounded-button: 3.75rem;
+    --rounded-input: 0.5rem;
+    --shadow-sm: 0 2px 8px rgb(var(--text-primary) / 0.1);
+    --shadow: 0 5px 15px rgb(var(--text-primary) / 0.1);
+    --shadow-md: 0 5px 30px rgb(var(--text-primary) / 0.1);
+    --shadow-block: 0px 18px 50px rgb(var(--text-primary) / 0.1);
+    --stagger-products-reveal-opacity: 0;
+
+    /* Header/Announcement heights — usadas por sticky y slideshow */
+    --header-height: 58px;
+    --announcement-bar-height: 48px;
+    --sticky-header-enabled: 1;
+    --sticky-announcement-bar-enabled: 0;
+    --section-is-first: 0;
+    --scrollbar-width: 0px;
+}
+
+[dir="rtl"]:root {
+    --transform-logical-flip: -1;
+    --transform-origin-start: right;
+    --transform-origin-end: left;
+}
+
+@media screen and (min-width: 700px) {
+    :root {
+        --text-h0: 4rem;
+        --text-h1: 3rem;
+        --text-h2: 2.5rem;
+        --text-h3: 2rem;
+        --text-h4: 1.625rem;
+        --text-h5: 1.25rem;
+        --text-h6: 1.125rem;
+        --text-xs: 0.75rem;
+        --text-sm: 0.875rem;
+        --text-base: 1.0rem;
+        --text-lg: 1.25rem;
+        --container-gutter: 2rem;
+        --section-outer-spacing-block: var(--spacing-16);
+        --section-inner-max-spacing-block: var(--spacing-12);
+        --section-inner-spacing-inline: var(--spacing-12);
+        --section-stack-spacing-block: var(--spacing-12);
+        --grid-gutter: var(--spacing-6);
+        --product-list-row-gap: var(--spacing-12);
+        --input-gap: 1rem;
+        --input-height: 3.125rem;
+        --input-padding-inline: var(--spacing-5);
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    :root {
+        --container-gutter: var(--spacing-12);
+        --section-outer-spacing-block: var(--spacing-18);
+        --section-inner-max-spacing-block: var(--spacing-16);
+        --section-inner-spacing-inline: var(--spacing-16);
+        --section-stack-spacing-block: var(--spacing-12);
+    }
+}
+
+@media screen and (min-width: 1150px) {
+    :root {
+        --container-gutter: var(--spacing-12);
+        --section-outer-spacing-block: var(--spacing-20);
+        --section-inner-max-spacing-block: var(--spacing-16);
+        --section-inner-spacing-inline: var(--spacing-16);
+        --section-stack-spacing-block: var(--spacing-12);
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    :root {
+        --text-h0: 5rem;
+        --text-h1: 3.75rem;
+        --text-h2: 3rem;
+        --text-h3: 2.25rem;
+        --text-h4: 2rem;
+        --text-h5: 1.5rem;
+        --text-h6: 1.25rem;
+        --section-outer-spacing-block: var(--spacing-24);
+        --section-inner-max-spacing-block: var(--spacing-18);
+        --section-inner-spacing-inline: var(--spacing-18);
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    :root {
+        --section-outer-spacing-block: var(--spacing-24);
+        --section-inner-max-spacing-block: var(--spacing-20);
+        --section-inner-spacing-inline: var(--spacing-20);
+    }
+}
+
+@media screen and (pointer: fine) {
+    .button:not([disabled]):hover,
+    .btn:not([disabled]):hover {
+        --button-background-opacity: 0.85;
+    }
+    .button--subdued:not([disabled]):hover {
+        --button-background: var(--text-color) / .05 !important;
+    }
+}
+
+
+/* ── Hero Slideshow ── */
+.button, .btn {
+  --button-background: var(--button-background-primary) / var(--button-background-opacity, 1);
+  --button-text-color: var(--button-text-primary);
+  --button-outline-color: var(--button-background-primary);
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: var(--rounded-button);
+  background-color: rgb(var(--button-background));
+  color: rgb(var(--button-text-color));
+  text-align: center;
+  text-decoration: none;
+  font-size: var(--text-sm);
+  letter-spacing: var(--text-letter-spacing);
+  padding-block: var(--spacing-2-5);
+  padding-inline: var(--spacing-5);
+  font-weight: 700;
+  line-height: 1.6;
+  display: inline-block;
+  position: relative;
+  transition: background-color .15s ease-in-out, color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.button--xl {
+  font-size: var(--text-base);
+  padding-block-start: var(--spacing-4);
+  padding-block-end: var(--spacing-4);
+  padding-inline-start: var(--spacing-8);
+  padding-inline-end: var(--spacing-8);
+}
+
+.button--xl {
+  padding-block-start: 1.075rem;
+    padding-block-end: 1.075rem;
+    padding-inline-start: var(--spacing-10);
+    padding-inline-end: var(--spacing-10);
+}
+
+.circle-button {
+  width: var(--spacing-12);
+  height: var(--spacing-12);
+  border-radius: var(--rounded-full);
+  place-items: center;
+  transition: opacity .15s ease-in;
+  display: grid;
+}
+
+.circle-button[disabled] {
+  opacity: .5;
+  pointer-events: none;
+}
+
+.circle-button--fill {
+  background: rgb(var(--background-primary));
+  color: rgb(var(--text-primary));
+}
+
+.circle-button--bordered {
+  border: 2px solid;
+}
+
+.circle-button--sm {
+  width: var(--spacing-10);
+  height: var(--spacing-10);
+}
+
+.circle-button--lg {
+  width: var(--spacing-14);
+  height: var(--spacing-14);
+}
+
+.content-over-media {
+  grid-template: 0 minmax(0, 1fr) 0 / minmax(0, 1fr) minmax(0,
+      min(var(--container-max-width), 100% - var(--content-over-media-gap, var(--content-over-media-column-gap, var(--container-gutter))) * 2))
+    minmax(0, 1fr);
+  gap: var(--content-over-media-row-gap, var(--content-over-media-gap, var(--container-gutter)))
+    var(--content-over-media-column-gap, var(--content-over-media-gap, var(--container-gutter)));
+  place-items: center;
+  display: grid;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.content-over-media:before {
+  content: "";
+  background: rgb(var(--content-over-media-overlay));
+  border-radius: inherit;
+  z-index: 1;
+  pointer-events: none;
+  transition: background .2s ease-in-out;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.content-over-media > :is(picture, img, video, iframe, svg, video-media) {
+  height: var(--content-over-media-height, auto);
+  transform-origin: top;
+  overflow-wrap: anywhere;
+  object-fit: cover;
+  object-position: center;
+  border-radius: inherit;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  grid-area: 1 / 1 / span 3 / span 3;
+  place-self: stretch stretch;
+  width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  position: relative;
+}
+
+.content-over-media > :is(picture, img, video, iframe, svg, video-media) > * {
+  border-radius: inherit;
+}
+
+/* ── Reset de img/picture (Impact) — sin esto el img conserva su tamaño intrínseco ── */
+/* display:block elimina el espacio fantasma bajo imágenes inline
+   (que se sientan sobre la línea base tipográfica y dejan un hueco
+   de ~4-7px debajo). De Impact theme.css 166. */
+img, video, iframe, object {
+  vertical-align: middle;
+  display: block;
+}
+
+img {
+  color: transparent;
+  max-width: min(var(--image-mobile-max-width, var(--image-max-width, 100%)), 100%);
+  object-fit: inherit;
+  object-position: inherit;
+  height: auto;
+}
+
+picture img {
+  width: 100%;
+  min-height: inherit;
+  max-height: 100%;
+}
+
+.content-over-media > :not(img, video, iframe, svg, video-media, picture) {
+  max-width: var(--content-over-media-content-max-width, 780px);
+  z-index: 1;
+  grid-area: 2 / 2 / auto / span 1;
+  position: relative;
+}
+
+[allow-transparent-header] :is(.content-over-media > :not(img, video, iframe, svg, video-media, picture)) {
+  padding-block-start: calc(var(--header-height) * var(--section-is-first));
+}
+
+.content-over-media > video-media:not([autoplay]) ~ * {
+  transition: opacity .2s ease-in-out, visibility .2s ease-in-out;
+}
+
+.content-over-media > video-media:not([autoplay])[loaded] ~ * {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.content-over-media:has( > video-media[loaded]:not([autoplay])):before {
+  background: none;
+  transition-delay: .1s;
+}
+
+.content-over-media--sm {
+  --content-over-media-height: 375px;
+}
+
+.content-over-media--md {
+  --content-over-media-height: 480px;
+}
+
+.content-over-media--lg {
+  --content-over-media-height: 560px;
+}
+
+.content-over-media--fill {
+  --content-over-media-height: calc(100vh - var(--sticky-area-height));
+}
+
+x-slideshow[allow-transparent-header] .content-over-media--fill {
+  --content-over-media-height: calc(100vh - var(--announcement-bar-height, 0px));
+}
+
+.content-over-media--fill {
+  --content-over-media-height: calc(100svh - var(--sticky-area-height));
+}
+
+x-slideshow[allow-transparent-header] .content-over-media--fill {
+  --content-over-media-height: calc(100svh - var(--announcement-bar-height, 0px));
+}
+
+@media screen and (min-width: 700px) {
+  .content-over-media--sm {
+    --content-over-media-height: 400px;
+  }
+
+  .content-over-media--md {
+    --content-over-media-height: 460px;
+  }
+
+  .content-over-media--lg {
+    --content-over-media-height: 560px;
+  }
+}
+
+.content-over-media--fill > :is(img, video, iframe, svg, video-media, picture) {
+  max-height: 1200px;
+}
+
+@media screen and (min-width: 1400px) {
+  .content-over-media--sm {
+    --content-over-media-height: 440px;
+  }
+
+  .content-over-media--md {
+    --content-over-media-height: 500px;
+  }
+
+  .content-over-media--lg {
+    --content-over-media-height: 640px;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .content-over-media--md {
+    --content-over-media-height: 560px;
+  }
+
+  .content-over-media--lg {
+    --content-over-media-height: 720px;
+  }
+}
+
+.numbered-dots {
+  align-items: center;
+  gap: var(--spacing-2);
+  display: flex;
+}
+
+.numbered-dots__item {
+  width: var(--spacing-8);
+  height: var(--spacing-8);
+  will-change: transform;
+  border-radius: 100%;
+  place-items: center;
+  font-weight: bold;
+  transition: color .2s;
+  display: grid;
+}
+
+.numbered-dots__item > * {
+  grid-area: 1 / -1;
+}
+
+.numbered-dots__item svg {
+  width: inherit;
+  height: inherit;
+  transform: rotate(-90deg);
+}
+
+.numbered-dots__item circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: butt;
+  stroke-opacity: .3;
+  stroke-width: 2px;
+}
+
+.numbered-dots__item[aria-current="true"] circle:last-child {
+  --radius: 15;
+  --circumference: calc(2px * (22 / 7) * var(--radius));
+  stroke-opacity: 1;
+  stroke-dasharray: calc(var(--circumference) * var(--progress, 1)), var(--circumference);
+}
+
+/* En Impact esta regla vive dentro de @media (min-width: 700px)
+   (theme.css 2753). Suelta, forzaba min-height:300px también en
+   mobile y el promo salía cuadrado en vez de 16:9. */
+@media screen and (min-width: 700px) {
+  .product-list:not(:has(.product-card--blends)) .product-list__promo .content-over-media {
+    grid-row: span 2;
+    min-height: 300px;
+  }
+
+  .product-list__promo :is(img, video-media) {
+    position: absolute;
+  }
+}
+
+.prose ol, .list-decimal {
+  list-style: inside decimal;
+}
+
+.prose ul, .list-disc {
+  list-style: inside;
+}
+
+.prose :is(ol, ul) :is(ol, ul) {
+  margin-block-start: 1em;
+  margin-inline-start: 1em;
+}
+
+.prose > :first-child, .prose > :first-child :first-child {
+  margin-block-start: 0 !important;
+}
+
+.prose > :last-child, .prose > :last-child :last-child {
+  margin-block-end: 0 !important;
+}
+
+.prose * + :is(p, div, ul, ol) {
+  margin-block-start: var(--spacing-3);
+}
+
+.prose * + :is(.h0, .h1, .h2, h1, h2) {
+  margin-block-start: var(--spacing-4);
+}
+
+.prose * + :is(.h3, .h4, .h5, .h6, h3, h4, h5, h6) {
+  margin-block-start: var(--spacing-3);
+}
+
+.prose * + .button {
+  margin-block-start: var(--spacing-6) !important;
+}
+
+.prose * + span:not(:empty, .metafield-multi_line_text_field) {
+  display: inline-block;
+}
+
+.prose :is(.h0, .h1, .h2, .h3, .h4, h1, h2, h3, h4) + * {
+  margin-block-start: var(--spacing-5);
+}
+
+.prose :is(.h5, .h6, h5, h6) + * {
+  margin-block-start: var(--spacing-4);
+}
+
+.prose :is(p img:not([style*="float"]):only-child, div img:not([style*="float"]):only-child, figure, video) {
+  margin-block: var(--spacing-8);
+}
+
+.prose figcaption {
+  font-style: italic;
+  font-size: var(--text-sm);
+  color: rgb(var(--text-color) / .7);
+  margin-block-start: .5em;
+}
+
+.prose ul, .prose ol {
+  row-gap: .6em;
+  display: grid;
+}
+
+.prose br {
+  margin-block-start: 0 !important;
+  margin-block-end: 0 !important;
+}
+
+.prose :is(iframe[src*="youtube"], iframe[src*="youtu.be"], iframe[src*="vimeo"]) {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: auto;
+}
+
+.prose * + :is(p, div, ul, ol) {
+  margin-block-start: var(--spacing-4);
+}
+
+.prose * + :is(.h0, .h1, .h2, h1, h2) {
+  margin-block-start: var(--spacing-6);
+}
+
+.prose * + :is(.h3, .h4, h3, h4) {
+  margin-block-start: var(--spacing-5);
+}
+
+.prose * + :is(.h5, .h6, h5, h6) {
+  margin-block-start: var(--spacing-4);
+}
+
+.prose * + .button {
+  margin-block-start: var(--spacing-8) !important;
+}
+
+.prose .h0 + .button {
+  margin-block-start: var(--spacing-10) !important;
+}
+
+.prose :is(.h0, .h1, .h2, .h3, h1, h2, h3) + * {
+  margin-block-start: var(--spacing-6);
+}
+
+.prose :is(.h4, h4) + * {
+  margin-block-start: var(--spacing-5);
+}
+
+.prose :is(p img:not([style*="float"]):only-child, div img:not([style*="float"]):only-child, figure, video) {
+  margin-block: var(--spacing-12);
+}
+
+.prose * + p {
+  margin-block-start: var(--spacing-6);
+}
+
+.prose * + :is(.h0, .h1, h1) {
+  margin-block-start: var(--spacing-8);
+}
+
+.prose * + :is(.h2, .h3, .h4, h2, h3, h4) {
+  margin-block-start: var(--spacing-6);
+}
+
+.prose :is(.h0, .h1, .h2, h1, h2) + * {
+  margin-block-start: var(--spacing-8);
+}
+
+.prose :is(.h3, .h4, h3, h4) + * {
+  margin-block-start: var(--spacing-6);
+}
+
+.link, .prose a:not(.button) {
+  text-underline: none;
+  background: linear-gradient(to right, currentColor, currentColor) 0 min(100%, 1.35em) / 100% 1px no-repeat;
+  transition: background-size .3s ease-in-out, color .3s ease-in-out;
+}
+
+.link, .prose a:not(.button) {
+  background: linear-gradient(to right, currentColor, currentColor) 0 min(100%, 1.2lh) / 100% 1px no-repeat;
+}
+
+:is(.link, .prose a:not(.button)):hover {
+  background-size: 0 1px;
+}
+
+.text-subdued :is(.link, .prose a:not(.button)):hover {
+  color: rgb(var(--text-color));
+}
+
+.blockquote, .prose blockquote {
+  --quote-width: 51px;
+  --quote-height: 37px;
+  --quote-inset-block-start: calc(var(--spacing-5) * -1);
+  --quote-inset-inline-start: var(--spacing-1);
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  font-weight: bold;
+  position: relative;
+}
+
+:is(.blockquote, .prose blockquote):before {
+  content: "";
+  width: var(--quote-width);
+  height: var(--quote-height);
+  background: rgb(var(--text-color) / .1);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='86' height='55' viewBox='0 0 86 55' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M71.3163 54.6H42.5163L60.3163 0.400024H85.5163L71.3163 54.6ZM29.3163 54.6H0.716309L18.9163 0.400024H44.1163L29.3163 54.6Z' fill='%23252627'/%3E%3C/svg%3E%0A");
+  mask-image: url("data:image/svg+xml,%3Csvg width='86' height='55' viewBox='0 0 86 55' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M71.3163 54.6H42.5163L60.3163 0.400024H85.5163L71.3163 54.6ZM29.3163 54.6H0.716309L18.9163 0.400024H44.1163L29.3163 54.6Z' fill='%23252627'/%3E%3C/svg%3E%0A");
+  -webkit-mask-size: var(--quote-width) var(--quote-height);
+  mask-size: var(--quote-width) var(--quote-height);
+  position: absolute;
+  top: var(--quote-inset-block-start);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+:is(.blockquote, .prose blockquote):not(:lang(ae), :lang(ar), :lang(arc), :lang(bcc), :lang(bqi), :lang(ckb), :lang(dv), :lang(fa), :lang(glk), :lang(he), :lang(ku), :lang(mzn), :lang(nqo), :lang(pnb), :lang(ps), :lang(sd), :lang(ug), :lang(ur), :lang(yi)):before {
+  left: var(--quote-inset-inline-start);
+}
+
+:is(.blockquote, .prose blockquote):is(:lang(ae), :lang(ar), :lang(arc), :lang(bcc), :lang(bqi), :lang(ckb), :lang(dv), :lang(fa), :lang(glk), :lang(he), :lang(ku), :lang(mzn), :lang(nqo), :lang(pnb), :lang(ps), :lang(sd), :lang(ug), :lang(ur), :lang(yi)):before {
+  right: var(--quote-inset-inline-start);
+}
+
+.prose blockquote {
+  --quote-inset-block-start: calc(var(--spacing-4) * -1);
+  --quote-inset-inline-start: calc(50% - (var(--quote-width) / 2));
+  text-align: center;
+  font-size: var(--text-h3);
+  margin-block-start: var(--spacing-14);
+  margin-block-end: var(--spacing-10);
+  line-height: 1.2;
+}
+
+.blockquote, .prose blockquote {
+  --quote-width: 70px;
+    --quote-height: 45px;
+}
+
+.prose blockquote {
+  --quote-width: 85px;
+    --quote-height: 55px;
+    --quote-inset-block-start: calc(var(--spacing-5) * -1);
+    margin-block-start: var(--spacing-18);
+    margin-block-end: var(--spacing-12);
+}
+
+.floating-controls-container .circle-button {
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+  transition: opacity .1s ease-in-out, transform .1s ease-in-out, visibility .1s ease-in-out;
+  position: absolute;
+  top: calc(50% - 24px);
+  transform: scale(.8);
+}
+
+.floating-controls-container .circle-button:first-of-type:not(:lang(ae), :lang(ar), :lang(arc), :lang(bcc), :lang(bqi), :lang(ckb), :lang(dv), :lang(fa), :lang(glk), :lang(he), :lang(ku), :lang(mzn), :lang(nqo), :lang(pnb), :lang(ps), :lang(sd), :lang(ug), :lang(ur), :lang(yi)) {
+  left: var(--spacing-5);
+}
+
+.floating-controls-container .circle-button:first-of-type:is(:lang(ae), :lang(ar), :lang(arc), :lang(bcc), :lang(bqi), :lang(ckb), :lang(dv), :lang(fa), :lang(glk), :lang(he), :lang(ku), :lang(mzn), :lang(nqo), :lang(pnb), :lang(ps), :lang(sd), :lang(ug), :lang(ur), :lang(yi)) {
+  right: var(--spacing-5);
+}
+
+.floating-controls-container .circle-button:last-of-type:not(:lang(ae), :lang(ar), :lang(arc), :lang(bcc), :lang(bqi), :lang(ckb), :lang(dv), :lang(fa), :lang(glk), :lang(he), :lang(ku), :lang(mzn), :lang(nqo), :lang(pnb), :lang(ps), :lang(sd), :lang(ug), :lang(ur), :lang(yi)) {
+  right: var(--spacing-5);
+}
+
+.floating-controls-container .circle-button:last-of-type:is(:lang(ae), :lang(ar), :lang(arc), :lang(bcc), :lang(bqi), :lang(ckb), :lang(dv), :lang(fa), :lang(glk), :lang(he), :lang(ku), :lang(mzn), :lang(nqo), :lang(pnb), :lang(ps), :lang(sd), :lang(ug), :lang(ur), :lang(yi)) {
+  left: var(--spacing-5);
+}
+
+/* Solo en dispositivos con mouse (pointer: fine). En mobile
+   (pointer: coarse) el :hover se dispara al mantener presionado, lo
+   que mostraría los botones flotantes indebidamente. Fiel a Impact
+   theme.css 4124 — el carrusel se navega por swipe en táctil. */
+@media screen and (pointer: fine) {
+  .floating-controls-container:hover .is-scrollable ~ .circle-button:not([disabled]) {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+  }
+}
+
+split-lines {
+  overflow-wrap: anywhere;
+}
+
+.navigation-promo.navigation-promo--carousel .content-over-media p {
+  max-width: 75%;
+}
+
+.image-link-blocks__item .content-over-media .circle-chevron {
+  background: rgb(var(--text-color));
+  color: rgb(var(--background));
+  opacity: 0;
+  transition: opacity .2s ease-in-out;
+}
+
+.image-link-blocks__item .icon-circle-button-right-clipped {
+  opacity: 0;
+  transition: opacity .2s ease-in-out;
+}
+
+.image-link-blocks__item:hover .content-over-media .circle-chevron {
+  background: rgb(var(--text-color));
+    color: rgb(var(--background));
+    opacity: 1;
+}
+
+.image-link-blocks__item:hover .image-link-blocks__inner .circle-chevron, .image-link-blocks__item:hover .icon-circle-button-right-clipped {
+  opacity: 1;
+}
+
+.multiple-images-with-text__content-with-nav .circle-button {
+  width: 2.5rem;
+    height: 2.5rem;
+}
+
+.product-gallery__zoom > .circle-button {
+  width: 2.1875rem;
+  height: 2.1875rem;
+}
+
+.product-gallery__zoom > .circle-button {
+  width: 3.5rem;
+    height: 3.5rem;
+}
+
+.rich-text .prose, .split-rich-text .prose {
+  align-items: start;
+  display: grid;
+}
+
+.slideshow {
+  background: var(--slideshow-background);
+}
+
+.slideshow, .slideshow__carousel {
+  color: rgb(var(--text-color));
+  display: block;
+  position: relative;
+}
+
+.slideshow__slide {
+  position: relative;
+}
+
+.slideshow__slide:not(.is-selected) {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.slideshow__slide-background {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.slideshow__slide.is-selected video-media ~ * {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.slideshow__slide.is-selected .content-over-media:before {
+  background: rgb(var(--content-over-media-overlay)) !important;
+}
+
+.slideshow__controls {
+  z-index: 1;
+  position: absolute;
+  bottom: var(--container-gutter);
+}
+
+.slideshow__controls:not(:lang(ae), :lang(ar), :lang(arc), :lang(bcc), :lang(bqi), :lang(ckb), :lang(dv), :lang(fa), :lang(glk), :lang(he), :lang(ku), :lang(mzn), :lang(nqo), :lang(pnb), :lang(ps), :lang(sd), :lang(ug), :lang(ur), :lang(yi)) {
+  right: max(var(--container-gutter), 50% - var(--container-max-width) / 2);
+}
+
+.slideshow__controls:is(:lang(ae), :lang(ar), :lang(arc), :lang(bcc), :lang(bqi), :lang(ckb), :lang(dv), :lang(fa), :lang(glk), :lang(he), :lang(ku), :lang(mzn), :lang(nqo), :lang(pnb), :lang(ps), :lang(sd), :lang(ug), :lang(ur), :lang(yi)) {
+  left: max(var(--container-gutter), 50% - var(--container-max-width) / 2);
+}
+
+.slideshow__controls .circle-button--fill {
+  background: rgb(var(--slideshow-controls-background));
+  color: rgb(var(--slideshow-controls-color));
+}
+
+.slideshow__controls .circle-button--bordered {
+  color: rgb(var(--slideshow-controls-color));
+}
+
+.slideshow__controls .numbered-dots > * {
+  color: rgb(var(--slideshow-controls-color) / .7);
+  border-color: rgb(var(--slideshow-controls-color) / .3);
+}
+
+.slideshow__controls .numbered-dots > [aria-current="true"] {
+  color: rgb(var(--slideshow-controls-color));
+}
+
+.slideshow__controls .stretching-dots > * {
+  background: rgb(var(--slideshow-controls-color));
+}
+
+custom-cursor {
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  scale: 0.5;
+  transition: opacity .1s ease, scale .1s ease, visibility .1s ease;
+}
+
+.slideshow__cursor.is-half-start .icon-chevron-right {
+  transform: rotate(180deg);
+}
+
+.slideshow__cursor-ring {
+  --radius: 27;
+  --circumference: calc(2px * (22 / 7) * var(--radius));
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.slideshow__cursor-ring circle {
+  stroke-opacity: 1;
+  stroke-dashoffset: 0;
+  stroke-dasharray: calc(var(--circumference) * var(--progress, 0)), var(--circumference);
+  transform: rotate(-90deg);
+}
+
+.slideshow .content-over-media--auto svg {
+  height: min(700px, 50vmax);
+}
+
+.slideshow__controls .circle-button {
+  width: var(--spacing-10);
+    height: var(--spacing-10);
+}
+
+.slideshow--multiple-slides :is(.place-self-end-start, .place-self-end-center) {
+  padding-block-end: 2.5rem;
+}
+
+.slideshow--boxed {
+  --content-over-media-gap: var(--section-inner-spacing-inline);
+  background: var(--slideshow-background);
+  padding-block-start: var(--section-inner-max-spacing-block);
+  padding-block-end: var(--section-inner-max-spacing-block);
+  padding-inline-start: max(var(--container-gutter), 50% - var(--container-max-width) / 2);
+  padding-inline-end: max(var(--container-gutter), 50% - var(--container-max-width) / 2);
+}
+
+.slideshow--boxed .content-over-media > :not(img, svg) {
+  padding-block-start: 0 !important;
+}
+
+.slideshow--boxed[allow-transparent-header] {
+  padding-block-start: max(var(--section-inner-max-spacing-block), var(--header-height));
+}
+
+.slideshow__controls {
+  bottom: var(--spacing-14);
+}
+
+.slideshow__controls:not(:lang(ae), :lang(ar), :lang(arc), :lang(bcc), :lang(bqi), :lang(ckb), :lang(dv), :lang(fa), :lang(glk), :lang(he), :lang(ku), :lang(mzn), :lang(nqo), :lang(pnb), :lang(ps), :lang(sd), :lang(ug), :lang(ur), :lang(yi)) {
+  right: var(--spacing-14);
+}
+
+.slideshow__controls:is(:lang(ae), :lang(ar), :lang(arc), :lang(bcc), :lang(bqi), :lang(ckb), :lang(dv), :lang(fa), :lang(glk), :lang(he), :lang(ku), :lang(mzn), :lang(nqo), :lang(pnb), :lang(ps), :lang(sd), :lang(ug), :lang(ur), :lang(yi)) {
+  left: var(--spacing-14);
+}
+
+.rounded-xs {
+  border-radius: var(--rounded-xs);
+}
+
+.rounded-sm {
+  border-radius: var(--rounded-sm);
+}
+
+.arms-rounded {
+  border-radius: var(--rounded);
+}
+
+.rounded-lg {
+  border-radius: var(--rounded-lg);
+}
+
+.rounded-full {
+  border-radius: var(--rounded-full);
+}
+
+.text-custom {
+  color: rgb(var(--text-color));
+}
+
+.place-self-center {
+  place-self: center;
+}
+
+.place-self-center-start {
+  place-self: center start;
+}
+
+.place-self-center-end {
+  place-self: center end;
+}
+
+.place-self-end-start {
+  place-self: end start;
+}
+
+.place-self-end-end {
+  place-self: end end;
+}
+
+.place-self-start-start {
+  place-self: start start;
+}
+
+.place-self-start-end {
+  place-self: start end;
+}
+
+.arms-text-start {
+  text-align: start;
+}
+
+.arms-text-center {
+  text-align: center;
+}
+
+.arms-text-end {
+  text-align: end;
+}
+
+@media screen and (min-width: 700px) {
+  .sm\:place-self-center {
+    place-self: center;
+  }
+
+  .sm\:place-self-center-start {
+    place-self: center start;
+  }
+
+  .sm\:place-self-center-end {
+    place-self: center end;
+  }
+
+  .sm\:arms-text-start {
+    text-align: start;
+  }
+
+  .sm\:arms-text-center {
+    text-align: center;
+  }
+
+  .sm\:arms-text-end {
+    text-align: end;
+  }
+}
+
+/* ── Announcement bar ── */
+.bg-custom {
+  background: rgb(var(--background));
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.text-xs {
+  font-size: var(--text-xs);
+  line-height: 1.7;
+}
+
+.shape-circle, .shape-square, .shape-diamond {
+  --size: var(--spacing-1-5);
+  width: var(--size);
+  height: var(--size);
+  background-color: currentColor;
+  display: block;
+}
+
+.shape-circle {
+  border-radius: 100%;
+}
+
+.shape--sm {
+  --size: var(--spacing-1);
+}
+
+.announcement-bar {
+  padding-block: var(--spacing-2-5);
+}
+
+.announcement-bar__wrapper {
+  max-width: 450px;
+  margin-inline: auto;
+  display: flex;
+}
+
+.announcement-bar__scrolling-list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.announcement-bar__item {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-items: center;
+  column-gap: var(--spacing-10);
+}
+
+.announcement-bar__item p {
+  margin: 0;
+}
+
+.announcement-bar__item a {
+  text-decoration: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .announcement-bar__item {
+    animation: translateFull var(--marquee-animation-duration, 0s) linear infinite;
+  }
+}
+
+@keyframes translateFull {
+  0%   { transform: translate(0); }
+  100% { transform: translate(-100%); }
+}
+
+/* ── Header ── */
+:root {
+  --header-background-opacity: 1;
+  --header-logo-opacity: 1;
+  --header-background-blur-radius: 0px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+height-observer[variable="header"] {
+  position: relative;
+  top: 0;
+  z-index: 10;
+  display: block;
+}
+
+/* ── Sticky real de Impact: el header NO es sticky mientras está
+   transparente (se desplaza con el contenido como cualquier
+   elemento normal) — solo se "engancha" como sticky después de
+   cruzar el umbral de scroll (STICKY_THRESHOLD=500px en
+   arms-header.js), momento en que gana la clase .is-filled.
+   Antes de este fix, el header era sticky desde el primer pixel
+   de scroll, distinto al comportamiento real de Impact. ── */
+height-observer[variable="header"]:has(.header.is-filled) {
+  position: sticky;
+}
+
+.header {
+  --background: var(--header-background);
+  --text-color: var(--header-text);
+  --header-grid-template: "main-nav logo secondary-nav" / minmax(0, 1fr) auto minmax(0, 1fr);
+  --header-padding-block: var(--spacing-4-5);
+  --header-part-gap: var(--spacing-3);
+  --header-icon-list-spacing: var(--spacing-4);
+  --header-link-list-spacing: var(--spacing-6);
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-inline: auto;
+  will-change: transform;
+  transition: background 0.25s ease;
+}
+
+@media screen and (min-width: 700px) {
+  .header {
+    --header-padding-block: var(--spacing-8-5);
+    --header-part-gap: var(--spacing-6);
+    --header-icon-list-spacing: var(--spacing-6);
+  }
+}
+
+@media screen and (min-width: 1150px) {
+  .header {
+    --header-grid-template: "logo main-nav secondary-nav" / minmax(0, 1fr) fit-content(55%) minmax(0, 1fr);
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .header {
+    --header-part-gap: var(--spacing-10);
+    --header-link-list-spacing: var(--spacing-10);
+  }
+}
+
+.header[allow-transparency] {
+  transition: color 0.25s ease, background 0.25s ease, backdrop-filter 0.25s ease;
+}
+
+.header[allow-transparency]:not(.is-filled) {
+  --header-background-opacity: 0;
+  --header-logo-opacity: 0;
+  --header-background-blur-radius: 0px;
+  --text-color: var(--header-transparent-text-color, 255 255 255);
+}
+
+.header__wrapper {
+  display: grid;
+  grid-template: var(--header-grid-template);
+  align-items: center;
+  column-gap: var(--header-part-gap, var(--spacing-3));
+  padding-block: var(--header-padding-block);
+  padding-inline: var(--container-gutter);
+  color: rgb(var(--text-color));
+  background-color: rgb(var(--background) / var(--header-background-opacity, 1));
+  backdrop-filter: blur(var(--header-background-blur-radius));
+}
+
+.header__main-nav {
+  grid-area: main-nav;
+  display: flex;
+  align-items: center;
+  gap: var(--header-link-list-spacing, var(--spacing-6));
+}
+
+.header__icon-list {
+  display: flex;
+  align-items: center;
+  gap: var(--header-icon-list-spacing, var(--spacing-4));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header__secondary-nav {
+  grid-area: secondary-nav;
+  justify-content: flex-end;
+  justify-self: end;
+  align-items: center;
+  gap: var(--spacing-3) var(--header-part-gap);
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.header__icon-button {
+  background: none;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__cart-button {
+  position: relative;
+}
+
+.header__cart-count {
+  top: -.3125rem;
+  left: .875rem;
+  position: absolute;
+}
+
+.header__link-list {
+  display: none;
+}
+
+@media screen and (min-width: 1150px) {
+  .header__link-list {
+    display: block;
+  }
+}
+
+.header__link-list .contents {
+  display: flex;
+  align-items: center;
+  gap: var(--header-link-list-spacing, var(--spacing-6));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header__link {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.header__link-list-item--dropdown {
+  position: relative;
+}
+
+.header__dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 180px;
+  margin-top: var(--spacing-2);
+  padding: var(--spacing-2);
+  border-radius: var(--rounded);
+  background: rgb(var(--background-primary));
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  flex-direction: column;
+  gap: var(--spacing-1);
+  z-index: 20;
+}
+
+.header__dropdown.is-open {
+  display: flex;
+}
+
+.header__dropdown-link {
+  display: block;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--rounded-sm);
+  color: rgb(var(--text-primary));
+  text-decoration: none;
+  font-size: var(--text-sm);
+}
+
+.header__logo {
+  grid-area: logo;
+  margin: 0;
+  font-size: 0;
+  line-height: 0;
+  justify-self: center;
+}
+
+@media screen and (min-width: 1150px) {
+  .header__logo {
+    justify-self: start;
+  }
+}
+
+.header__logo a {
+  display: inline-block;
+  position: relative;
+}
+
+.header__logo-image {
+  width: var(--header-logo-width, 90px);
+  height: auto;
+  display: block;
+  opacity: var(--header-logo-opacity, 1);
+  transition: opacity 0.25s ease;
+}
+
+.header__logo-image--transparent {
+  opacity: calc(1 - var(--header-logo-opacity, 1));
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* ── count-bubble — usado dentro de .header__cart-count para el
+   número de items del carrito (reemplaza el badge rojo custom
+   anterior, que no coincidía con el diseño real de Impact) ── */
+.count-bubble {
+  --size: var(--spacing-4);
+  width: var(--size);
+  height: var(--size);
+  min-width: min-content;
+  border-radius: var(--rounded-full);
+  background: rgb(var(--button-background-primary));
+  color: rgb(var(--button-text-primary));
+  place-items: center;
+  padding-inline-start: var(--spacing-1);
+  padding-inline-end: var(--spacing-1);
+  font-size: 9px;
+  font-weight: bold;
+  line-height: 1;
+  display: grid;
+}
+
+.subheading {
+  font-weight: bold;
+}
+
+.heading, .h0, .h1, .h2, .h3, .h4, .h5, .h6, .prose :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--heading-font-family);
+  font-weight: var(--heading-font-weight);
+  font-style: var(--heading-font-style);
+  letter-spacing: var(--heading-letter-spacing);
+  text-transform: var(--heading-text-transform);
+  overflow-wrap: anywhere;
+}
+
+.h0 {
+  font-size: var(--text-h0);
+  line-height: 1;
+}
+
+.h1, .prose h1:not(.h0, .h1, .h2, .h3, .h4, .h5, .h6) {
+  font-size: var(--text-h1);
+  line-height: 1.1;
+}
+
+.h2, .prose h2:not(.h0, .h1, .h2, .h3, .h4, .h5, .h6) {
+  font-size: var(--text-h2);
+  line-height: 1.1;
+}
+
+.h3, .prose h3:not(.h0, .h1, .h2, .h3, .h4, .h5, .h6) {
+  font-size: var(--text-h3);
+  line-height: 1.2;
+}
+
+.h4, .prose h4:not(.h0, .h1, .h2, .h3, .h4, .h5, .h6) {
+  font-size: var(--text-h4);
+  line-height: 1.3;
+}
+
+.h5, .prose h5:not(.h0, .h1, .h2, .h3, .h4, .h5, .h6) {
+  font-size: var(--text-h5);
+  line-height: 1.4;
+}
+
+.h6, .prose h6:not(.h0, .h1, .h2, .h3, .h4, .h5, .h6) {
+  font-size: var(--text-h6);
+  line-height: 1.4;
+}
+/* ── Reglas únicas del hero (no duplicadas arriba) ── */
+
+/* Body base */
+body {
+  --background: var(--background-primary);
+  --text-color: var(--text-primary);
+  background: rgb(var(--background));
+  color: rgb(var(--text-color));
+  font: var(--text-font-style) var(--text-font-weight) var(--text-base) / 1.6 var(--text-font-family);
+  letter-spacing: var(--text-letter-spacing);
+  margin: 0;
+  position: relative;
+}
+
+/* Hero con allow-transparent-header — margin negativo para que quede
+   debajo del header transparente. Aplica directo al elemento real
+   (x-slideshow no tiene wrapper .shopify-section como en Shopify). */
+x-slideshow[allow-transparent-header] {
+  --section-is-first: 1;
+  margin-block-start: calc(-1 * var(--header-height) * var(--section-is-first));
+}
+
+/* Cursor nativo oculto cuando hay custom-cursor activo (lo reemplaza el círculo que sigue al mouse) */
+:has(> custom-cursor:not([hidden])) {
+  cursor: none;
+}
+
+/* ============================================================
+   UTILIDADES BASE — layout/spacing (Impact)
+   Compartidas por image-link-blocks, scrolling-text,
+   collection-list y todas las secciones futuras del home.
+   ============================================================ */
+
+.container {
+  --container-inner-width: min((100vw - var(--scrollbar-width, 0px)) - var(--container-gutter) * 2, var(--container-max-width));
+  --container-outer-width: calc(((100vw - var(--scrollbar-width, 0px)) - var(--container-inner-width)) / 2);
+  margin-inline-start: max(var(--container-gutter), 50% - var(--container-max-width) / 2);
+  margin-inline-end: max(var(--container-gutter), 50% - var(--container-max-width) / 2);
+}
+
+.container--narrow {
+  --container-max-width: var(--container-narrow-max-width);
+}
+
+@media screen and (min-width: 700px) {
+  .sm\:container {
+    --container-inner-width: min((100vw - var(--scrollbar-width, 0px)) - var(--container-gutter) * 2, var(--container-max-width));
+    --container-outer-width: calc(((100vw - var(--scrollbar-width, 0px)) - var(--container-inner-width)) / 2);
+    margin-inline-start: max(var(--container-gutter), 50% - var(--container-max-width) / 2);
+    margin-inline-end: max(var(--container-gutter), 50% - var(--container-max-width) / 2);
+  }
+}
+
+.bleed {
+  scroll-padding-inline: var(--container-outer-width);
+  margin-inline-start: calc(-1 * var(--container-outer-width));
+  margin-inline-end: calc(-1 * var(--container-outer-width));
+  padding-inline-start: var(--container-outer-width);
+  padding-inline-end: var(--container-outer-width);
+  display: grid;
+}
+
+.full-bleed {
+  margin-inline-start: calc(-1 * var(--container-outer-width));
+  margin-inline-end: calc(-1 * var(--container-outer-width));
+  display: grid;
+}
+
+@media screen and (min-width: 700px) {
+  .sm\:unbleed {
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    scroll-padding-inline: 0;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .md\:unbleed {
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    scroll-padding-inline: 0;
+  }
+}
+
+@media screen and (min-width: 1150px) {
+  .lg\:unbleed {
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    scroll-padding-inline: 0;
+  }
+}
+
+/* ── Sistema de secciones (section/section-stack) — controla el
+   espaciado vertical entre TODAS las secciones del home ── */
+.section {
+  --context-section-spacing-block-start: var(--section-outer-spacing-block);
+  --context-section-spacing-block-end: var(--section-outer-spacing-block);
+  --context-section-spacing-inline: var(--container-gutter);
+  --calculated-section-spacing-block-start: var(--section-spacing-block-start, var(--section-spacing-block, var(--context-section-spacing-block-start)));
+  --calculated-section-spacing-block-end: var(--section-spacing-block-end, var(--section-spacing-block, var(--context-section-spacing-block-end)));
+  --calculated-section-spacing-inline: var(--section-spacing-inline, var(--context-section-spacing-inline));
+  --container-inner-width: min((100vw - var(--scrollbar-width, 0px)) - var(--calculated-section-spacing-inline, 0px) * 2, var(--container-max-width));
+  --container-outer-width: calc(((100vw - var(--scrollbar-width, 0px)) - var(--container-inner-width, 0px)) / 2);
+  --section-stack-spacing-inline: var(--section-inner-spacing-inline, 0px);
+  padding-inline-start: max(var(--calculated-section-spacing-inline), 50% - var(--container-max-width) / 2);
+  padding-inline-end: max(var(--calculated-section-spacing-inline), 50% - var(--container-max-width) / 2);
+  padding-block-start: var(--calculated-section-spacing-block-start);
+  padding-block-end: var(--calculated-section-spacing-block-end);
+  /* fondo opaco + position relative: replica [role="main"]
+     .shopify-section de Impact. Necesario para que cada sección
+     tape la revealed-image (z-index:-1) al avanzar el scroll.
+     Hereda --background del body (o el propio si tiene bg-custom). */
+  position: relative;
+  background: rgb(var(--background, var(--background-primary)));
+}
+
+.section--tight {
+  --calculated-section-spacing-block-start: min(48px, var(--section-spacing-block-start, var(--section-spacing-block, var(--context-section-spacing-block-start))));
+  --calculated-section-spacing-block-end: min(48px, var(--section-spacing-block-end, var(--section-spacing-block, var(--context-section-spacing-block-end))));
+  --calculated-section-spacing-inline: min(48px, var(--section-spacing-inline, var(--context-section-spacing-inline)));
+}
+
+/* ── section--no-top-gap — fusiona visualmente el espacio entre dos
+   secciones consecutivas que comparten el mismo color de fondo
+   (equivalente adaptado de --background-differs-from-previous en
+   Impact real, que ahí se calcula automático vía hash de color
+   generado por el editor de temas de Shopify). Aquí se marca a
+   mano, sección por sección, cuando se sabe que el fondo coincide
+   con el de la sección inmediatamente anterior — más simple y
+   predecible que intentar detección automática en CSS puro. ── */
+.section--no-top-gap {
+  padding-block-start: 0;
+}
+
+.section--narrow {
+  --container-max-width: var(--container-narrow-max-width);
+}
+
+.section-header {
+  gap: var(--spacing-4);
+  justify-items: start;
+  display: grid;
+}
+
+@media screen and (min-width: 1150px) {
+  .section-header {
+    grid-template-columns: 700px;
+    justify-content: space-between;
+    align-items: end;
+  }
+}
+
+.section-stack {
+  gap: var(--section-stack-spacing-block, 0px) var(--section-stack-spacing-inline, 0px);
+  grid-auto-columns: minmax(0, 1fr);
+  display: grid;
+}
+
+@media screen and (min-width: 700px) {
+  .section--tight {
+    --calculated-section-spacing-block-start: min(48px, var(--section-spacing-block-start, var(--section-spacing-block, var(--context-section-spacing-block-start, 0px))));
+    --calculated-section-spacing-block-end: min(48px, var(--section-spacing-block-end, var(--section-spacing-block, var(--context-section-spacing-block-end, 0px))));
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .section--tight {
+    --calculated-section-spacing-block-start: min(64px, var(--section-spacing-block-start, var(--section-spacing-block, var(--context-section-spacing-block-start, 0px))));
+    --calculated-section-spacing-block-end: min(64px, var(--section-spacing-block-end, var(--section-spacing-block, var(--context-section-spacing-block-end, 0px))));
+  }
+}
+
+/* ── Flex/grid stacks ── */
+.v-stack {
+  display: grid;
+}
+
+/* ── reset de list-style solo cuando v-stack se usa en un <ul>
+   (footer.njk: <ul class="v-stack gap-3" role="list">) — no afecta
+   los <div class="v-stack"> usados en el resto del proyecto ── */
+ul.v-stack {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.h-stack {
+  align-items: center;
+  display: flex;
+}
+
+/* ── Utilidades sueltas usadas por las 3 secciones nuevas ── */
+.bg-secondary {
+  background: rgb(var(--text-color) / .05);
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.gap-2 {
+  gap: var(--spacing-2);
+}
+
+/* ── circle-chevron base (los hover states ya existían arriba) ── */
+.circle-chevron {
+  width: var(--spacing-6);
+  height: var(--spacing-6);
+  border-radius: var(--rounded-full);
+  background: rgb(var(--text-color) / .1);
+  flex-shrink: 0;
+  place-items: center;
+  transition: all .2s ease-in-out;
+  display: grid;
+}
+
+.circle-chevron[disabled] {
+  opacity: .5;
+}
+
+/* ── animated-arrow — usado por prev/next buttons en scroll-area ── */
+.animated-arrow {
+  pointer-events: none;
+  place-items: center;
+  display: grid;
+}
+
+.animated-arrow:before, .animated-arrow:after {
+  content: "";
+  grid-area: 1 / -1;
+  transition: all .2s ease-in-out;
+}
+
+.animated-arrow:before {
+  border-block-start-width: 2px;
+  border-inline-end-width: 2px;
+  width: .5rem;
+  height: .5rem;
+  transform: rotate(calc(var(--transform-logical-flip) * 45deg));
+  border-color: currentColor;
+  left: -1px;
+  position: relative;
+}
+
+.animated-arrow:after {
+  width: var(--spacing-2-5);
+  height: var(--spacing-0-5);
+  transform-origin: center;
+  opacity: 0;
+  background: currentColor;
+  transform: scaleX(.5);
+}
+
+@media screen and (pointer: fine) {
+  .group:hover .animated-arrow:before {
+    transform: translateX(calc(var(--transform-logical-flip) * var(--spacing-0-5))) rotate(calc(var(--transform-logical-flip) * 45deg));
+  }
+
+  .group:hover .animated-arrow:after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.animated-arrow--reverse {
+  transform: rotate(180deg);
+}
+
+/* ── scroll-area — contenedor con scroll horizontal + snap ── */
+.scroll-area {
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  overflow: auto hidden;
+}
+
+.scroll-area::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============================================================
+   IMAGE-LINK-BLOCKS — 5 tarjetas de categoría con scroll
+   ============================================================ */
+
+.image-link-blocks {
+  --image-link-blocks-item-width: 48vw;
+  --image-link-blocks-grid: auto / auto-flow var(--image-link-blocks-item-width);
+  grid: var(--image-link-blocks-grid);
+  gap: var(--spacing-2);
+  align-items: start;
+  display: grid;
+}
+
+.image-link-blocks__item {
+  position: relative;
+}
+
+.image-link-blocks__inner {
+  gap: var(--spacing-3);
+  padding: var(--spacing-5);
+  grid-template-columns: minmax(0, 1fr);
+  display: grid;
+}
+
+.image-link-blocks__inner .circle-chevron {
+  opacity: 0;
+  transition: opacity .2s ease-in-out;
+}
+
+.image-link-blocks__title {
+  gap: var(--spacing-2-5);
+  justify-content: center;
+  align-items: center;
+  margin-block-end: calc(-1 * var(--spacing-1));
+  display: flex;
+}
+
+.image-link-blocks__title--animate {
+  transform: translateX(calc(var(--transform-logical-flip) * 16px));
+  transition: transform .2s;
+}
+
+@media screen and (min-width: 700px) {
+  .image-link-blocks {
+    --image-link-blocks-item-width: 26vw;
+    gap: var(--grid-gutter);
+  }
+
+  .image-link-blocks__inner {
+    gap: var(--spacing-5);
+    padding: var(--spacing-10);
+  }
+
+  .image-link-blocks__title {
+    margin-block-end: calc(-1 * var(--spacing-4));
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .image-link-blocks {
+    --image-link-blocks-items-per-row: 4;
+    --image-link-blocks-grid: auto / auto-flow calc(var(--container-inner-width) / var(--image-link-blocks-items-per-row) - (var(--grid-gutter) / var(--image-link-blocks-items-per-row) * (var(--image-link-blocks-items-per-row) - 1)));
+  }
+
+  .image-link-blocks__item {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .image-link-blocks {
+    --image-link-blocks-items-per-row: 5;
+  }
+}
+
+@media screen and (pointer: fine) {
+  .image-link-blocks__item:hover .image-link-blocks__title--animate {
+    transform: translateX(0);
+  }
+}
+
+/* ============================================================
+   SCROLLING-TEXT — marquee de texto con gradiente, loop infinito
+   ============================================================ */
+
+.scrolling-text {
+  --scrolling-text-font-size: 5rem;
+  overflow: hidden;
+}
+
+.scrolling-text__wrapper {
+  display: grid;
+}
+
+.scrolling-text__text {
+  line-height: normal;
+  font-size: var(--scrolling-text-font-size);
+  padding-inline-start: min(1em, 2rem);
+  padding-inline-end: min(1em, 2rem);
+}
+
+@supports (overflow: clip) {
+  .scrolling-text {
+    overflow: clip visible;
+  }
+
+  .scrolling-text__text {
+    line-height: 1;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .scrolling-text {
+    --scrolling-text-font-size: 8.75rem;
+  }
+
+  .scrolling-text__text {
+    padding-inline-start: min(1.5em, 4rem);
+    padding-inline-end: min(1.5em, 4rem);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .scrolling-text__wrapper {
+    grid: auto / auto-flow max-content;
+  }
+
+  .scrolling-text--auto .scrolling-text__text {
+    animation: translateFull var(--marquee-animation-duration, 0s) linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolling-text {
+    --scrolling-text-font-size: var(--text-h0);
+  }
+
+  .scrolling-text__wrapper {
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+@keyframes translateFull {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-100% * var(--transform-logical-flip)));
+  }
+}
+
+/* ── text-gradient — usado por scrolling-text (y disponible para otras secciones) ── */
+.text-gradient {
+  background-image: var(--gradient);
+  color: #0000;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ============================================================
+   COLLECTION-LIST — 3 tarjetas grandes con scroll
+   ============================================================ */
+
+.collection-list {
+  --collection-list-grid: auto / auto-flow 73vw;
+  grid: var(--collection-list-grid, none);
+  align-items: start;
+  gap: var(--grid-gutter);
+  display: grid;
+}
+
+.collection-card {
+  --transition-direction: 1;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  overflow: hidden;
+}
+
+.collection-card--reverse-transition {
+  --transition-direction: -1;
+}
+
+.collection-card__content-wrapper svg {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .2s, visibility .2s, transform .2s;
+  display: inline-block;
+}
+
+.collection-card__content + svg {
+  transform: translateY(calc(var(--transition-direction) * 48px));
+}
+
+.collection-card__content {
+  transition: transform .2s;
+}
+
+.collection-card__content:first-child {
+  margin-block-end: -3rem;
+}
+
+@media screen and (min-width: 700px) {
+  .collection-list {
+    --collection-list-grid: auto / auto-flow 36vw;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .collection-list {
+    --collection-list-grid: auto / auto-flow calc(var(--container-inner-width) / 3 - (var(--grid-gutter) / 3 * 2));
+  }
+
+  .collection-card {
+    scroll-snap-align: none;
+  }
+}
+
+@media screen and (pointer: fine) {
+  .collection-card:hover .collection-card__content {
+    transform: translateY(calc(var(--transition-direction) * -8px));
+  }
+
+  .collection-card:hover .collection-card__content-wrapper svg {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-8px);
+  }
+
+  .collection-card:hover .collection-card__content + svg {
+    transform: translateY(56px);
+  }
+}
+
+/* ============================================================
+   FEATURED-COLLECTION — grid de productos "Más Vendidos"
+   ============================================================ */
+
+/* ── badge (sold-out / on-sale) ── */
+.badge {
+  --badge-background: var(--text-color) / .05;
+  --badge-color: var(--text-color);
+  align-items: center;
+  gap: var(--spacing-1-5);
+  padding: 3px var(--spacing-2);
+  background: rgb(var(--badge-background));
+  width: max-content;
+  color: rgb(var(--badge-color));
+  border-radius: var(--rounded-button);
+  font-size: 9px;
+  font-weight: bold;
+  display: flex;
+}
+
+.badge--sold-out {
+  --badge-background: var(--sold-out-badge-background);
+  --badge-color: var(--sold-out-badge-text);
+}
+
+.badge--on-sale {
+  --badge-background: var(--on-sale-badge-background);
+  --badge-color: var(--on-sale-badge-text);
+}
+
+@media screen and (min-width: 700px) {
+  .badge:not(.badge--lg) {
+    font-size: var(--text-xs);
+    padding-block-start: var(--spacing-0-5);
+    padding-block-end: var(--spacing-0-5);
+  }
+}
+
+/* ── product-list (grid contenedor de las cards) ── */
+.product-list {
+  /* variables del grid — valores de Impact (Headphones.html 1897).
+     Sin estas, grid:var(--product-list-grid) caía a 1 columna. */
+  --product-list-items-per-row: 2;
+  --product-list-grid: auto-flow dense / repeat(var(--product-list-items-per-row), minmax(0, 1fr));
+  --product-list-gap: var(--spacing-2);
+  grid: var(--product-list-grid);
+  gap: var(--product-list-gap);
+  scroll-padding-top: calc(var(--sticky-area-height) + 20px);
+  display: grid;
+  position: relative;
+}
+
+@media screen and (min-width: 1000px) {
+  .product-list {
+    --product-list-items-per-row: 3;
+    --product-list-gap: var(--product-list-row-gap) var(--product-list-column-gap);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .product-list {
+    --product-list-items-per-row: 4;
+  }
+}
+
+/* ── rating (estrellas) — solo se renderiza si el producto tiene prod.rating ── */
+.rating {
+  align-items: center;
+  gap: var(--spacing-1-5);
+  display: flex;
+}
+
+.rating__stars {
+  display: contents;
+}
+
+.rating__star {
+  color: rgb(var(--star-color));
+  position: relative;
+  top: -1px;
+}
+
+.rating__star--empty {
+  filter: grayscale();
+}
+
+@media screen and (min-width: 700px) {
+  .rating__star {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.rating-with-text {
+  gap: var(--spacing-2);
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  align-items: baseline;
+  display: grid;
+}
+
+/* ── product-card ── */
+.product-card {
+  --product-card-badge-spacing: var(--spacing-2);
+  --product-card-info-padding: var(--spacing-4);
+  border-radius: var(--rounded-sm);
+  isolation: isolate;
+  overflow: hidden;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  align-items: start;
+  display: grid;
+  position: relative;
+}
+
+.product-card__figure {
+  display: block;
+  position: relative;
+}
+
+.product-card__badge-list {
+  gap: var(--spacing-2);
+  pointer-events: none;
+  z-index: 5;
+  display: grid;
+  position: absolute;
+  top: var(--product-card-badge-spacing);
+  left: var(--product-card-badge-spacing);
+}
+
+.product-card__image {
+  object-fit: contain;
+  object-position: center;
+  transition: opacity .2s ease-in-out;
+  border-top-left-radius: var(--rounded-sm);
+  border-top-right-radius: var(--rounded-sm);
+}
+
+.product-card__image--secondary {
+  display: none;
+}
+
+.product-card__title {
+  line-height: 1.5;
+}
+
+.product-card__info {
+  gap: var(--spacing-1);
+  padding: var(--product-card-info-padding);
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: start;
+  display: grid;
+}
+
+@media screen and (min-width: 700px) {
+  .product-card {
+    --product-card-badge-spacing: var(--spacing-4);
+    --product-card-info-padding: var(--spacing-5);
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .product-card__info {
+    --product-card-info-padding: var(--spacing-6) var(--spacing-8) var(--spacing-8) var(--spacing-8);
+  }
+}
+
+/* Hover de imagen secundaria — solo aplica cuando hay 2da foto real */
+@media screen and (pointer: fine) {
+  .product-card--show-secondary-media .product-card__figure:hover .product-card__image--primary {
+    opacity: 0;
+  }
+
+  .product-card--show-secondary-media .product-card__figure:hover .product-card__image--secondary {
+    opacity: 1;
+  }
+
+  .product-card--show-secondary-media .product-card__image--secondary {
+    opacity: 0;
+    display: block;
+  }
+}
+
+/* ── price-list / precios ── */
+.price-list {
+  align-items: baseline;
+  gap: var(--spacing-0-5) var(--spacing-2);
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.text-subdued {
+  color: rgb(var(--text-color) / .7);
+}
+
+.text-on-sale {
+  color: rgb(var(--on-sale-text));
+}
+
+/* ── text-with-icon ("View all" del section-header) ── */
+.text-with-icon {
+  align-items: center;
+  gap: var(--spacing-2);
+  display: inline-flex;
+}
+
+.text-with-icon > svg {
+  flex-shrink: 0;
+}
+
+.reversed-link {
+  background: linear-gradient(to right, currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size .3s ease-in-out;
+}
+
+@media screen and (pointer: fine) {
+  .group:hover .reversed-link {
+    background-size: 100% 1px;
+  }
+}
+
+/* ============================================================
+   IMPACT-TEXT — texto gigante con gradiente + bloque de
+   descripción (image-with-text-overlay no necesita CSS nuevo,
+   reutiliza .content-over-media y .full-bleed ya existentes)
+   ============================================================ */
+
+.impact-text {
+  --impact-text-spacing: var(--spacing-10);
+  gap: var(--impact-text-spacing);
+  align-items: start;
+  display: grid;
+}
+
+.impact-text--scroll {
+  grid: auto / auto-flow var(--impact-text-auto-columns);
+}
+
+.impact-text--center {
+  text-align: center;
+  justify-content: safe center;
+}
+
+.impact-text--end {
+  text-align: end;
+  justify-content: end;
+}
+
+.impact-text__text {
+  font-size: var(--impact-text-font-size);
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.impact-text__text:not(:only-child) {
+  margin-bottom: .2em;
+}
+
+.impact-text__content {
+  max-width: 750px;
+}
+
+.impact-text--center .impact-text__content {
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+.impact-text--end .impact-text__content {
+  margin-inline-start: auto;
+}
+
+@media screen and (min-width: 700px) {
+  .impact-text {
+    --impact-text-spacing: var(--spacing-8);
+    grid: auto / auto-flow var(--impact-text-auto-columns);
+  }
+
+  .impact-text--center {
+    justify-content: space-evenly;
+  }
+}
+
+@media screen and (min-width: 1150px) {
+  .impact-text {
+    --impact-text-spacing: var(--spacing-12);
+  }
+}
+
+/* ============================================================
+   MEDIA-GRID — grid asimétrico de 4 tiles (foto/video)
+   ============================================================ */
+
+.media-grid {
+  --media-grid-row-height: 150px;
+  align-items: start;
+  gap: calc(var(--grid-gutter) / 2);
+  grid: auto-flow dense var(--media-grid-row-height) / repeat(2, minmax(0, 1fr));
+  display: grid;
+}
+
+.media-grid__item {
+  grid-area: span min(2, var(--media-grid-row-span)) / span min(2, var(--media-grid-column-span));
+  height: 100%;
+}
+
+.media-grid__item > * {
+  height: 100%;
+}
+
+@media screen and (min-width: 700px) {
+  .media-grid {
+    --media-grid-row-height: 290px;
+    --calculated-row-height: max(150px, min(100vw / 5, var(--media-grid-row-height)));
+    grid: auto-flow dense var(--calculated-row-height) / repeat(4, minmax(0, 1fr));
+  }
+
+  .media-grid__item {
+    grid-area: span var(--media-grid-row-span) / span var(--media-grid-column-span);
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .media-grid {
+    gap: var(--grid-gutter);
+  }
+}
+
+/* ── video-media — wrapper de video con autoplay, sin play-button manual
+   (no se usa el sistema de play/pause de Impact, solo reproducción
+   automática en loop muteado para el tile de media-grid) ── */
+video-media {
+  --default-aspect-ratio: 16 / 9;
+  border-radius: inherit;
+  aspect-ratio: var(--aspect-ratio, var(--default-aspect-ratio));
+  position: relative;
+}
+
+video-media[autoplay] {
+  pointer-events: none;
+}
+
+video-media > :is(video, img) {
+  border-radius: inherit;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: opacity .2s ease-in-out, visibility .2s ease-in-out;
+}
+
+video-media:not([loaded]) > video {
+  opacity: 0;
+  visibility: hidden;
+}
+
+video-media[loaded] > img {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ============================================================
+   BEFORE-AFTER-IMAGE — comparador deslizable de 2 imágenes
+   ============================================================ */
+
+/* ── section-stack--center / --horizontal / --reverse / __intro
+   / __main (solo aplica en desktop ≥1150px; en mobile el stack
+   normal ya los apila) — sistema flexbox fiel a Impact: cada
+   sección declara su proporción vía --section-stack-intro/main
+   en su propio HTML (default 50/50). ── */
+@media screen and (min-width: 1150px) {
+  .section-stack--horizontal {
+    justify-content: center;
+    display: flex;
+  }
+
+  .section-stack--center {
+    justify-items: center;
+  }
+
+  .section-stack--reverse {
+    flex-direction: row-reverse;
+  }
+
+  .section-stack__intro {
+    width: var(--section-stack-intro, 50%);
+  }
+
+  .section-stack__main {
+    width: var(--section-stack-main, 50%);
+  }
+}
+
+.before-after {
+  --before-after-label-spacing: var(--spacing-5);
+  -webkit-user-select: none;
+  user-select: none;
+  position: relative;
+}
+
+.before-after__label {
+  position: absolute;
+}
+
+.before-after__label--left {
+  left: var(--before-after-label-spacing);
+}
+
+.before-after__label--right {
+  right: var(--before-after-label-spacing);
+}
+
+.before-after__label--top {
+  top: var(--before-after-label-spacing);
+}
+
+.before-after__label--bottom {
+  bottom: var(--before-after-label-spacing);
+}
+
+.before-after__after-image {
+  clip-path: inset(0 0 0 calc(var(--before-after-initial-drag-position, 50%) + var(--clip-path-offset, 0px)));
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.before-after__cursor-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.before-after__cursor {
+  touch-action: none;
+  width: max-content;
+  height: 100%;
+  top: 50%;
+  left: var(--before-after-initial-drag-position, 0px);
+  transform: translate(calc(-50% + var(--clip-path-offset, 0px)), -50%);
+  cursor: grab;
+  filter: drop-shadow(0 1px 2px #0000001a) drop-shadow(0 1px 1px #0000000f);
+  will-change: transform;
+  place-items: center;
+  display: grid;
+  position: relative;
+}
+
+.before-after__cursor:before {
+  content: "";
+  height: 100%;
+  width: var(--spacing-0-5);
+  background: rgb(var(--background));
+  z-index: -1;
+  position: absolute;
+}
+
+.before-after__cursor:active {
+  cursor: grabbing;
+}
+
+@media screen and (min-width: 700px) {
+  .before-after {
+    --before-after-label-spacing: var(--spacing-8);
+  }
+
+  .before-after__cursor svg {
+    width: var(--spacing-10);
+    height: var(--spacing-10);
+  }
+}
+
+/* ============================================================
+   PRESS — carrusel de testimonios (adaptado: clientes, no medios)
+   ============================================================ */
+
+.page-dots {
+  justify-content: center;
+  gap: var(--spacing-2-5) var(--spacing-4);
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.page-dots > * {
+  width: var(--spacing-1-5);
+  height: var(--spacing-1-5);
+  border-radius: var(--rounded-full);
+  opacity: .3;
+  background: currentColor;
+  transition: opacity .2s ease-in-out;
+}
+
+.page-dots > *[aria-current="true"] {
+  opacity: 1;
+}
+
+.press {
+  --press-padding-inline: var(--spacing-5);
+  gap: var(--spacing-6);
+  max-width: var(--press-max-width);
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  padding-inline-start: var(--press-padding-inline);
+  padding-inline-end: var(--press-padding-inline);
+  display: grid;
+}
+
+.press__list {
+  align-items: flex-start;
+  display: grid;
+}
+
+.press__list > * {
+  grid-area: 1 / -1;
+}
+
+.press__list-item {
+  gap: var(--spacing-8);
+  justify-items: center;
+  display: grid;
+}
+
+.press__list-item:not(.is-selected) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.press__list-item .blockquote:first-child {
+  margin-block-start: 0;
+}
+
+.press__controls {
+  gap: var(--spacing-5);
+  grid: auto / auto-flow;
+  justify-content: center;
+  align-items: center;
+  display: grid;
+}
+
+@media screen and (min-width: 700px) {
+  .press {
+    --press-padding-inline: var(--spacing-8);
+    gap: var(--spacing-10);
+  }
+
+  .press__list-item {
+    gap: var(--spacing-10);
+  }
+}
+
+/* ── tap-area / ring — usados por los dots y botones de press ── */
+.tap-area {
+  position: relative;
+}
+
+.tap-area:before {
+  content: "";
+  inset: calc(-1 * var(--spacing-2-5));
+  position: absolute;
+}
+
+.ring {
+  box-shadow: 0 0 0 1px rgb(var(--text-color) / .12);
+}
+
+/* ============================================================
+   HOT-SPOTS — puntos clickeables sobre imagen de producto
+   ============================================================ */
+
+/* La sección hot-spots necesita z-index:1 (como Impact:
+   .shopify-section--hot-spots { z-index: 1 }, theme.css 6699) para
+   elevarse sobre el fondo opaco de las .section vecinas. Sin esto, el
+   background de .section tapa la porción de los dots que sobresale
+   del content-over-media (dots cerca del borde, ej. 86.7%). */
+.section:has(.hot-spot) {
+  z-index: 1;
+}
+
+/* El content-over-media base tiene overflow:hidden, que recorta los
+   dots posicionados cerca del borde (ej. vertical-position 86.7%).
+   Impact sobrescribe esto para hot-spots — comentario original:
+   "allows dot to show outside". :has(.hot-spot) apunta solo a esta
+   sección sin depender del ID de sección. */
+.content-over-media:has(.hot-spot) {
+  overflow: visible;
+}
+
+.content-over-media > .hot-spot {
+  --hot-spot-dot-size: var(--spacing-8);
+  --hot-spot-dot-shadow-size: var(--spacing-2-5);
+  top: var(--hot-spot-vertical-position);
+  left: var(--hot-spot-horizontal-position);
+  max-width: none;
+  position: absolute !important;
+}
+
+.hot-spot__dot {
+  width: var(--hot-spot-dot-size);
+  height: var(--hot-spot-dot-size);
+  border-radius: var(--rounded-full);
+  background: rgb(var(--hot-spot-background, 255 255 255));
+  color: rgb(var(--hot-spot-text-color, 0 0 0));
+  place-items: center;
+  transition: transform .2s ease-in-out;
+  display: grid;
+  position: relative;
+}
+
+.hot-spot__dot:after {
+  content: "";
+  box-sizing: content-box;
+  top: calc(-1 * var(--hot-spot-dot-shadow-size));
+  left: calc(-1 * var(--hot-spot-dot-shadow-size));
+  width: 100%;
+  height: 100%;
+  padding: var(--hot-spot-dot-shadow-size);
+  background: radial-gradient(50% 50% at 50% 50%, rgb(var(--hot-spot-background, 255 255 255) / 0) 0%, rgb(var(--hot-spot-background, 255 255 255) / .3) 100%);
+  border-radius: inherit;
+  animation: 2s ease-in-out infinite alternate ping;
+  position: absolute;
+}
+
+.hot-spot__dot[aria-expanded="true"] {
+  transform: rotate(45deg);
+}
+
+/* ── arms-popover — REESCRITO desde cero, versión simplificada al
+   máximo. Se eliminó la separación content/body (no resolvió el
+   problema real y añadió complejidad) — todo vive ahora en un solo
+   nivel: .arms-popover__content, con isolation:isolate + un
+   background-color explícito (no via variable con fallback) para
+   garantizar que el fondo se pinte sin ambigüedad de stacking
+   context, sin importar qué esté detrás (gradiente, imagen, etc). ── */
+.arms-popover {
+  display: none;
+}
+
+.arms-popover[open] {
+  display: block;
+}
+
+.arms-popover__overlay {
+  background: rgb(0 0 0 / .4);
+  cursor: pointer;
+  z-index: 1030;
+  position: fixed;
+  inset: 0;
+}
+
+.arms-popover__content {
+  isolation: isolate;
+  width: auto;
+  max-width: calc(100% - var(--spacing-4));
+  max-height: 75vh;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  border-radius: var(--rounded-input);
+  padding: var(--spacing-6);
+  text-align: start;
+  z-index: 1031;
+  position: fixed;
+  bottom: var(--spacing-4);
+  left: var(--spacing-2);
+  right: var(--spacing-2);
+  overflow-y: auto;
+  display: block;
+}
+
+.arms-popover__close {
+  width: var(--spacing-12);
+  height: var(--spacing-12);
+  border-radius: var(--rounded-full);
+  background-color: #ffffff;
+  color: #1a1a1a;
+  box-shadow: var(--shadow-md);
+  place-items: center;
+  display: grid;
+  position: absolute;
+  bottom: 100%;
+  left: calc(50% - var(--spacing-6));
+  margin-block-end: var(--spacing-4);
+  z-index: 1032;
+}
+
+@media screen and (min-width: 1000px) {
+  .hot-spot {
+    --hot-spot-dot-size: var(--spacing-12);
+    --hot-spot-dot-shadow-size: var(--spacing-4);
+  }
+
+  .hot-spot__dot svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .arms-popover__overlay {
+    display: none;
+  }
+
+  .arms-popover__content {
+    width: 380px;
+    max-width: 380px;
+    max-height: none;
+    overflow-y: visible;
+    border-radius: var(--rounded-input);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgb(var(--border-color));
+    position: absolute;
+    top: 50%;
+    bottom: auto;
+    left: calc(100% + var(--spacing-4-5));
+    transform: translateY(-50%);
+  }
+
+  .arms-popover__close {
+    width: calc(var(--spacing-6) * 1.2);
+    height: calc(var(--spacing-6) * 1.2);
+    top: var(--spacing-3);
+    bottom: auto;
+    left: auto;
+    right: var(--spacing-3);
+    margin-block-end: 0;
+  }
+}
+
+/* ── shape-line / bg-gradient — usados por impact-text #2 (variante
+   de 2 columnas con fondo de gradiente y separador vertical) ── */
+.shape-line {
+  background: rgb(var(--text-color) / .1);
+  width: 1px;
+  height: 100%;
+}
+
+.bg-gradient {
+  background-image: var(--gradient);
+}
+
+/* ── reveal / reveal-invisible / [reveal-js] / [reveal-on-scroll] —
+   estado inicial vía CSS puro (no esperan a que cargue el JS), con
+   resiliencia: si scripting está deshabilitado, se muestran de
+   inmediato; si el usuario pide reducir movimiento, no se ocultan. ── */
+.reveal-invisible {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [reveal-js], [reveal-on-scroll="true"], .reveal {
+    opacity: 0;
+  }
+}
+
+@media (scripting: none) {
+  [reveal-js], [reveal-on-scroll="true"], .reveal {
+    opacity: 1;
+  }
+  /* sin JS no hay animación que aplique el rotate final; lo damos por CSS */
+  .multiple-images-with-text__image-list img.reveal {
+    transform: rotate(var(--image-rotation, 0deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* con reduced-motion el JS no anima; la imagen nace visible y
+     necesita su ángulo final aplicado por CSS */
+  .multiple-images-with-text__image-list img.reveal {
+    transform: rotate(var(--image-rotation, 0deg));
+  }
+}
+
+/* ── prev-next-buttons — usado por multiple-images-with-text y press ── */
+.prev-next-buttons {
+  gap: var(--spacing-4);
+  justify-content: center;
+  display: flex;
+}
+
+/* ============================================================
+   MULTIPLE-IMAGES-WITH-TEXT — "Sobre Nosotros" con 2 imágenes
+   dispersas + texto que cambia con prev/next
+   ============================================================ */
+
+.multiple-images-with-text {
+  /* max-width responsive (Impact): 580px mobile → 690px ≥1000px →
+     none ≥1150px. Definido aquí (no inline en el .njk) para que el
+     valor de desktop no sea pisado por la especificidad del inline. */
+  --multiple-images-with-text-max-width: 580px;
+  grid-template-columns: var(--multiple-images-with-text-grid-template-columns, none);
+  gap: var(--section-stack-spacing-block, var(--spacing-8)) var(--multiple-images-with-text-column-gap, 0px);
+  max-width: var(--multiple-images-with-text-max-width);
+  isolation: isolate;
+  justify-content: center;
+  place-items: center;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  display: grid;
+}
+
+.multiple-images-with-text__content-with-nav {
+  row-gap: var(--spacing-8);
+  text-align: var(--multiple-images-with-text-alignment, center);
+  justify-items: var(--multiple-images-with-text-alignment, center);
+  justify-self: start;
+  width: 100%;
+  max-width: 600px;
+  display: grid;
+}
+
+.multiple-images-with-text__content-list {
+  place-items: end start;
+  width: 100%;
+  display: grid;
+}
+
+.multiple-images-with-text__content-list > * {
+  grid-area: 1 / -1;
+  width: 100%;
+}
+
+.multiple-images-with-text__image-list {
+  grid-template: var(--multiple-images-with-text-images-grid-template, none);
+  align-items: var(--multiple-images-with-text-images-alignment, center);
+  width: 100%;
+  display: grid;
+}
+
+.multiple-images-with-text__image-list > img {
+  width: 100%;
+  max-width: var(--multiple-images-with-text-image-max-width, 390px);
+  will-change: transform;
+  outline: 1px solid #0000;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+.multiple-images-with-text__image-list > img:first-child {
+  grid-area: 1 / 2 / -1;
+  margin-block-start: var(--multiple-images-with-text-main-image-offset, 0px);
+}
+
+@media screen and (max-width: 699px) {
+  .multiple-images-with-text__content-with-nav .circle-button {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .multiple-images-with-text__content-with-nav {
+    row-gap: var(--spacing-12);
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .multiple-images-with-text {
+    --multiple-images-with-text-max-width: 690px;
+  }
+}
+
+@media screen and (min-width: 1150px) {
+  .multiple-images-with-text {
+    --multiple-images-with-text-image-max-width: 500px;
+    /* activa el layout de 2 columnas (imágenes | texto) en desktop.
+       Sin estas variables grid-template-columns es "none" y el texto
+       se apila debajo. Valores de Impact index.html @media 1150px. */
+    --multiple-images-with-text-max-width: none;
+    --multiple-images-with-text-grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+    --multiple-images-with-text-column-gap: var(--spacing-24);
+    --multiple-images-with-text-alignment: start;
+  }
+}
+
+/* ── divide-y / line-clamp — usados por feature-chart ── */
+.divide-y > :not([hidden]) ~ :not([hidden]) {
+  border-block-start-width: 1px;
+}
+
+.line-clamp {
+  -webkit-line-clamp: var(--line-clamp-count, 2);
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+/* ============================================================
+   FEATURE-CHART — tabla comparativa de 2 productos
+   (simplificada: sin fila sticky de Impact, no aporta valor real
+   aquí y agrega complejidad de scroll-tracking innecesaria)
+   ============================================================ */
+
+.feature-chart {
+  padding: 0 var(--container-gutter);
+  scroll-padding-top: var(--sticky-area-height, 0px);
+  display: block;
+}
+
+.feature-chart__table-row {
+  --feature-chart-heading-width: 140px;
+  grid-template-columns: var(--feature-chart-heading-width) repeat(var(--feature-chart-values-columns-count), minmax(140px, 1fr));
+  gap: var(--spacing-1) var(--spacing-5);
+  min-width: min-content;
+  padding-block-start: var(--spacing-4);
+  padding-block-end: var(--spacing-4);
+  display: grid;
+}
+
+.feature-chart__product {
+  --feature-chart-product-image-width: 80px;
+  gap: var(--spacing-5);
+  place-content: start;
+  display: grid;
+  position: relative;
+}
+
+.feature-chart__product :is(img, svg) {
+  width: var(--feature-chart-product-image-width);
+}
+
+.feature-chart__product .badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@media screen and (max-width: 699px) {
+  .feature-chart, .feature-chart__table {
+    margin-inline-start: calc(-1 * var(--container-gutter));
+    margin-inline-end: calc(-1 * var(--container-gutter));
+    padding-inline-start: var(--container-gutter);
+    padding-inline-end: var(--container-gutter);
+    display: grid;
+  }
+
+  .feature-chart__table-row {
+    grid-template-columns: repeat(var(--feature-chart-values-columns-count), minmax(140px, 1fr));
+  }
+
+  .feature-chart__table--multi-columns .feature-chart__table-row {
+    grid-template-columns: repeat(var(--feature-chart-values-columns-count), 150px);
+  }
+
+  .feature-chart__heading {
+    position: sticky;
+    left: 0;
+  }
+
+  .feature-chart__value {
+    grid-row: 2;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .feature-chart {
+    border-radius: var(--rounded);
+  }
+
+  .feature-chart__table-row--product > :first-child {
+    grid-column-start: 2;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .feature-chart {
+    padding: var(--spacing-4) var(--spacing-12);
+  }
+
+  .feature-chart__table-row {
+    --feature-chart-heading-width: 180px;
+    column-gap: var(--spacing-6);
+    padding-block-start: var(--spacing-6);
+    padding-block-end: var(--spacing-6);
+  }
+
+  .feature-chart__table-row--product {
+    padding-block-end: var(--spacing-10);
+  }
+}
+
+/* ============================================================
+   REVEALED-IMAGE — imagen que se revela progresivamente con scroll
+   ============================================================ */
+
+.revealed-image {
+  z-index: -1;
+  display: inline;
+  position: relative;
+}
+
+.revealed-image__scroll-tracker {
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.revealed-image__scroller {
+  height: 180vh;
+  height: 180lvh;
+  display: block;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+}
+
+.revealed-image__wrapper {
+  height: 100vh;
+  height: 100lvh;
+  top: calc(var(--sticky-area-height, 0px) / 2);
+  grid-auto-rows: minmax(0, 1fr);
+  place-items: center;
+  display: grid;
+  position: relative;
+}
+
+.revealed-image__wrapper > * {
+  grid-area: 1 / -1;
+}
+
+.revealed-image__wrapper img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.revealed-image__wrapper > .revealed-image__image-clipper,
+.revealed-image__wrapper > .revealed-image__content--inside {
+  clip-path: inset(37% 37% 41%);
+  width: 100%;
+  height: 100%;
+}
+
+.revealed-image__content {
+  width: 100%;
+  height: 100%;
+  padding-inline: max(var(--container-gutter), 50% - var(--container-max-width) / 2);
+  text-align: center;
+  z-index: 1;
+  opacity: 0;
+  place-content: center;
+  display: grid;
+}
+
+.revealed-image__content-inner {
+  max-width: 1300px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+/* ── relative — usado por timeline (y disponible para otras secciones) ── */
+.relative {
+  position: relative;
+}
+
+/* ============================================================
+   TIMELINE — historia de marca por hitos, con navegación por año
+   ============================================================ */
+
+.timeline {
+  gap: var(--spacing-8);
+  grid-template-columns: minmax(0, 1fr);
+  display: grid;
+}
+
+.timeline__slider {
+  align-items: start;
+  display: grid;
+}
+
+.timeline__slider > * {
+  grid-area: 1 / -1;
+}
+
+.timeline__slide {
+  gap: var(--spacing-6);
+  text-align: center;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  display: grid;
+}
+
+.timeline__image {
+  width: 100%;
+  max-width: 410px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  position: relative;
+}
+
+.timeline__controls {
+  --timeline-dot-size: var(--spacing-4);
+  --timeline-dot-padding-inline-end: var(--spacing-4);
+  padding-block-start: calc((var(--timeline-dot-size) / 2));
+}
+
+.timeline__nav {
+  grid: auto / repeat(var(--timeline-nav-item-count), minmax(0, 1fr));
+  width: max-content;
+  min-width: 100%;
+  display: grid;
+}
+
+.timeline__nav-bar {
+  background-color: rgb(var(--text-color) / .12);
+  width: 100%;
+  height: 2px;
+  position: absolute;
+  top: -1px;
+  left: 0;
+}
+
+.timeline__nav-item {
+  gap: var(--spacing-3);
+  align-content: flex-start;
+  min-width: 100px;
+  max-width: 200px;
+  padding-inline-end: var(--timeline-dot-padding-inline-end);
+  display: grid;
+  position: relative;
+}
+
+.timeline__nav-item:before {
+  content: "";
+  width: var(--timeline-dot-size);
+  height: var(--timeline-dot-size);
+  border-radius: var(--rounded-full);
+  background-color: rgb(var(--background));
+  border-width: 2px;
+  margin-block-start: calc((var(--timeline-dot-size) / 2) * -1);
+  transition: border-color .2s ease-in-out, background-color .2s ease-in-out;
+}
+
+.timeline__nav-item[aria-current="true"]:before {
+  border-color: rgb(var(--text-color));
+  background-color: rgb(var(--text-color));
+}
+
+.timeline__nav-label {
+  opacity: .5;
+  transition: opacity .2s ease-in-out;
+}
+
+.timeline__nav-item[aria-current="true"] .timeline__nav-label {
+  opacity: 1;
+}
+
+@media screen and (min-width: 700px) {
+  .timeline {
+    gap: var(--spacing-14);
+  }
+
+  .timeline__slide {
+    gap: var(--spacing-10);
+  }
+
+  .timeline__slide > .prose {
+    padding-inline-start: var(--spacing-14);
+    padding-inline-end: var(--spacing-14);
+  }
+
+  .timeline__controls {
+    --timeline-dot-size: var(--spacing-5);
+    --timeline-dot-padding-inline-end: var(--spacing-5);
+  }
+
+  .timeline__nav-item {
+    min-width: 160px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .timeline__slide {
+    text-align: start;
+    grid: auto / repeat(2, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .timeline__slide > .timeline__image-wrapper {
+    padding-inline-end: 16.5%;
+  }
+
+  .timeline__slide > .prose {
+    z-index: 1;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    position: relative;
+  }
+
+  .timeline__image {
+    max-width: initial;
+  }
+
+  .timeline__image-wrapper {
+    position: relative;
+  }
+
+  .timeline__controls {
+    align-items: flex-start;
+    gap: var(--spacing-10);
+    display: flex;
+  }
+
+  .timeline__controls.scroll-area {
+    overflow: visible;
+  }
+}
+
+.timeline__buttons {
+  gap: var(--spacing-4);
+  display: flex;
+}
+
+@media screen and (max-width: 999px) {
+  .md-max\:hidden {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1150px) {
+  .timeline__slide > .prose {
+    padding-inline-end: 16.5%;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .timeline__slide > .prose {
+    max-width: 85%;
+  }
+}
+
+/* ============================================================
+   FAQ — acordeón de preguntas frecuentes
+   ============================================================ */
+
+summary {
+  -webkit-user-select: none;
+  user-select: none;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion {
+  --accordion-spacing: var(--spacing-5);
+  box-sizing: content-box;
+  border-block-start-width: 1px;
+  border-block-end-width: 1px;
+  border-color: rgb(var(--text-color) / .12);
+}
+
+.accordion__toggle {
+  gap: var(--spacing-2);
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+  padding-block-start: var(--accordion-spacing);
+  padding-block-end: var(--accordion-spacing);
+  display: flex;
+}
+
+.accordion__content {
+  margin-block-end: var(--accordion-spacing);
+  padding-inline-end: var(--spacing-6);
+}
+
+.accordion-box {
+  padding: var(--spacing-1) var(--spacing-6);
+}
+
+.accordion-box > :first-child {
+  border-block-start-width: 0;
+}
+
+.accordion-box > :last-child {
+  border-block-end-width: 0;
+}
+
+@media screen and (min-width: 1000px) {
+  .accordion-box {
+    padding: var(--spacing-5) var(--spacing-12);
+  }
+}
+
+.faq-availability {
+  gap: var(--spacing-6);
+  text-align: center;
+  justify-items: center;
+  display: grid;
+}
+
+.faq-availability > * {
+  justify-items: inherit;
+}
+
+.section-stack__intro .faq-availability {
+  text-align: start;
+  justify-items: start;
+}
+
+/* ============================================================
+   TEXT-WITH-ICONS — 4 trust badges con ícono (envíos, pago,
+   soporte, garantía) — usa <scroll-carousel> y <page-dots> ya
+   registrados, no necesita JS nuevo.
+   ============================================================ */
+
+.text-with-icons {
+  gap: var(--spacing-8);
+  text-align: var(--text-with-icons-text-align);
+  justify-content: var(--text-with-icons-justify);
+  display: grid;
+}
+
+.text-with-icons__list {
+  grid: auto / var(--text-with-icons-template);
+  row-gap: var(--spacing-6);
+  align-items: start;
+  min-width: 0;
+  display: grid;
+}
+
+.text-with-icons__item {
+  gap: var(--text-with-icons-gap);
+  justify-items: var(--text-with-icons-justify);
+  padding-inline-start: var(--spacing-6);
+  padding-inline-end: var(--spacing-6);
+  display: grid;
+}
+
+@media screen and (min-width: 1000px) {
+  :not(.is-scrollable) .text-with-icons__list {
+    gap: var(--spacing-6);
+  }
+
+  :not(.is-scrollable) .text-with-icons__item {
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  :not(.is-scrollable) .text-with-icons__list {
+    gap: var(--spacing-10);
+  }
+}
+
+/* ── peer-not-scrollable — oculta los page-dots cuando el carrusel
+   no tiene contenido suficiente para hacer scroll (ej. desktop
+   donde los 4 íconos ya caben sin necesitar scroll) ── */
+:not(.is-scrollable) ~ .peer-not-scrollable\:hidden {
+  display: none;
+}
+
+/* ============================================================
+   FOOTER — rediseño visual (HTML/JS/IDs sin tocar, solo se
+   reemplazan clases Bootstrap rotas por el sistema arms-/Impact)
+   ============================================================ */
+
+.footer {
+  --background: var(--footer-background);
+  --text-color: var(--footer-text);
+  --footer-padding-block: var(--spacing-12);
+  --footer-part-gap: var(--spacing-10);
+  --footer-block-list-gap: var(--spacing-10);
+  --footer-block-gap: var(--spacing-4);
+  --footer-aside-gap: var(--spacing-10);
+  background: rgb(var(--background));
+  color: rgb(var(--text-color));
+  padding-block-start: var(--footer-padding-block);
+  padding-block-end: var(--footer-padding-block);
+}
+
+.footer__wrapper {
+  gap: var(--footer-part-gap);
+  display: grid;
+}
+
+.footer__block-list {
+  gap: var(--footer-block-list-gap);
+  align-items: start;
+  justify-content: var(--footer-block-list-justify-content, start);
+  grid: auto-flow dense / repeat(2, minmax(0, 1fr));
+  display: grid;
+}
+
+.footer__block {
+  gap: var(--footer-block-gap);
+  display: grid;
+}
+
+.footer__block--text {
+  grid-column: span 2;
+}
+
+.footer__block--menu {
+  max-width: 250px;
+}
+
+.footer__aside {
+  gap: var(--footer-aside-gap);
+  display: grid;
+}
+
+.footer__aside-top, .footer__aside-bottom {
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-8);
+  display: grid;
+}
+
+/* ── social-media / link-faded — íconos sociales del footer ── */
+.social-media {
+  gap: var(--spacing-3) var(--spacing-6);
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.link-faded {
+  opacity: .7;
+  transition: opacity .2s ease-in-out;
+}
+
+@media screen and (pointer: fine) {
+  .link-faded:hover {
+    opacity: 1;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .footer {
+    --footer-padding-block: var(--spacing-16);
+    --footer-part-gap: var(--spacing-16);
+    --footer-block-list-gap: var(--spacing-10) var(--spacing-24);
+    --footer-block-gap: var(--spacing-6);
+    --footer-aside-gap: var(--spacing-12);
+  }
+
+  .footer__block-list {
+    flex-wrap: wrap;
+    display: flex;
+  }
+
+  .footer__block--text {
+    flex-basis: 25%;
+  }
+
+  .footer__block--menu {
+    flex-shrink: 0;
+  }
+
+  .footer__aside-top, .footer__aside-bottom {
+    display: flex;
+  }
+
+  .footer__copyright {
+    order: -1;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .footer {
+    --footer-block-list-gap: var(--spacing-10) var(--spacing-12);
+  }
+
+  .footer__block-list {
+    flex-wrap: nowrap;
+  }
+}
+
+/* ============================================================
+   UTILIDADES DE VISIBILIDAD/DISPLAY RESPONSIVE — Impact
+   CRÍTICO: estas faltaban por completo en arms.css. Sin ellas,
+   cualquier clase "hidden", "sm:hidden", "md:block", etc. usada
+   en cualquier .njk del proyecto no tiene ningún efecto — el
+   elemento queda SIEMPRE visible sin importar el viewport.
+   Esto causó el bug real de "2 lupas visibles a la vez" en el
+   header (la de mobile y la de desktop, ambas mostrándose juntas
+   porque sm:hidden / hidden sm:block nunca se aplicaban).
+   ============================================================ */
+
+.hidden {
+  display: none;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.block {
+  display: block;
+}
+
+.contents {
+  display: contents;
+}
+
+@media screen and (min-width: 700px) {
+  .sm\:hidden {
+    display: none;
+  }
+
+  .sm\:block {
+    display: block;
+  }
+
+  .sm\:flex {
+    display: flex;
+  }
+
+  .sm\:grid {
+    display: grid;
+  }
+
+  .sm\:table-cell {
+    display: table-cell;
+  }
+
+  .sm\:contents {
+    display: contents;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .md\:hidden {
+    display: none;
+  }
+
+  .md\:block {
+    display: block;
+  }
+
+  .md\:flex {
+    display: flex;
+  }
+
+  .md\:grid {
+    display: grid;
+  }
+
+  .md\:table-cell {
+    display: table-cell;
+  }
+
+  .md\:contents {
+    display: contents;
+  }
+}
+
+@media screen and (min-width: 1150px) {
+  .lg\:hidden {
+    display: none;
+  }
+
+  .lg\:block {
+    display: block;
+  }
+
+  .lg\:flex {
+    display: flex;
+  }
+
+  .lg\:grid {
+    display: grid;
+  }
+
+  .lg\:table-cell {
+    display: table-cell;
+  }
+
+  .lg\:contents {
+    display: contents;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .xl\:hidden {
+    display: none;
+  }
+
+  .xl\:block {
+    display: block;
+  }
+
+  .xl\:flex {
+    display: flex;
+  }
+
+  .xl\:grid {
+    display: grid;
+  }
+}
+
+/* ── max-width inverso (oculta DESDE ese breakpoint hacia ABAJO,
+   lo opuesto a sm:/md:/lg: que ocultan desde ahí hacia ARRIBA).
+   Ya usado antes en timeline.njk (md-max:hidden) ── */
+@media screen and (max-width: 699px) {
+  .sm-max\:hidden {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 999px) {
+  .md-max\:hidden {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1149px) {
+  .lg-max\:hidden {
+    display: none;
+  }
+}
+
+/* ── snap utilities — scroll-snap-align para ítems de carruseles
+   con scroll horizontal (text-with-icons, colecciones). Sin esto
+   los ítems no se enganchan al deslizar. De Impact theme.css 9440. ── */
+.snap-start {
+  scroll-snap-align: start;
+}
+
+.snap-center {
+  scroll-snap-align: center;
+}
+
+/* ── object-fit utilities — sistema de imágenes de Impact.
+   .object-fill posiciona la imagen en absolute llenando su
+   contenedor: es el mecanismo que APILA la imagen secundaria del
+   product-card sobre la primaria (hover-swap). Sin esto la
+   secundaria fluye debajo. De Impact theme.css 10039. ── */
+.object-fill {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.object-fill, .object-fill-safe, .object-cover {
+  object-fit: cover;
+  object-position: center;
+}
+
+.object-contain {
+  object-fit: contain;
+  object-position: center;
+}
+
+/* el <a> del product-card debe ser contexto de posicionamiento para
+   que la imagen secundaria (.object-fill, absolute) se apile sobre la
+   primaria respetando el aspect-ratio del enlace. */
+.product-card__figure > a {
+  position: relative;
+}
+
+/* ================================================================
+   Card de catálogo (card-producto.njk) — utilidades del reskin a
+   product-card de Impact. Estas visten el card manteniendo su
+   funcionamiento (variantes, stock, botón agregar). Van al final
+   para ganar la cascada (patrón utilidades).
+   ================================================================ */
+
+/* subtítulo bajo el nombre del producto */
+.product-card__subtitle {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: 400;
+  color: rgb(var(--text-color) / 0.55);
+  margin-top: 2px;
+}
+
+/* cuerpo del card: flex column de altura completa para poder anclar
+   el botón "Agregar" abajo (margin-top:auto) — así queda alineado
+   entre todas las cards sin importar cuántas filas ocupen las
+   variantes. El .product-card__info ya aporta el padding (16px). */
+.arms-card-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* contenedor de botones de variante (flex wrap, lado a lado) */
+.arms-card-variantes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-block: 0;
+}
+
+/* botones de variante — compactos para que quepan 3 por fila */
+.arms-var-btn {
+  padding: 0.15rem 0.3rem;
+  border-radius: var(--rounded-xs);
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s ease;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* variante SELECCIONADA — recupera el feedback visual que estaba en
+   main.css (desconectado). Adaptado al tema claro de Impact: anillo
+   oscuro que contrasta con el fondo blanco, en vez del outline blanco
+   del diseño viejo. El outline no altera el layout, así que no
+   descuadra la fila de variantes. Aplica en AMBOS contextos:
+   - cards de catálogo (botón .arms-var-btn)
+   - página de producto (botón con estilos inline, sin .arms-var-btn)
+   por eso la clase .var-btn-active va sola, sin exigir .arms-var-btn. */
+.var-btn-active {
+  outline: 2px solid rgb(var(--text-primary));
+  outline-offset: 1px;
+  font-weight: 700;
+  transform: scale(1.04);
+}
+
+/* indicador de stock (lo llena el JS) */
+.arms-card-stock {
+  font-size: var(--text-xs);
+  min-height: 0;
+}
+
+/* el botón "Agregar" del card: ancho completo, compacto, anclado
+   al fondo (margin-top:auto) para alinearse entre todas las cards. */
+.product-card__info .button.btn-cat-agregar {
+  width: 100%;
+  font-size: var(--text-xs);
+  padding-block: var(--spacing-1-5);
+  margin-top: auto;
+}
+
+/* separación mínima garantizada entre las variantes (o lo que haya
+   encima) y el botón, aunque la card esté llena y margin-top:auto
+   colapse. Se aplica al contenedor de variantes por abajo. */
+.product-card.card-categoria .arms-card-variantes {
+  margin-bottom: var(--spacing-2);
+}
+
+/* reducir el margen lateral del grid de productos en mobile
+   (el .section base usa spacing-8 = 32px/lado, demasiado). Solo
+   afecta a la sección que contiene un product-list. */
+.section:has(.product-list) {
+  --calculated-section-spacing-inline: var(--spacing-4);
+}
+
+/* ================================================================
+   Página PILAR (colección) — componentes del collection-banner
+   portados de Impact theme.css. El collection-banner en sí usa
+   content-over-media + full-bleed (ya existentes). Estos son los
+   sub-componentes que faltaban: featured product + horizontal-product.
+   ================================================================ */
+
+/* producto horizontal (usado en el featured product del banner) */
+.horizontal-product {
+  --horizontal-product-image-size: var(--spacing-16);
+  align-items: flex-start;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4);
+  min-width: 0;
+  display: flex;
+}
+
+.horizontal-product__image {
+  width: var(--horizontal-product-image-size);
+  flex: 0 0 var(--horizontal-product-image-size);
+}
+
+.horizontal-product__info {
+  gap: var(--spacing-2);
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+  display: grid;
+}
+
+@media screen and (min-width: 700px) {
+  .horizontal-product {
+    --horizontal-product-image-size: var(--spacing-20);
+    gap: var(--spacing-5);
+    align-items: center;
+  }
+  .horizontal-product--sm {
+    --horizontal-product-image-size: var(--spacing-16);
+  }
+  .horizontal-product__info {
+    gap: var(--spacing-4);
+    display: flex;
+  }
+}
+
+/* producto destacado del banner de colección */
+.collection-featured-product {
+  max-width: 290px;
+  display: grid;
+}
+
+.collection-featured-product > * {
+  background: rgb(var(--text-primary) / .2);
+  -webkit-backdrop-filter: blur(80px);
+  backdrop-filter: blur(80px);
+}
+
+.collection-featured-product__title {
+  padding: var(--spacing-1-5) var(--spacing-4);
+  border-top-left-radius: var(--rounded-xs);
+  border-top-right-radius: var(--rounded-xs);
+  justify-self: end;
+}
+
+.collection-featured-product__content {
+  border-radius: var(--rounded-xs);
+  border-top-right-radius: 0;
+}
+
+/* zoom en hover de las imágenes de image-link-blocks */
+@media (pointer: fine) {
+  .zoom-image--enabled .zoom-image {
+    transform-origin: center;
+    transition: transform 1.5s cubic-bezier(.22, 1, .36, 1);
+  }
+  .zoom-image--enabled .group:hover .zoom-image {
+    transform: scale(1.06);
+  }
+}
+
+/* ── Alineación del botón "Agregar" al fondo del card de catálogo.
+   Solo aplica a cards de catálogo (.card-categoria), no a las del
+   home. La cadena de altura: el grid del product-list da igual
+   altura a las cards de una fila; el card estira su fila de info
+   (1fr) para llenar; info y body propagan height:100%; el botón
+   usa margin-top:auto (definido arriba) para irse al fondo. ── */
+.product-card.card-categoria {
+  grid-template-rows: auto 1fr;
+  align-content: stretch;
+}
+.product-card.card-categoria .product-card__info {
+  height: 100%;
+  align-content: stretch;
+  padding-top: var(--spacing-1);
+}
+
+/* ================================================================
+   Indicador de stock bajo/agotado (recuperado de main.css 448).
+   Lo inserta cart-store.js en el contenedor .card-categoria-body
+   cuando quedan ≤5 unidades. Estaba en main.css (desconectado). ── */
+.stock-indicator {
+  display: none;
+  align-items: center;
+  gap: .3rem;
+  margin-bottom: .4rem;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+.stock-indicator.stock-low {
+  display: flex;
+  color: #d97706;
+}
+.stock-indicator.stock-low .stock-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f59e0b;
+  flex-shrink: 0;
+  animation: stock-pulse 1.8s ease-in-out infinite;
+}
+.stock-indicator.stock-out {
+  display: flex;
+  color: #ef4444;
+}
+.stock-indicator.stock-out .stock-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  flex-shrink: 0;
+}
+@keyframes stock-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .5; transform: scale(.75); }
+}
+
+/* ================================================================
+   Bloque promocional dentro del grid de productos (Impact:
+   .product-list__promo, theme.css 2747). Ocupa 2 columnas del grid.
+   ================================================================ */
+.product-list__promo {
+  grid-column: var(--product-list-promo-grid-column, span 2);
+  min-height: 200px;
+  display: grid;
+}
+
+/* utilidades que usa el promo (van al final para ganar cascada) */
+.h-full {
+  height: 100%;
+}
+
+.justify-items-center {
+  justify-items: safe center;
+}
+
+.ring-current {
+  box-shadow: 0 0 0 1px rgb(var(--text-color));
+}
+
+/* ================================================================
+   PÁGINA DE PRODUCTO — migración de producto.css al sistema Impact.
+   Mismas clases que ya usaba producto.njk (no cambia el HTML por
+   este bloque), pero adaptadas al tema claro de Impact: texto
+   oscuro sobre fondo claro, tokens de spacing/rounded del sistema.
+   Sustituye por completo a producto.css, que queda desconectado.
+   ================================================================ */
+
+/* ── Espaciado de secciones ── */
+.pt-producto    { padding-top: var(--spacing-10); }
+.pb-producto    { padding-bottom: var(--spacing-16); }
+.py-producto-sm { padding-block: var(--spacing-10); }
+
+@media screen and (min-width: 1000px) {
+  .pt-producto    { padding-top: var(--spacing-12); }
+  .pb-producto    { padding-bottom: var(--spacing-20); }
+  .py-producto-sm { padding-block: var(--spacing-12); }
+}
+
+/* ── Layout de 2 columnas (galería + info) ── */
+.producto-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spacing-6);
+  align-items: start;
+}
+
+@media screen and (min-width: 1000px) {
+  .producto-layout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--spacing-10);
+  }
+}
+
+/* ── Breadcrumb ── */
+.breadcrumb-arms {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-1-5);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: var(--text-sm);
+}
+.breadcrumb-arms li { display: flex; align-items: center; gap: var(--spacing-1-5); }
+.breadcrumb-arms a {
+  color: rgb(var(--text-primary) / 0.55);
+  text-decoration: none;
+  transition: color .15s ease;
+}
+.breadcrumb-arms a:hover { color: rgb(var(--text-primary)); }
+.breadcrumb-arms span { color: rgb(var(--text-primary) / 0.3); font-size: var(--text-xs); }
+.breadcrumb-arms li:last-child { color: rgb(var(--text-primary) / 0.8); font-weight: 500; }
+
+/* ── Imagen principal de la galería ── */
+.producto-imagen-wrap {
+  border-radius: var(--rounded-sm);
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: rgb(255 255 255);
+}
+.producto-imagen-wrap svg {
+  width: 55% !important;
+  height: 55% !important;
+  opacity: .92;
+}
+
+/* ── Info del producto ── */
+.producto-nombre {
+  font-size: var(--text-h2);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: rgb(var(--text-primary));
+  margin: 0 0 var(--spacing-1);
+  line-height: 1.15;
+}
+.producto-subtitulo {
+  color: rgb(var(--text-primary) / 0.55);
+  font-size: var(--text-base);
+  margin: 0 0 var(--spacing-5);
+}
+
+/* ── Precio ── */
+.producto-precio-wrap {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-5);
+}
+.producto-precio-actual {
+  font-size: var(--text-h4);
+  font-weight: 700;
+  color: rgb(var(--text-primary));
+  letter-spacing: -0.02em;
+}
+.producto-precio-original {
+  font-size: var(--text-base);
+  color: rgb(var(--text-primary) / 0.4);
+  text-decoration: line-through;
+}
+.badge-discount-lg {
+  display: inline-block;
+  background: rgb(var(--text-primary) / 0.06);
+  color: #dc2626;
+  border: 1px solid rgb(220 38 38 / 0.25);
+  border-radius: var(--rounded-full, 2rem);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  padding: var(--spacing-1-5) var(--spacing-4);
+}
+
+/* ── Label de variante ── */
+.producto-label-variante {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: rgb(var(--text-primary) / 0.5);
+  margin: 0 0 var(--spacing-2);
+}
+
+/* selector de variantes en la página de producto */
+.producto-variantes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-6);
+}
+
+/* ── Botones de acción ── */
+.producto-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-6);
+}
+.btn-agregar-lg {
+  flex: 1 1 200px;
+  justify-content: center;
+}
+.btn-whatsapp-producto {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3) var(--spacing-5);
+  background: #25D366;
+  color: #fff;
+  border-radius: var(--rounded-button, var(--rounded-xs));
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: transform .2s ease, box-shadow .2s ease;
+  flex: 1 1 200px;
+}
+.btn-whatsapp-producto:hover {
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgb(37 211 102 / 0.35);
+}
+
+/* ── Chips de garantía ── */
+.producto-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  background: rgb(var(--text-primary) / 0.04);
+  border: 1px solid rgb(var(--text-primary) / 0.1);
+  border-radius: var(--rounded-full, 2rem);
+  padding: var(--spacing-1-5) var(--spacing-3);
+  font-size: var(--text-xs);
+  color: rgb(var(--text-primary) / 0.65);
+  font-weight: 500;
+}
+.chip-icon { color: rgb(var(--text-primary) / 0.45); font-size: var(--text-xs); }
+
+/* ── Descripción ── */
+.producto-descripcion-card {
+  background: rgb(var(--text-primary) / 0.03);
+  border: 1px solid rgb(var(--text-primary) / 0.08);
+  border-radius: var(--rounded-sm);
+  padding: var(--spacing-8);
+}
+.producto-section-title {
+  font-size: var(--text-h6);
+  font-weight: 700;
+  color: rgb(var(--text-primary));
+  margin: 0 0 var(--spacing-4);
+  letter-spacing: -0.01em;
+}
+.producto-descripcion-texto {
+  color: rgb(var(--text-primary) / 0.7);
+  font-size: var(--text-base);
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* ── Botón volver ── */
+.btn-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  color: rgb(var(--text-primary) / 0.55);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  padding: var(--spacing-2) 0;
+  transition: color .15s ease;
+}
+.btn-volver:hover { color: rgb(var(--text-primary)); }
+.btn-volver svg { transition: transform .15s ease; }
+.btn-volver:hover svg { transform: translateX(-3px); }
+
+/* ── Grid de relacionados ── */
+.producto-relacionados {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-2);
+}
+@media screen and (min-width: 1000px) {
+  .producto-relacionados {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--product-list-row-gap) var(--product-list-column-gap);
+  }
+}
