@@ -211,6 +211,7 @@ Cargados en `base.njk`:
 |---|---|
 | `arms-announcement.js` | `<marquee-text>` + `HeightObserver`. **Único** dueño de `marquee-text`. |
 | `arms-header.js` | `<store-header>`: sticky tras 500px (`STICKY_THRESHOLD`), transparencia condicional. |
+| `safe-sticky.js` | `<safe-sticky>`: compensación de scroll para `position:sticky` (portado del `theme.js` real de Impact). Lo usa la columna de info de la página de producto (botón sticky en desktop). |
 | `arms-slideshow.js` (module) | Hero/slideshow, `ScrollCarousel`, `PageDots`, prev/next buttons, `SplitLines` con Motion One. |
 | `arms-home.js` (module) | Resto de Web Components del home; Motion One para reveal-on-scroll. |
 | `cart-store.js` | Estado del carrito, stock (`/api/stock`), variantes (`seleccionarVariante`), `agregarAlCarrito`. |
@@ -299,6 +300,10 @@ hay menos (Cables tiene 3). Promos: accesorios → "Encuentra tus In-Ears" →
 (Generada por `src/producto-page.njk` con paginación.) Se conservó la
 estructura; se cambió layout y estilo:
 - `.producto-layout` (grid 5/7 en desktop), `.producto-relacionados` (2/4 col).
+- **Botón "Agregar al carrito" sticky** (ver fix `00b4bba` en §14): columna
+  de info envuelta en `<safe-sticky class="producto-info">` (sticky en
+  desktop ≥1000px, mecanismo de Impact) + barra fija abajo en móvil
+  (`#producto-barra`, JS inline al final del include, `z-index: 1050`).
 - Al final: featured-collection "Los más vendidos" (excluye el producto
   actual vía `fcExcluirId = productoActualId`) + text-with-icons.
 - **Ojo:** el bucle de relacionados hace `{% set prod = rel %}` y sobrescribe
@@ -505,6 +510,10 @@ armsmusic/
 ## 14. ESTADO — SESIÓN 2026-10-07 (auditoría de fidelidad + fixes)
 
 ### Fixes aplicados (commiteados en `main`)
+- `00b4bba` — **Botón "Agregar al carrito" sticky** en la página de producto:
+  - **Desktop (≥1000px):** mecanismo real de Impact — `safe-sticky.js` (nuevo; clase `SafeSticky` portada del `theme.js` real con su `throttle` rAF y `inView` vía IntersectionObserver) + wrapper `<safe-sticky class="producto-info">` en la columna de info + regla `position:sticky; top: calc(var(--sticky-area-height) + 20px); z-index:1` (igual a `.product-info` del demo, mismo breakpoint). La columna (y su botón) se queda fija a 117px (header 97 + 20) durante ~340px de scroll mientras pasa la galería (la galería 672px es más alta que la info 333px). `--sticky-area-height` ya era correcto: el `height-observer` local mide el header real en runtime.
+  - **Móvil (<992px):** barra fija abajo con botón "Agregar al carrito" (`button--xl`, mismo tamaño que el principal) que aparece cuando el bloque de botones queda por arriba del viewport (listener de scroll con rAF — **no** IntersectionObserver: el elemento pasa de "abajo" a "arriba" sin cruzar umbral de intersección, ratio 0 en ambos lados, y el IO nunca dispara). El botón de la barra lee `data-product-name`/`data-img` del botón principal **en el momento del clic** (siempre la variante seleccionada; no se toca `cart-store.js`) y llama al `agregarAlCarrito()` existente (misma animación, mismo stock, mismo agotado — sincronizado con MutationObserver). `z-index: 1050` (cubre el bottom-nav 1020 mientras está visible; el carrito y el menú siguen en el header).
+  - **Nota del demo:** el producto de referencia de la barra móvil (`mh40-wireless-paris-saint-german`, captura del dueño 2026-10-07) **fue borrado del demo** (404 + fuera de la colección; sin snapshot en Wayback) — la barra vivía en su plantilla custom, no en el `theme.css`/`theme.js` base (verificado: ni un `position:fixed;bottom` de compra en el tema). Comportamiento replicado de la captura: botón a todo lo ancho fijo abajo, encima del contenido.
 - `8a5f0f0` — **Botones de producto** ("Agregar al carrito" + "Consultar por WhatsApp"): ahora usan `button button--xl` → igual al demo en los dos tamaños (móvil: h 54.4px, font 14px, pad 16/32px · desktop: h 60px, font 16px, pad 17.2/40px). Gap de `.producto-acciones` igualado a `.buy-buttons` del demo (8px móvil / 16px ≥700px). Incluye fix de bug: la segunda regla de `.button--xl` vivía **suelta sin `@media (min-width:700px)`** y aplicaba el padding de desktop a todos los tamaños (afectaba también a los CTA `--xl` del home).
 - `48d429c` — **Barra de anuncio**: padding igual a Impact (10px móvil / 14px ≥700px) + `display:block` en el `height-observer` de la barra. Antes: la variable `--announcement-bar-height` quedaba en **0px** (el `height-observer` era `display:inline` sin regla) y rompía el offset de scroll y el alto del hero.
 - `02770f8` — **Grid de productos**: eliminada la regla suelta `.section:has(.product-list)` que dejaba margen de 16px en TODOS los tamaños (estaba pensada solo para móvil, sin su `@media`). Ahora: 20px móvil / 48px desktop / centrado a 1600px — igual al demo en todos los tamaños.
