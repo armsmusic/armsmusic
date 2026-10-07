@@ -3792,13 +3792,6 @@ summary::-webkit-details-marker {
   margin-bottom: var(--spacing-2);
 }
 
-/* reducir el margen lateral del grid de productos en mobile
-   (el .section base usa spacing-8 = 32px/lado, demasiado). Solo
-   afecta a la sección que contiene un product-list. */
-.section:has(.product-list) {
-  --calculated-section-spacing-inline: var(--spacing-4);
-}
-
 /* ================================================================
    Página PILAR (colección) — componentes del collection-banner
    portados de Impact theme.css. El collection-banner en sí usa
