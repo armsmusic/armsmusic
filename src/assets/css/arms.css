@@ -4122,6 +4122,53 @@ summary::-webkit-details-marker {
   box-shadow: 0 8px 24px rgb(37 211 102 / 0.35);
 }
 
+/* ── Sticky de la columna de info — mecanismo real de Impact ──
+   Igual que .product-info del demo (theme.css, min-width:1000px):
+   position:sticky + top = sticky-area (header real, medido por
+   height-observer) + 20px. El wrapper <safe-sticky> (safe-sticky.js)
+   compensa el scroll para que no salte. Con la galería más alta
+   que la info, la columna (y su botón) se queda fija mientras
+   pasa la galería. */
+@media screen and (min-width: 1000px) {
+  .producto-info {
+    top: calc(var(--sticky-area-height) + 20px);
+    z-index: 1;
+    position: sticky;
+  }
+}
+
+/* ── Barra sticky móvil — botón "Agregar" fijo abajo ──────────
+   Mismo comportamiento que el demo en móvil (ver captura de
+   referencia): el botón se fija en la parte inferior cuando el
+   botón principal sale de pantalla. Solo <992px (mismo breakpoint
+   que el bottom-nav, que cubre mientras está visible: z 1050 > 1020). */
+.producto-barra {
+  display: none;
+}
+@media screen and (max-width: 991.98px) {
+  .producto-barra {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    background: rgb(var(--dialog-background));
+    border-block-start: 1px solid rgb(var(--text-primary) / 0.08);
+    box-shadow: 0 -8px 24px rgb(var(--text-primary) / 0.08);
+    padding: var(--spacing-2) var(--spacing-3) calc(var(--spacing-2) + env(safe-area-inset-bottom, 0px));
+    transform: translateY(110%);
+    transition: transform 0.25s ease;
+    display: block;
+  }
+  .producto-barra.is-visible {
+    transform: translateY(0);
+  }
+  .producto-barra__btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* ── Chips de garantía ── */
 .producto-chips {
   display: flex;

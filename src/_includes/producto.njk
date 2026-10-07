@@ -78,8 +78,10 @@
           {% endif %}
         </div>
 
-        <!-- Info -->
-        <div>
+        <!-- Info — <safe-sticky>: mecanismo de sticky de Impact
+             (position:sticky + compensación de scroll —
+             safe-sticky.js / .producto-info en arms.css) -->
+        <safe-sticky class="producto-info">
 
           <h1 class="producto-nombre">{{ nombre }}</h1>
           {% if subtitulo %}<p class="producto-subtitulo">{{ subtitulo }}</p>{% endif %}
@@ -143,7 +145,7 @@
             <span class="chip"><i class="fa-solid fa-rotate-left chip-icon"></i> Cambios y devoluciones</span>
           </div>
 
-        </div>
+        </safe-sticky>
       </div>
     </div>
   </section>
@@ -190,6 +192,17 @@
 
 </div>
 
+{# ── BARRA STICKY MÓVIL — botón "Agregar" fijo abajo ──────────
+   Mismo comportamiento que el demo de Impact en móvil: aparece
+   cuando el botón principal sale de pantalla (IntersectionObserver
+   en el <script> final de este include). Solo <992px (arms.css). #}
+<div id="producto-barra" class="producto-barra">
+  <button id="btn-barra-add" class="button button--xl producto-barra__btn"
+    onclick="agregarDesdeBarra()">
+    <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
+  </button>
+</div>
+
 {# ── FEATURED-COLLECTION ("Los más vendidos") ────────────────── #}
 {% set fcTitulo = "Los más vendidos" %}
 {% set fcCarouselId = "scroll-area-producto" %}
@@ -219,6 +232,67 @@
 {% include "pilar/text-with-icons.njk" %}
 
 <script>
+// Precio de ESTA página — lo usa la barra sticky móvil
+// (el botón principal lleva el precio en su onclick inline)
+var ARMS_PRODUCTO_PRECIO = {{ precio }};
+
+// Barra sticky móvil: agrega al carrito la variante que está
+// seleccionada en el botón principal (lee data-product-name en
+// el momento del clic — siempre sincronizado con
+// seleccionarVariante de cart-store.js, sin tocar ese archivo).
+function agregarDesdeBarra() {
+  var main  = document.querySelector('.producto-acciones .btn-agregar');
+  var barra = document.getElementById('btn-barra-add');
+  if (!main || !barra || main.disabled) return;
+  var img = main.getAttribute('data-img');
+  if (img) barra.setAttribute('data-img', img);
+  agregarAlCarrito(main.getAttribute('data-product-name'), ARMS_PRODUCTO_PRECIO, barra);
+}
+
+(function () {
+  var acciones = document.querySelector('.producto-acciones');
+  var barra    = document.getElementById('producto-barra');
+  if (!acciones || !barra) return;
+
+  // Mostrar la barra cuando el bloque de botones queda por ARIBA
+  // del viewport (r.bottom < 0); ocultarla cuando vuelve a ser
+  // visible. Con IntersectionObserver no funciona: el elemento pasa
+  // de "abajo del viewport" a "arriba" sin cruzar el umbral de
+  // intersección (ratio 0 en ambos lados) y nunca dispara.
+  function actualizarBarra() {
+    barra.classList.toggle('is-visible', acciones.getBoundingClientRect().bottom < 0);
+  }
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      actualizarBarra();
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  actualizarBarra();
+
+  // Sincronizar estado agotado con el botón principal
+  var main = document.querySelector('.producto-acciones .btn-agregar');
+  var btnBarra = document.getElementById('btn-barra-add');
+  if (main && btnBarra) {
+    new MutationObserver(function () {
+      if (main.disabled) {
+        btnBarra.disabled = true;
+        btnBarra.style.opacity = '0.5';
+        btnBarra.textContent = 'Agotado';
+      } else {
+        btnBarra.disabled = false;
+        btnBarra.style.opacity = '1';
+        btnBarra.innerHTML = '<i class="fa-solid fa-cart-plus"></i> Agregar al carrito';
+      }
+    }).observe(main, { attributes: true, attributeFilter: ['disabled'] });
+  }
+})();
+
 function cambiarImagen(src, btn) {
   document.getElementById('img-principal').src = src;
   document.querySelectorAll('.thumb-btn').forEach(b => {
