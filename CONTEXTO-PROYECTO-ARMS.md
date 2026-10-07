@@ -505,6 +505,7 @@ armsmusic/
 ## 14. ESTADO — SESIÓN 2026-10-07 (auditoría de fidelidad + fixes)
 
 ### Fixes aplicados (commiteados en `main`)
+- `8a5f0f0` — **Botones de producto** ("Agregar al carrito" + "Consultar por WhatsApp"): ahora usan `button button--xl` → igual al demo en los dos tamaños (móvil: h 54.4px, font 14px, pad 16/32px · desktop: h 60px, font 16px, pad 17.2/40px). Gap de `.producto-acciones` igualado a `.buy-buttons` del demo (8px móvil / 16px ≥700px). Incluye fix de bug: la segunda regla de `.button--xl` vivía **suelta sin `@media (min-width:700px)`** y aplicaba el padding de desktop a todos los tamaños (afectaba también a los CTA `--xl` del home).
 - `48d429c` — **Barra de anuncio**: padding igual a Impact (10px móvil / 14px ≥700px) + `display:block` en el `height-observer` de la barra. Antes: la variable `--announcement-bar-height` quedaba en **0px** (el `height-observer` era `display:inline` sin regla) y rompía el offset de scroll y el alto del hero.
 - `02770f8` — **Grid de productos**: eliminada la regla suelta `.section:has(.product-list)` que dejaba margen de 16px en TODOS los tamaños (estaba pensada solo para móvil, sin su `@media`). Ahora: 20px móvil / 48px desktop / centrado a 1600px — igual al demo en todos los tamaños.
 - `617d93f` — **`<main>` anidado**: eliminado en pilares y subpilares (7 páginas con 2 landmarks `main`: el de `base.njk` + uno propio en `in-ears/index.njk`, `audio/index.njk`, `subpilar.njk`).
