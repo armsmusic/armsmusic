@@ -4137,38 +4137,113 @@ summary::-webkit-details-marker {
   }
 }
 
-/* ── Barra sticky móvil — botón "Agregar" fijo abajo ──────────
-   Mismo comportamiento que el demo en móvil (ver captura de
-   referencia): el botón se fija en la parte inferior cuando el
-   botón principal sale de pantalla. Solo <992px (mismo breakpoint
-   que el bottom-nav, que cubre mientras está visible: z 1050 > 1020). */
+/* Barra sticky: aparece cuando el boton principal queda por
+   arriba del viewport. Igual al demo de Impact:
+   · movil (<992px): boton a todo lo ancho abajo (sin imagen/texto)
+   · desktop: tarjeta compacta abajo-derecha con imagen + nombre +
+     precio + boton (los espacios abajo/dercha del borde, como el
+     demo). */
 .producto-barra {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1050;
+  background: rgb(var(--dialog-background));
+  box-shadow: 0 -8px 24px rgb(var(--text-primary) / 0.08);
+  /* el boton llena la barra a todo lo ancho (sin franjas blancas
+     a los lados); solo safe-area abajo para el iPhone con
+     home indicator */
+  padding: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  /* oculta: transparente y bajada 16px; visible: sube y aparece.
+     (translateY(110%) no sirve aqui: la barra queda elevada sobre
+     el bottom-nav y no saldria completa de la pantalla) */
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+  display: block;
+}
+.producto-barra.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.producto-barra__img {
   display: none;
 }
-@media screen and (max-width: 991.98px) {
+.producto-barra__nombre {
+  display: none;
+}
+.producto-barra__precio {
+  display: none;
+}
+.producto-barra__btn {
+  /* el ancho se iguala al del boton principal (lo mide el script
+     de producto.njk); centrado para que los bordes queden alineados
+     con la columna de contenido */
+  width: auto;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (min-width: 992px) {
   .producto-barra {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1050;
-    background: rgb(var(--dialog-background));
-    box-shadow: 0 -8px 24px rgb(var(--text-primary) / 0.08);
-    /* el boton llena la barra (como en el demo): sin padding visible,
-       solo safe-area abajo para el iPhone con home indicator */
-    padding-inline: var(--spacing-3);
-    padding-block: 0;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-    transform: translateY(110%);
-    transition: transform 0.25s ease;
+    left: auto;
+    right: var(--spacing-6);
+    bottom: var(--spacing-6);
+    border-radius: var(--rounded-sm);
+    box-shadow: var(--shadow-md), 0 0 0 1px rgb(var(--text-primary) / 0.06);
+    padding: var(--spacing-3) var(--spacing-4);
+    align-items: center;
+    gap: var(--spacing-3);
+    display: flex;
+  }
+  .producto-barra__img {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: var(--rounded-xs);
     display: block;
   }
-  .producto-barra.is-visible {
-    transform: translateY(0);
+  .producto-barra__nombre {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 240px;
+    display: block;
+  }
+  .producto-barra__precio {
+    font-size: var(--text-sm);
+    color: rgb(var(--text-primary) / 0.6);
+    display: block;
+  }
+  /* el boton de la tarjeta va en tamano base (el del demo),
+     no en --xl (ese es el de la barra movil) */
+  .producto-barra__btn {
+    width: auto;
+    flex-shrink: 0;
+    font-size: var(--text-sm);
+    padding-block: var(--spacing-3);
+    padding-inline: var(--spacing-6);
+  }
+}
+@media screen and (max-width: 991.98px) {
+  /* la barra no lleva fondo ni sombra: el boton es una pildora que
+     flota sobre el contenido (sin fondo blanco a la vista). Su
+     posicion (encima del bottom-nav) la pone el script de
+     producto.njk, que mide el nav en runtime. */
+  .producto-barra {
+    background: transparent;
+    box-shadow: none;
   }
   .producto-barra__btn {
-    width: 100%;
-    justify-content: center;
+    box-shadow: 0 8px 24px rgb(var(--text-primary) / 0.2);
   }
 }
 

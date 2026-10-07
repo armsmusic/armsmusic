@@ -192,11 +192,16 @@
 
 </div>
 
-{# ── BARRA STICKY MÓVIL — botón "Agregar" fijo abajo ──────────
-   Mismo comportamiento que el demo de Impact en móvil: aparece
-   cuando el botón principal sale de pantalla (IntersectionObserver
-   en el <script> final de este include). Solo <992px (arms.css). #}
+{# ── BARRA STICKY — botón "Agregar" fijo ───────────────────────
+   Igual al demo de Impact: en móvil (<992px) el botón va a todo
+   lo ancho abajo; en desktop una tarjeta compacta abajo-derecha
+   (imagen + nombre + precio + botón). Aparece cuando el botón
+   principal sale de pantalla (script al final de este include). #}
+{% set imgBarra = (imagenesVariantes[variantes[0]] if (variantes and imagenesVariantes and imagenesVariantes[variantes[0]]) else imagenes[0]) %}
 <div id="producto-barra" class="producto-barra">
+  <img class="producto-barra__img" src="/assets/img/productos/{{ imgBarra }}" alt="{{ nombre }}">
+  <span class="producto-barra__nombre">{{ nombre }}</span>
+  <span class="producto-barra__precio">{{ precio | gtq }}</span>
   <button id="btn-barra-add" class="button button--xl producto-barra__btn"
     onclick="agregarDesdeBarra()">
     <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
@@ -254,13 +259,50 @@ function agregarDesdeBarra() {
   var barra    = document.getElementById('producto-barra');
   if (!acciones || !barra) return;
 
+  // En movil la barra flota ENCIMA del bottom-nav (que siempre se
+  // queda a la vista): se apila por encima del elemento mas alto
+  // del nav (su boton carrito sube con margin-top negativo). Se
+  // mide en runtime para que sirva en iPhone (ahi el nav es mas
+  // alto por el safe-area). En desktop la posicion la da el CSS
+  // (tarjeta abajo-derecha).
+  var barraBottom = 0;
+  function posicionarBarra() {
+    var main = document.querySelector('.producto-acciones .btn-agregar');
+    var btn  = document.getElementById('btn-barra-add');
+    if (window.innerWidth >= 992) {
+      barra.style.bottom = '';
+      barraBottom = 0;
+      if (btn) btn.style.width = ''; // en desktop lo da el CSS (tarjeta)
+      return;
+    }
+    // la pildora lleva el mismo ancho que el boton principal
+    if (btn && main && main.offsetWidth) btn.style.width = main.offsetWidth + 'px';
+    var nav  = document.getElementById('bottom-nav');
+    if (!nav) return; // aun no se ha parseado (viene despues en el HTML)
+    var cart = document.getElementById('btn-cart-bottom');
+    var ref  = (cart && cart.offsetWidth) ? cart : nav;
+    barraBottom = Math.ceil(window.innerHeight - ref.getBoundingClientRect().top) + 10;
+    barra.style.bottom = barraBottom + 'px';
+  }
+
   // Mostrar la barra cuando el bloque de botones queda por ARIBA
   // del viewport (r.bottom < 0); ocultarla cuando vuelve a ser
   // visible. Con IntersectionObserver no funciona: el elemento pasa
   // de "abajo del viewport" a "arriba" sin cruzar el umbral de
   // intersección (ratio 0 en ambos lados) y nunca dispara.
   function actualizarBarra() {
-    barra.classList.toggle('is-visible', acciones.getBoundingClientRect().bottom < 0);
+    var visible = acciones.getBoundingClientRect().bottom < 0;
+    barra.classList.toggle('is-visible', visible);
+    // el boton de WhatsApp sube mientras la barra esta a la vista
+    // (en su posicion normal quedaria dentro de la zona de la
+    // pildora). Se consulta en runtime: floating-ui viene despues
+    // del main en el HTML, al correr el script no esta en el DOM.
+    var waf = document.querySelector('.whatsapp-float');
+    if (waf) {
+      waf.style.bottom = (visible && window.innerWidth < 992)
+        ? (barraBottom + barra.offsetHeight + 12) + 'px'
+        : '';
+    }
   }
   var ticking = false;
   function onScroll() {
@@ -272,8 +314,19 @@ function agregarDesdeBarra() {
     });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
+  window.addEventListener('resize', function () {
+    posicionarBarra();
+    onScroll();
+  }, { passive: true });
+  posicionarBarra();
   actualizarBarra();
+  // la primera llamada (arriba) corre con el nav aun no parseado:
+  // se repite cuando el DOM esta completo y el nav ya esta dibujado
+  // (site-ui.js lo muestra en su propio DOMContentLoaded, que corre
+  // antes de este rAF)
+  document.addEventListener('DOMContentLoaded', function () {
+    requestAnimationFrame(posicionarBarra);
+  });
 
   // Sincronizar estado agotado con el botón principal
   var main = document.querySelector('.producto-acciones .btn-agregar');
@@ -289,7 +342,13 @@ function agregarDesdeBarra() {
         btnBarra.style.opacity = '1';
         btnBarra.innerHTML = '<i class="fa-solid fa-cart-plus"></i> Agregar al carrito';
       }
-    }).observe(main, { attributes: true, attributeFilter: ['disabled'] });
+      // miniatura de la barra = imagen de la variante elegida
+      var img = main.getAttribute('data-img');
+      if (img) {
+        var thumb = document.querySelector('.producto-barra__img');
+        if (thumb) thumb.src = img;
+      }
+    }).observe(main, { attributes: true, attributeFilter: ['disabled', 'data-img'] });
   }
 })();
 
