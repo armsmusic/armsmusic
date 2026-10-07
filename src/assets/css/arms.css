@@ -4153,9 +4153,12 @@ summary::-webkit-details-marker {
     right: 0;
     z-index: 1050;
     background: rgb(var(--dialog-background));
-    border-block-start: 1px solid rgb(var(--text-primary) / 0.08);
     box-shadow: 0 -8px 24px rgb(var(--text-primary) / 0.08);
-    padding: var(--spacing-2) var(--spacing-3) calc(var(--spacing-2) + env(safe-area-inset-bottom, 0px));
+    /* el boton llena la barra (como en el demo): sin padding visible,
+       solo safe-area abajo para el iPhone con home indicator */
+    padding-inline: var(--spacing-3);
+    padding-block: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
     transform: translateY(110%);
     transition: transform 0.25s ease;
     display: block;
