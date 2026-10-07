@@ -1165,6 +1165,12 @@ custom-cursor {
   padding-block: var(--spacing-2-5);
 }
 
+@media screen and (min-width: 700px) {
+  .announcement-bar {
+    padding-block: var(--spacing-3-5);
+  }
+}
+
 .announcement-bar__wrapper {
   max-width: 450px;
   margin-inline: auto;
@@ -1223,6 +1229,10 @@ custom-cursor {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+height-observer[variable="announcement-bar"] {
+  display: block;
 }
 
 height-observer[variable="header"] {
