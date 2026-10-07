@@ -328,11 +328,13 @@ button, label, summary, [role="button"], [type="checkbox"], [type="radio"], [typ
   padding-inline-end: var(--spacing-8);
 }
 
-.button--xl {
-  padding-block-start: 1.075rem;
+@media screen and (min-width: 700px) {
+  .button--xl {
+    padding-block-start: 1.075rem;
     padding-block-end: 1.075rem;
     padding-inline-start: var(--spacing-10);
     padding-inline-end: var(--spacing-10);
+  }
 }
 
 .circle-button {
@@ -4091,25 +4093,26 @@ summary::-webkit-details-marker {
 .producto-acciones {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-3);
+  gap: var(--spacing-2);
   margin-bottom: var(--spacing-6);
+}
+@media screen and (min-width: 700px) {
+  .producto-acciones {
+    gap: var(--spacing-4);
+  }
 }
 .btn-agregar-lg {
   flex: 1 1 200px;
   justify-content: center;
 }
+/* Tamaño (font/padding/radius) viene de .button + .button--xl — igual al demo */
 .btn-whatsapp-producto {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--spacing-2);
-  padding: var(--spacing-3) var(--spacing-5);
   background: #25D366;
   color: #fff;
-  border-radius: var(--rounded-button, var(--rounded-xs));
-  text-decoration: none;
-  font-size: var(--text-sm);
-  font-weight: 600;
   transition: transform .2s ease, box-shadow .2s ease;
   flex: 1 1 200px;
 }
