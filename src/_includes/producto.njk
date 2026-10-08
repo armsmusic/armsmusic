@@ -44,6 +44,23 @@
 
 {% set varId = ("var-" + nombre) | replace(" ", "-") | replace("/", "-") %}
 {% set btnId = ("btn-add-" + nombre) | replace(" ", "-") | replace("/", "-") %}
+{# el bucle de relacionados sobrescribe varId/btnId; el del producto
+   se captura ya (mismo patrón que productoActualId) #}
+{% set productoVarId = varId %}
+
+{# dots de color para el picker de variantes (block-swatch) —
+   mismos colores que el mapa `vs` de .eleventy.js #}
+{% set varDots = {
+  "Negro":   "#1a1a1a",
+  "Verde":   "#10b981",
+  "Crystal": "#38bdf8",
+  "Gray":    "#9ca3af",
+  "Purple":  "#a855f7",
+  "Silver":  "#94a3b8",
+  "Blue":    "#3b82f6",
+  "Dorado":  "#d97706",
+  "Blanco":  "#cbd5e1"
+} %}
 
 <div class="producto-page">
 
@@ -62,9 +79,10 @@
     </div>
   </section>
 
-  <!-- HERO DEL PRODUCTO -->
+  <!-- HERO DEL PRODUCTO — sin .container: en el demo la caja
+       (section-boxed) lleva el padding y el grid ocupa todo el
+       ancho interior (1248px en 1440) -->
   <section class="pb-producto">
-    <div class="container">
       <div class="producto-layout">
 
         <!-- Galería -->
@@ -86,28 +104,53 @@
           <h1 class="producto-nombre">{{ nombre }}</h1>
           {% if subtitulo %}<p class="producto-subtitulo">{{ subtitulo }}</p>{% endif %}
 
-          <div class="producto-precio-wrap">
-            {% if precioOriginal %}
-            <span class="producto-precio-original">{{ precioOriginal | gtq }}</span>
-            {% endif %}
-            <span class="producto-precio-actual">{{ precio | gtq }}</span>
+          {# Precio — price-list del demo (price-list--lg + text-lg) #}
+          <div class="producto-precio">
+            <div class="price-list price-list--lg">
+              {% if precioOriginal %}<s class="producto-precio-original">{{ precioOriginal | gtq }}</s>{% endif %}
+              <span class="producto-precio-actual">{{ precio | gtq }}</span>
+            </div>
           </div>
 
           <div class="stock-indicator" style="margin-bottom:1.25rem;"></div>
 
+          <hr class="producto-separator">
+
           {% if variantes %}
-          <div>
-            <p class="producto-label-variante">Color / Versión</p>
-            <div class="producto-variantes" id="{{ varId }}">
-              {% for varName in variantes %}
-              <button
-                onclick="seleccionarVariante(this, '{{ nombre }}', '{{ varName }}', {{ precio }})"
-                data-img="/assets/img/productos/{{ imagenesVariantes[varName] if imagenesVariantes[varName] else imagenes[0] }}"
-                style="padding:0.35rem 0.85rem; border-radius:0.5rem; font-size:0.82rem; font-weight:600; cursor:pointer; {{ vs[varName] }}; transition:all .15s ease;"
-                {% if loop.first %}class="var-btn-active"{% endif %}>
-                {{ varName }}
-              </button>
-              {% endfor %}
+          {# Picker de variantes — variant-picker del demo: swatch de
+             imagen 60px si hay foto por variante, si no block-swatch
+             (texto + dot de color). El onclick y .var-btn-active son
+             hooks de cart-store.js (no tocar). #}
+          <div class="variant-picker">
+            <div class="variant-picker__option">
+              <div class="variant-picker__option-info">
+                <span class="text-subdued">Color / Versión:</span>
+                <span class="producto-variante-actual">{{ variantes[0] }}</span>
+              </div>
+              <div class="variant-picker__option-values" id="{{ productoVarId }}">
+                {% for varName in variantes %}
+                {% set varImg = imagenesVariantes[varName] if imagenesVariantes[varName] else null %}
+                {% if varImg %}
+                <button
+                  onclick="seleccionarVariante(this, '{{ nombre }}', '{{ varName }}', {{ precio }})"
+                  data-img="/assets/img/productos/{{ varImg }}"
+                  class="thumbnail-swatch{% if loop.first %} var-btn-active{% endif %}"
+                  title="{{ varName }}" aria-label="{{ varName }}">
+                  <img src="/assets/img/productos/{{ varImg }}" alt="{{ varName }}">
+                </button>
+                {% else %}
+                <button
+                  onclick="seleccionarVariante(this, '{{ nombre }}', '{{ varName }}', {{ precio }})"
+                  data-img="/assets/img/productos/{{ imagenes[0] if imagenes[0] else '' }}"
+                  class="block-swatch{% if loop.first %} var-btn-active{% endif %}"
+                  style="--swatch-background: {{ varDots[varName] or '#9ca3af' }};"
+                  title="{{ varName }}">
+                  <span class="block-swatch__color" aria-hidden="true"></span>
+                  {{ varName }}
+                </button>
+                {% endif %}
+                {% endfor %}
+              </div>
             </div>
           </div>
           {% endif %}
@@ -115,7 +158,7 @@
           <div class="producto-acciones">
             {% if variantes %}
             <button
-              class="button button--xl btn-agregar btn-agregar-lg"
+              class="button button--xl btn-agregar"
               id="{{ btnId }}"
               data-product-name="{{ nombre }} - {{ variantes[0] }}"
               data-img="/assets/img/productos/{{ imagenesVariantes[variantes[0]] if imagenesVariantes[variantes[0]] else imagenes[0] }}"
@@ -124,7 +167,7 @@
             </button>
             {% else %}
             <button
-              class="button button--xl btn-agregar btn-agregar-lg"
+              class="button button--xl btn-agregar"
               data-product-name="{{ nombre }}"
               data-img="/assets/img/productos/{{ imagenes[0] }}"
               onclick="agregarAlCarrito('{{ nombre }}', {{ precio }}, this)">
@@ -147,7 +190,6 @@
 
         </safe-sticky>
       </div>
-    </div>
   </section>
 
   {% if descripcion %}
@@ -352,13 +394,20 @@ function agregarDesdeBarra() {
   }
 })();
 
-function cambiarImagen(src, btn) {
-  document.getElementById('img-principal').src = src;
-  document.querySelectorAll('.thumb-btn').forEach(b => {
-    b.style.borderColor = 'rgb(var(--text-primary) / 0.15)';
-    b.classList.remove('thumb-active');
-  });
-  btn.style.borderColor = 'rgb(var(--text-primary))';
-  btn.classList.add('thumb-active');
-}
+// Etiqueta "Color / Versión: X" — se actualiza cuando cambia la
+// variante (seleccionarVariante / autoSeleccionarVarianteDisponible
+// de cart-store.js togglean .var-btn-active; se lee con observer
+// para no tocar ese archivo).
+(function () {
+  var grupo = document.querySelector('.variant-picker__option-values');
+  var label = document.querySelector('.producto-variante-actual');
+  if (!grupo || !label) return;
+  new MutationObserver(function () {
+    var act = grupo.querySelector('.var-btn-active');
+    if (!act) return;
+    var m = (act.getAttribute('onclick') || '')
+      .match(/seleccionarVariante\(this,\s*'[^']*',\s*'([^']*)'/);
+    if (m) label.textContent = m[1];
+  }).observe(grupo, { subtree: true, attributes: true, attributeFilter: ['class'] });
+})();
 </script>

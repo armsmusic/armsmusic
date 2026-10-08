@@ -123,6 +123,12 @@ button, label, summary, [role="button"], [type="checkbox"], [type="radio"], [typ
     --container-max-width: 1600px;
     --container-narrow-max-width: 1350px;
     --container-gutter: var(--spacing-5);
+    /* a nivel raíz (igual al demo) para que .full-bleed/.bleed
+       funcionen fuera de un .container — p. ej. la galería del
+       producto, que ahora vive directo en la sección box.
+       .container redefine ambos con la misma fórmula. */
+    --container-inner-width: min((100vw - var(--scrollbar-width, 0px)) - var(--container-gutter) * 2, var(--container-max-width));
+    --container-outer-width: calc(((100vw - var(--scrollbar-width, 0px)) - var(--container-inner-width)) / 2);
     --section-outer-spacing-block: var(--spacing-12);
     --section-inner-max-spacing-block: var(--spacing-10);
     --section-inner-spacing-inline: var(--container-gutter);
@@ -3964,28 +3970,80 @@ summary::-webkit-details-marker {
 
 /* ── Espaciado de secciones ── */
 .pt-producto    { padding-top: var(--spacing-10); }
-.pb-producto    { padding-bottom: var(--spacing-16); }
 .py-producto-sm { padding-block: var(--spacing-10); }
 
 @media screen and (min-width: 1000px) {
   .pt-producto    { padding-top: var(--spacing-12); }
-  .pb-producto    { padding-bottom: var(--spacing-20); }
   .py-producto-sm { padding-block: var(--spacing-12); }
 }
 
-/* ── Layout de 2 columnas (galería + info) ── */
+/* ── Sección hero del producto: caja Impact (section-boxed) ──
+   Medido en el demo (mg20-galactic-white): <700px sin caja;
+   700–999px caja blanca radius 24 (rounded-lg) + sombra
+   shadow-block, margen-inline 32; ≥1000px margen-inline 48 +
+   margen-top 24, padding 48 (64 en ≥1600px). */
+section.pb-producto {
+  --background: 255 255 255;
+  margin-top: var(--spacing-4);
+  /* sin .container dentro (igual al demo): el padding lo lleva la
+     sección — 0/20/48 en móvil (igual al demo) */
+  padding: 0 var(--spacing-5) var(--spacing-12);
+}
+@media screen and (min-width: 700px) {
+  section.pb-producto {
+    margin-inline: var(--spacing-8);
+    margin-top: var(--spacing-6);
+    padding: 0 var(--spacing-12) var(--spacing-12);
+    background: rgb(var(--background));
+    border-radius: var(--rounded-lg);
+    box-shadow: var(--shadow-block);
+    /* section-boxed del demo: redefine --container-outer-width con
+       el padding de la caja → la galería full-bleed llega hasta el
+       borde de la caja (no de la pantalla) */
+    --container-outer-width: var(--spacing-12);
+  }
+}
+@media screen and (min-width: 700px) and (max-width: 999px) {
+  section.pb-producto {
+    /* recorta las esquinas de la media full-bleed al radius de la
+       caja. El demo no recorta (overflow visible) pero sus fotos
+       son de fondo blanco y no se nota; con las nuestras (estudio
+       oscuro) se vería. Solo en este rango: en ≥1000px hay
+       position:sticky dentro y overflow:hidden lo rompería. */
+    overflow: hidden;
+  }
+}
+@media screen and (min-width: 1000px) {
+  section.pb-producto {
+    margin-inline: var(--spacing-12);
+    padding: var(--spacing-12);
+  }
+}
+@media screen and (min-width: 1600px) {
+  section.pb-producto { padding-block: var(--spacing-16); }
+}
+
+/* ── Layout de 2 columnas (galería + info) — .product del demo ──
+   Base: 1 columna; ≥1000px: 60/40 (el demo define
+   --product-grid: auto / minmax(0,1.2fr) minmax(0,0.8fr)).
+   Gap igual al demo: fila = container-gutter, columna = 40px
+   (48 en ≥1150, 96 en ≥1600). */
 .producto-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--spacing-6);
+  gap: var(--container-gutter) var(--spacing-10);
   align-items: start;
 }
-
 @media screen and (min-width: 1000px) {
   .producto-layout {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: var(--spacing-10);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
   }
+}
+@media screen and (min-width: 1150px) {
+  .producto-layout { column-gap: var(--spacing-12); }
+}
+@media screen and (min-width: 1600px) {
+  .producto-layout { column-gap: var(--spacing-24); }
 }
 
 /* ── Breadcrumb ── */
@@ -4009,21 +4067,370 @@ summary::-webkit-details-marker {
 .breadcrumb-arms span { color: rgb(var(--text-primary) / 0.3); font-size: var(--text-xs); }
 .breadcrumb-arms li:last-child { color: rgb(var(--text-primary) / 0.8); font-weight: 500; }
 
-/* ── Imagen principal de la galería ── */
-.producto-imagen-wrap {
-  border-radius: var(--rounded-sm);
-  overflow: hidden;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background: rgb(255 255 255);
+/* ================================================================
+   GALLERY DEL PRODUCTO (product-gallery) — igual al demo de Impact
+   (clases y reglas portadas de theme.css, medidas en
+   mg20-galactic-white 2026-10-07):
+   · <1000px:  media full-bleed (cuadrada, sin radius) + dots
+               con blur abajo; thumbnails ocultos.
+   · 1000–1149px: carousel horizontal (scroll-snap) + fila de
+               thumbnails debajo (64px).
+   · ≥1150px:   columna de thumbnails a la IZQUIERDA (64px, gap
+               10px, scroll hasta 600px) + carousel a la derecha.
+   El scroll del carousel es NATIVO (scroll-snap): swip en móvil y
+   arrastre/trackpad en desktop, sin JS custom.
+   ================================================================ */
+.product-gallery {
+  display: grid;
+  gap: var(--spacing-5);
+  grid-auto-columns: minmax(0, 1fr);
 }
-.producto-imagen-wrap svg {
-  width: 55% !important;
-  height: 55% !important;
+@media screen and (min-width: 1000px) {
+  .product-gallery {
+    gap: var(--spacing-6) var(--spacing-12);
+  }
+}
+.product-gallery__ar-wrapper {
+  display: grid;
+  gap: var(--spacing-2-5);
+}
+.product-gallery__media-list-wrapper {
+  display: grid;
+  position: relative;
+  /* full-bleed en <1000px (clases full-bleed md:unbleed en el
+     njk): el bleed va en el WRAPPER, nunca en la lista — un
+     scroll container con márgenes negativos rompe el scroll-snap
+     de Chrome (asienta desplazado → pedazo de la imagen
+     anterior). El demo no lo padece: su carousel es JS. */
+}
+/* lista de media: Fila de columnas de 100% de ancho que se
+   DESPLAZA en horizontal (overflow de .scroll-area + snap).
+   (El demo usa `grid: auto / auto-flow 100%`, que es inválido y
+   el navegador descarta; este es el equivalente válido.) */
+.product-gallery__media-list {
+  display: grid;
+  grid-template-columns: none;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  gap: var(--spacing-0-5);
+  align-items: start;
+}
+@media screen and (min-width: 1000px) {
+  .product-gallery__media-list {
+    gap: var(--spacing-6);
+  }
+}
+.product-gallery__media {
+  scroll-snap-align: center;
+  position: relative;
+}
+.product-gallery__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+@media screen and (min-width: 1000px) {
+  /* .rounded del demo (radius --rounded = 12px) */
+  .product-gallery__media img {
+    border-radius: var(--rounded);
+  }
+}
+/* fallback de SVG (productos sin fotos reales): el partial trae
+   width/height fijos de 96px; se escala con CSS igual que antes
+   de la migración de la galería */
+.product-gallery__media > svg {
+  width: 55%;
+  height: 55%;
   opacity: .92;
+}
+
+/* ── Dots (móvil): píldora con blur, igual al demo ── */
+.page-dots--blurred {
+  padding: var(--spacing-2) var(--spacing-4);
+  border-radius: var(--rounded-full);
+  background: rgb(var(--background) / .7);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.product-gallery__dots {
+  z-index: 1;
+  justify-self: center;
+  margin-inline: var(--spacing-2);
+  position: absolute;
+  bottom: var(--spacing-2);
+}
+@media screen and (min-width: 1000px) {
+  .product-gallery__dots {
+    display: none;
+  }
+}
+
+/* ── Thumbnails ──
+   Base (1000–1149px): fila horizontal bajo la galería,
+   scrollable si no caben. <1000px: ocultos (van los dots).
+   ≥1150px: columna vertical a la izquierda. */
+.product-gallery__thumbnail-list-wrapper {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: var(--spacing-4);
+  position: relative;
+}
+.product-gallery__thumbnail-list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 56px;
+  gap: var(--spacing-2);
+  align-items: end;
+  max-width: 100%;
+}
+@media screen and (min-width: 700px) {
+  .product-gallery__thumbnail-list {
+    grid-auto-columns: 64px;
+  }
+}
+@media screen and (max-width: 999px) {
+  .product-gallery__thumbnail-list-wrapper {
+    display: none;
+  }
+}
+.product-gallery__thumbnail {
+  position: relative;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.product-gallery__thumbnail img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: var(--rounded-sm);
+}
+/* subrayado de 2px bajo el thumbnail activo (igual al demo) */
+.product-gallery__thumbnail::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin-top: 4px;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.product-gallery__thumbnail[aria-current="true"]::after {
+  opacity: 1;
+}
+@media screen and (min-width: 1150px) {
+  /* columna de thumbnails (auto) + media (1fr). El demo declara
+     `auto / auto-flow auto minmax(0,1fr)`, inválido (auto-flow no
+     va en la lista de tracks); equivalente válido: */
+  .product-gallery {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+  }
+  .product-gallery__thumbnail-list-wrapper {
+    order: -1;
+    grid-auto-flow: row;
+    justify-items: center;
+    overflow: auto;
+    scrollbar-width: none;
+  }
+  .product-gallery__thumbnail-list-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  .product-gallery__thumbnail-list {
+    grid-auto-flow: row;
+    gap: var(--spacing-2-5);
+    max-height: 600px;
+    overflow: auto;
+    scrollbar-width: none;
+    align-items: center;
+  }
+  .product-gallery__thumbnail-list::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── Botón de zoom (PhotoSwipe) — medido en el demo:
+   · móvil: circle 35px (2.1875rem) ARIBA-derecha (16px); el
+     borde derecho queda a 20px de la pantalla en <700 y a 48px
+     del borde de la caja en 700–999 → var(--container-outer-
+     width) en ambos casos (el wrapper lleva el full-bleed)
+   · desktop: circle 56px (3.5rem) ABAJO-derecha (24px) con
+     scale(.8) (45px a la vista) — el demo NUNCA resetea el
+     scale en modo carousel ── */
+.product-gallery__zoom {
+  z-index: 2;
+  transition: opacity .2s ease-in-out, transform .2s ease-in-out;
+  position: absolute;
+  top: var(--spacing-4);
+  right: var(--container-outer-width);
+}
+.product-gallery__zoom .circle-button {
+  width: 2.1875rem;
+  height: 2.1875rem;
+}
+/* visible en modo carousel (el de esta página) en todos los
+   tamaños — igual al demo */
+.product-gallery--desktop-carousel .product-gallery__zoom {
+  opacity: 1;
+  visibility: visible;
+}
+@media screen and (min-width: 1000px) {
+  .product-gallery__zoom {
+    top: auto;
+    bottom: var(--spacing-6);
+    right: var(--spacing-6);
+    opacity: 0;
+    transform: scale(.8);
+  }
+  .product-gallery__zoom .circle-button {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  .product-gallery__zoom svg {
+    width: 17px;
+    height: 17px;
+  }
+  .product-gallery--desktop-carousel .product-gallery__zoom {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* ── Cursor circular con chevron sobre la galería (custom-cursor) ──
+   Solo en desktop (pointer:fine). El JS (product-gallery.njk) lo
+   posiciona siguiendo al puntero; la media lista se queda con
+   cursor:none (igual al demo). */
+.custom-cursor {
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  scale: .5;
+  transition: opacity .1s, scale .1s, visibility .1s;
+}
+@media screen and (pointer: fine) {
+  .custom-cursor {
+    display: block;
+  }
+  .product-gallery__media-list-wrapper:has(> .custom-cursor) {
+    cursor: none;
+  }
+}
+.custom-cursor.is-visible {
+  opacity: 1;
+  visibility: visible;
+  scale: 1;
+}
+.custom-cursor.is-half-start svg {
+  transform: rotate(180deg);
+}
+
+/* ── Bottom-bar del lightbox (pagination) — igual al demo ──
+   Se registra como elemento custom de PhotoSwipe (ver
+   product-gallery.njk). Solo existe cuando el lightbox está
+   abierto. OJO: el dist actual de photoswipe.css (v5.4.x) NO
+   posiciona .pswp__bottom-bar (lo hacía la versión vieja que
+   trae bundled el theme del demo: absolute top:0 + override).
+   Sin estas reglas la barra queda position:static y flota
+   ARRIBA del lightbox. */
+.pswp__bottom-bar {
+  position: absolute;
+  top: auto;
+  bottom: 24px;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  justify-content: center;
+  pointer-events: none;
+  display: flex;
+  flex-direction: row;
+}
+.pswp__bottom-bar > * {
+  pointer-events: auto;
+  will-change: opacity;
+}
+@media screen and (min-width: 700px) {
+  .pswp__bottom-bar {
+    bottom: 48px;
+  }
+}
+.pagination {
+  display: flex;
+  justify-self: center;
+  background: rgb(var(--background));
+  border: 1px solid rgb(var(--text-primary) / 0.12);
+  border-radius: var(--rounded-full);
+}
+.pagination__item {
+  display: grid;
+  place-content: center;
+  padding-inline: var(--spacing-4);
+  border: none;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+@media screen and (min-width: 700px) {
+  .pagination__item {
+    padding-inline: var(--spacing-5);
+  }
+}
+.pagination__item--disabled {
+  opacity: .5;
+  pointer-events: none;
+}
+.pagination__current {
+  font-size: var(--text-sm);
+}
+.animated-arrow--reverse {
+  transform: rotate(180deg);
+}
+/* flecha animada: esquina de 8px que "se desliza" al hover +
+   línea que crece (igual al demo) */
+.animated-arrow {
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+}
+.animated-arrow::before,
+.animated-arrow::after {
+  content: "";
+  grid-area: 1 / -1;
+  transition: all .2s ease-in-out;
+}
+.animated-arrow::before {
+  position: relative;
+  width: .5rem;
+  height: .5rem;
+  border-block-start-width: 2px;
+  border-inline-end-width: 2px;
+  border-color: currentColor;
+  transform: rotate(calc(var(--transform-logical-flip) * 45deg));
+}
+.animated-arrow::after {
+  opacity: 0;
+  border-block-start-width: 2px;
+  border-color: currentColor;
+  width: var(--spacing-2);
+  transform: scaleX(0);
+}
+@media screen and (pointer: fine) {
+  .group:hover .animated-arrow::before {
+    transform: translate(calc(var(--transform-logical-flip) * var(--spacing-0-5))) rotate(calc(var(--transform-logical-flip) * 45deg));
+  }
+  .group:hover .animated-arrow::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
 }
 
 /* ── Info del producto ── */
@@ -4041,24 +4448,33 @@ summary::-webkit-details-marker {
   margin: 0 0 var(--spacing-5);
 }
 
-/* ── Precio ── */
-.producto-precio-wrap {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
+/* ── Precio — igual al demo: price-list--lg + text-lg (18/20px,
+   line-height 1.6); el original va tachado y atenuado ── */
+.price-list--lg {
   gap: var(--spacing-3);
+}
+.producto-precio {
   margin-bottom: var(--spacing-5);
 }
 .producto-precio-actual {
-  font-size: var(--text-h4);
+  font-size: var(--text-lg);
+  line-height: 1.6;
   font-weight: 700;
   color: rgb(var(--text-primary));
-  letter-spacing: -0.02em;
 }
 .producto-precio-original {
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
+  line-height: 1.6;
   color: rgb(var(--text-primary) / 0.4);
   text-decoration: line-through;
+}
+/* separador de la columna info (hr.product-info__separator del
+   demo: 1px en color de texto) */
+.producto-separator {
+  height: 0;
+  border: none;
+  border-top: 1px solid rgb(var(--text-primary));
+  margin: var(--spacing-5) 0;
 }
 .badge-discount-lg {
   display: inline-block;
@@ -4071,39 +4487,129 @@ summary::-webkit-details-marker {
   padding: var(--spacing-1-5) var(--spacing-4);
 }
 
-/* ── Label de variante ── */
-.producto-label-variante {
-  font-size: var(--text-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  color: rgb(var(--text-primary) / 0.5);
-  margin: 0 0 var(--spacing-2);
-}
-
-/* selector de variantes en la página de producto */
-.producto-variantes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-2);
+/* ── Selector de variantes — variant-picker del demo ──
+   Label "Color / Versión:" (text-subdued) + valor actual a la
+   derecha; valores: swatch de imagen 60px (thumbnail-swatch) si
+   el producto tiene foto por variante, si no block-swatch (texto
+   + dot de color). El estado seleccionado lo pinta
+   .var-btn-active (lo togglea cart-store.js — hook, no tocar). */
+.variant-picker {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spacing-6);
   margin-bottom: var(--spacing-6);
 }
-
-/* ── Botones de acción ── */
-.producto-acciones {
+.variant-picker__option-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-2);
+}
+.variant-picker__option-values {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-2);
+}
+/* swatch de imagen (60px, radius 4px, anillo oscuro al seleccionar) */
+.thumbnail-swatch {
+  --swatch-size: 60px;
+  position: relative;
+  display: block;
+  width: var(--swatch-size);
+  height: var(--swatch-size);
+  padding: 0;
+  border: 1px solid rgb(var(--text-primary) / 0.15);
+  border-radius: min(4px, var(--rounded-input));
+  background: rgb(var(--background));
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.thumbnail-swatch img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.thumbnail-swatch::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 2px rgb(var(--text-primary));
+  opacity: 0;
+  transform: scale(.95);
+  transition: opacity .2s ease-in-out, transform .2s ease-in-out;
+  pointer-events: none;
+}
+.thumbnail-swatch.var-btn-active::before {
+  opacity: 1;
+  transform: scale(1);
+}
+/* swatch de texto con dot de color (sin foto por variante) */
+.block-swatch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  height: var(--input-height);
+  padding-inline: var(--spacing-6);
+  border: 1px solid rgb(var(--text-primary) / 0.15);
+  border-radius: var(--rounded-button);
+  background: rgb(var(--background));
+  font-family: inherit;
+  font-size: var(--text-base);
+  color: rgb(var(--text-primary));
+  cursor: pointer;
+}
+.block-swatch__color {
+  width: var(--spacing-3-5);
+  height: var(--spacing-3-5);
+  border-radius: var(--rounded-full);
+  background: var(--swatch-background, rgb(var(--text-primary) / 0.2));
+  flex-shrink: 0;
+}
+.block-swatch::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 2px rgb(var(--text-primary));
+  opacity: 0;
+  transform: scale(.95);
+  transition: opacity .2s ease-in-out, transform .2s ease-in-out;
+  pointer-events: none;
+}
+.block-swatch.var-btn-active::before {
+  opacity: 1;
+  transform: scale(1);
+}
+/* en los swatches el estado va por el anillo ::before, no por el
+   outline/scale de la regla genérica .var-btn-active */
+.thumbnail-swatch.var-btn-active,
+.block-swatch.var-btn-active {
+  outline: none;
+  transform: none;
+  font-weight: inherit;
+}
+
+/* ── Botones de acción — buy-buttons del demo ──
+   Grid: 1 columna full-width (móvil); ≥700px auto-fit
+   minmax(180px,1fr) con gap 16 — en la columna de 480px quedan
+   dos botones lado a lado de ~232px (igual al demo). */
+.producto-acciones {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spacing-2);
+  align-items: start;
   margin-bottom: var(--spacing-6);
 }
 @media screen and (min-width: 700px) {
   .producto-acciones {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: var(--spacing-4);
   }
-}
-.btn-agregar-lg {
-  flex: 1 1 200px;
-  justify-content: center;
 }
 /* Tamaño (font/padding/radius) viene de .button + .button--xl — igual al demo */
 .btn-whatsapp-producto {
@@ -4114,7 +4620,6 @@ summary::-webkit-details-marker {
   background: #25D366;
   color: #fff;
   transition: transform .2s ease, box-shadow .2s ease;
-  flex: 1 1 200px;
 }
 .btn-whatsapp-producto:hover {
   color: #fff;

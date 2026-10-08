@@ -1,159 +1,299 @@
+{# ================================================================
+   GALERÍA DEL PRODUCTO — igual al demo de Impact
+   (product-gallery del theme.css/theme.js, portado 2026-10-07):
+   · <1000px:  media full-bleed + dots con blur (píldora)
+   · 1000–1149: carousel horizontal (scroll-snap nativo) +
+     thumbnails debajo
+   · ≥1150px:  thumbnails verticales a la izquierda + carousel
+   · zoom: PhotoSwipe v5 por CDN (lazy, solo al abrir) con
+     maxZoomLevel 3 — botón circular abajo-derecha + pinch en iOS
+   · custom-cursor: círculo con chevron que sigue al puntero
+     (solo pointer:fine)
+   El swipe es scroll-snap NATIVO (sin JS custom): funciona en
+   móvil y desktop (arrastre/trackpad).
+   ================================================================ #}
 {% set svgPartial = "svgs/" + svgTipo + ".njk" %}
 
 {% if imagenes and imagenes.length > 0 %}
 
-  <div class="producto-imagen-wrap" id="img-principal-wrap"
-    style="background:linear-gradient(135deg,{{ g1 }},{{ g2 }}); overflow:hidden; position:relative; touch-action:pan-y;">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css">
 
-    <div id="img-track" style="display:flex; width:100%; height:100%; will-change:transform;">
-      {% for img in imagenes %}
-      <div style="min-width:100%; height:100%; flex-shrink:0;">
-        <img src="/assets/img/productos/{{ img }}"
-          alt="{{ nombre }} foto {{ loop.index }}"
-          onerror="this.style.display='none'"
-          style="width:100%; height:100%; object-fit:contain; display:block; pointer-events:none;">
+<div class="product-gallery product-gallery--mobile-dots product-gallery--desktop-carousel product-gallery--desktop-thumbnails-left product-gallery--mobile-expanded"
+  id="producto-gallery" allow-zoom="3">
+
+  <div class="product-gallery__ar-wrapper">
+    {# El full-bleed (<1000px) vive en el WRAPPER, no en la media
+       list: un contenedor de scroll con márgenes negativos rompe
+       el scroll-snap de Chrome (asienta ~20px corto y queda un
+       pedazo de la imagen anterior a la vista). #}
+    <div class="product-gallery__media-list-wrapper full-bleed md:unbleed" id="gallery-media-wrapper">
+
+      <div class="custom-cursor product-gallery__cursor" aria-hidden="true">
+        <div class="circle-button circle-button--fill circle-button--lg">
+          <svg role="presentation" focusable="false" width="7" height="10" viewBox="0 0 7 10">
+            <path d="m 1 9 4-4-4-4" fill="none" stroke="currentColor" stroke-width="2"></path>
+          </svg>
+        </div>
       </div>
-      {% endfor %}
-    </div>
 
-    <template id="svg-tmpl-main">{% include svgPartial %}</template>
+      {# OJO: el full-bleed NO va en esta clase (el scroll container).
+         Un contenedor de scroll con márgenes negativos rompe el
+         scroll-snap de Chrome (asienta 20px corto → pedazo de la
+         imagen anterior). El bleed vive en el wrapper (ver arms.css). #}
+      <div class="product-gallery__media-list scroll-area" id="gallery-media-list"
+        role="region" aria-label="Fotos de {{ nombre }}">
+        {% for img in imagenes %}
+        <div class="product-gallery__media snap-center" data-media-type="image">
+          <img src="/assets/img/productos/{{ img }}"
+            alt="{{ nombre }} foto {{ loop.index }}"
+            onerror="this.style.display='none'"
+            {% if loop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="product-gallery__zoom">
+        <button type="button" class="circle-button circle-button--fill" id="btn-zoom-galeria" aria-label="Ampliar imagen">
+          <span class="sr-only">Zoom</span>
+          <svg role="presentation" fill="none" stroke-width="2" focusable="false" width="15" height="15" viewBox="0 0 15 15">
+            <circle cx="7.067" cy="7.067" r="6.067" stroke="currentColor"></circle>
+            <path d="M11.4 11.4 14 14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M7 4v6M4 7h6" stroke="currentColor"></path>
+          </svg>
+        </button>
+      </div>
+
+      {% if imagenes.length > 1 %}
+      <div class="page-dots page-dots--blurred product-gallery__dots" id="gallery-dots" aria-label="Ir a la foto">
+        {% for img in imagenes %}
+        <button type="button" class="tap-area" data-index="{{ loop.index0 }}"
+          aria-current="{{ 'true' if loop.first else 'false' }}">
+          <span class="sr-only">Ir a la foto {{ loop.index }}</span>
+        </button>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+    </div>
   </div>
 
   {% if imagenes.length > 1 %}
-  <div style="display:flex; gap:0.5rem; margin-top:0.75rem; flex-wrap:wrap;">
-    {% for img in imagenes %}
-    <button
-      style="width:64px; height:64px; border-radius:0.5rem; overflow:hidden; padding:0; cursor:pointer;
-             border:2px solid {% if loop.first %}rgb(var(--text-primary)){% else %}rgb(var(--text-primary) / 0.15){% endif %};
-             background:linear-gradient(135deg,{{ g1 }},{{ g2 }});
-             transition:border-color .15s ease; flex-shrink:0;"
-      class="thumb-btn {% if loop.first %}thumb-active{% endif %}"
-      data-index="{{ loop.index0 }}">
-      <img src="/assets/img/productos/{{ img }}" alt="{{ nombre }} foto {{ loop.index }}"
-        style="width:100%; height:100%; object-fit:contain; pointer-events:none;">
-    </button>
-    {% endfor %}
+  <div class="product-gallery__thumbnail-list-wrapper">
+    <div class="product-gallery__thumbnail-list scroll-area" aria-label="Miniaturas">
+      {% for img in imagenes %}
+      <button type="button" class="product-gallery__thumbnail" data-index="{{ loop.index0 }}"
+        aria-current="{{ 'true' if loop.first else 'false' }}" aria-label="Foto {{ loop.index }}">
+        <img src="/assets/img/productos/{{ img }}" alt="" loading="lazy" class="object-contain">
+      </button>
+      {% endfor %}
+    </div>
   </div>
   {% endif %}
 
-  <script>
-  (function() {
-    const wrap   = document.getElementById('img-principal-wrap');
-    const track  = document.getElementById('img-track');
-    const thumbs = document.querySelectorAll('.thumb-btn');
-    const total  = {{ imagenes | length }};
-    if (!wrap || !track || total <= 1) return;
+</div>
 
-    let idx      = 0;
-    let startX   = 0;
-    let startY   = 0;
-    let diffX    = 0;
-    let active   = false;
-    let isH      = null;
-    let blocked  = false; // true cuando el gesto tocó un límite
+<script>
+(function () {
+  var list   = document.getElementById('gallery-media-list');
+  var items  = list ? Array.prototype.slice.call(list.querySelectorAll('.product-gallery__media')) : [];
+  var dots   = Array.prototype.slice.call(document.querySelectorAll('#gallery-dots .tap-area'));
+  var thumbs = Array.prototype.slice.call(document.querySelectorAll('.product-gallery__thumbnail'));
+  var wrapper = document.getElementById('gallery-media-wrapper');
+  var cursor  = document.querySelector('.product-gallery__cursor');
 
-    // Posicionar track sin animación
-    function setPos(i) {
-      track.style.transition = 'none';
-      track.style.transform  = `translateX(-${i * 100}%)`;
+  // ── Índice actual: el item más cerca del centro del viewport ──
+  function indexActual() {
+    var rect = list.getBoundingClientRect();
+    var centro = (rect.left + rect.right) / 2;
+    var best = 0, bestDist = Infinity;
+    items.forEach(function (it, i) {
+      var r = it.getBoundingClientRect();
+      var d = Math.abs((r.left + r.right) / 2 - centro);
+      if (d < bestDist) { bestDist = d; best = i; }
+    });
+    return best;
+  }
+
+  function marcar(i) {
+    dots.forEach(function (d, di) { d.setAttribute('aria-current', di === i ? 'true' : 'false'); });
+    thumbs.forEach(function (t, ti) { t.setAttribute('aria-current', ti === i ? 'true' : 'false'); });
+    // en ≥1150px los thumbnails van en columna vertical: mantener
+    // el activo a la vista
+    if (thumbs[i] && window.innerWidth >= 1150) {
+      var tr = thumbs[i].getBoundingClientRect();
+      var wr = thumbs[i].closest('.product-gallery__thumbnail-list');
+      var rr = wr.getBoundingClientRect();
+      if (tr.top < rr.top || tr.bottom > rr.bottom) {
+        thumbs[i].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
     }
+  }
 
-    // Ir a imagen con animación
-    function goTo(i, animate) {
-      idx = Math.max(0, Math.min(i, total - 1));
-      track.style.transition = animate ? 'transform 0.28s cubic-bezier(.4,0,.2,1)' : 'none';
-      track.style.transform  = `translateX(-${idx * 100}%)`;
-      // Resetear scaleX de la imagen actual
-      const imgs = track.querySelectorAll('div > img');
-      imgs.forEach(im => { im.style.transform = ''; im.style.transformOrigin = ''; });
-      // Actualizar thumbnails
-      thumbs.forEach((t, ti) => {
-        t.style.borderColor = ti === idx ? 'rgb(var(--text-primary))' : 'rgb(var(--text-primary) / 0.15)';
-        t.classList.toggle('thumb-active', ti === idx);
+  // snap-align: center → el target es offsetLeft - medio hueco
+  function irA(i) {
+    i = Math.max(0, Math.min(items.length - 1, i));
+    var it = items[i];
+    list.scrollTo({ left: it.offsetLeft - (list.clientWidth - it.offsetWidth) / 2, behavior: 'smooth' });
+  }
+
+  if (items.length > 1) {
+    var ticking = false;
+    list.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        marcar(indexActual());
+        ticking = false;
       });
-    }
-
-    // Obtener imagen visible actual
-    function imgActual() {
-      const divs = track.querySelectorAll('div');
-      return divs[idx] ? divs[idx].querySelector('img') : null;
-    }
-
-    wrap.addEventListener('touchstart', function(e) {
-      startX  = e.touches[0].clientX;
-      startY  = e.touches[0].clientY;
-      diffX   = 0;
-      active  = true;
-      isH     = null;
-      blocked = false;
-      track.style.transition = 'none';
     }, { passive: true });
 
-    wrap.addEventListener('touchmove', function(e) {
-      if (!active) return;
-      const dx = e.touches[0].clientX - startX;
-      const dy = e.touches[0].clientY - startY;
-
-      // Detectar dirección una sola vez
-      if (isH === null) {
-        if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
-        isH = Math.abs(dx) >= Math.abs(dy);
-      }
-      if (!isH) return;
-
-      const enInicio = dx > 0 && idx === 0;
-      const enFinal  = dx < 0 && idx === total - 1;
-
-      if (enInicio || enFinal) {
-        // Bloquear el gesto completo
-        blocked = true;
-        diffX   = 0;
-        // Rubber band: scaleX solo en la imagen visible, track fijo
-        const img = imgActual();
-        if (img) {
-          const r = Math.abs(dx) / wrap.offsetWidth;
-          const s = 1 + Math.min(r * 0.06, 0.04);
-          img.style.transformOrigin = enInicio ? '0% 50%' : '100% 50%';
-          img.style.transform = `scaleX(${s})`;
-        }
-        track.style.transform = `translateX(-${idx * 100}%)`;
-      } else if (!blocked) {
-        // Movimiento normal solo si no bloqueado
-        diffX = dx;
-        const offset = -(idx * 100) + (dx / wrap.offsetWidth * 100);
-        track.style.transform = `translateX(${offset}%)`;
-        // Asegurar que no quede scaleX residual
-        const img = imgActual();
-        if (img) img.style.transform = '';
-      }
-    }, { passive: true });
-
-    wrap.addEventListener('touchend', function() {
-      if (!active || !isH) { active = false; return; }
-      active = false;
-
-      if (!blocked && diffX < -50 && idx < total - 1) {
-        goTo(idx + 1, true);
-      } else if (!blocked && diffX > 50 && idx > 0) {
-        goTo(idx - 1, true);
-      } else {
-        goTo(idx, true);
-      }
-    }, { passive: true });
-
-    // Thumbnails
-    thumbs.forEach((btn, i) => {
-      btn.addEventListener('click', () => goTo(i, true));
+    dots.forEach(function (d) {
+      d.addEventListener('click', function () { irA(parseInt(d.getAttribute('data-index'), 10)); });
+    });
+    thumbs.forEach(function (t) {
+      t.addEventListener('click', function () { irA(parseInt(t.getAttribute('data-index'), 10)); });
     });
 
-    goTo(0, false);
-  })();
-  </script>
+    // click en mitad izquierda/derecha de la galería →
+    // foto anterior/siguiente (igual al demo; solo pointer:fine,
+    // y sin capturar clics en botones)
+    list.addEventListener('click', function (e) {
+      if (e.target.closest('button, a[href]')) return;
+      if (!window.matchMedia('(pointer: fine)').matches) return;
+      var r = list.getBoundingClientRect();
+      irA(indexActual() + (e.clientX - r.left > r.width / 2 ? 1 : -1));
+    });
+  }
+
+  // ── Cursor circular con chevron (custom-cursor del demo) ──
+  // Sigue al puntero sobre la media-list-wrapper; se esconde al
+  // salir y al pasar sobre botones.
+  if (cursor && wrapper) {
+    wrapper.addEventListener('pointermove', function (e) {
+      if (e.target.closest('button, a[href]')) {
+        cursor.classList.remove('is-visible');
+        return;
+      }
+      var rect = wrapper.getBoundingClientRect();
+      var xCentro = (rect.left + rect.right) / 2;
+      cursor.classList.toggle('is-half-start', e.pageX < xCentro);
+      cursor.classList.toggle('is-half-end', e.pageX >= xCentro);
+      cursor.classList.add('is-visible');
+      var x = (e.clientX - rect.left - cursor.clientWidth / 2).toFixed(3);
+      var y = (e.clientY - rect.top - cursor.clientHeight / 2).toFixed(3);
+      cursor.style.translate = x + 'px ' + y + 'px';
+      cursor.style.transform = x + 'px ' + y + 'px';
+    }, { passive: true });
+    wrapper.addEventListener('pointerleave', function () {
+      cursor.classList.remove('is-visible', 'is-half-start', 'is-half-end');
+    });
+  }
+
+  // ── Zoom: PhotoSwipe v5 por CDN (lazy — solo se descarga al
+  //      primer uso). Config igual al demo: fondo opaco, zoom
+  //      máx 3, sin flechas/contador propios (bottom-bar custom
+  //      con "N / M"). ──
+  var lightbox = null, lightboxPromise = null;
+
+  function dataSource() {
+    return items.map(function (it) {
+      var img = it.querySelector('img');
+      return {
+        thumbnailElement: img,
+        src: img.src,
+        srcset: img.getAttribute('srcset') || undefined,
+        msrc: img.currentSrc || img.src,
+        alt: img.alt,
+        thumbCropped: true
+      };
+    });
+  }
+
+  function getLightbox() {
+    if (!lightboxPromise) {
+      lightboxPromise = Promise.all([
+        import('https://cdn.jsdelivr.net/npm/photoswipe@5/lightbox/+esm'),
+        import('https://cdn.jsdelivr.net/npm/photoswipe@5/+esm')
+      ]).then(function (mods) {
+        var lb = new mods[0].default({
+          pswpModule: function () { return Promise.resolve(mods[1].default); },
+          bgOpacity: 1,
+          maxZoomLevel: parseInt(document.getElementById('producto-gallery').getAttribute('allow-zoom'), 10) || 3,
+          arrowPrev: false,
+          arrowNext: false,
+          counter: false,
+          zoom: false,
+          closeSVG: '<svg fill="none" xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56"><path d="M56 28C56 12.536 43.464 0 28 0S0 12.536 0 28s12.536 28 28 28 28-12.536 28-28Z" fill="#fff"/><path d="M55.5 28C55.5 12.812 43.188.5 28 .5S.5 12.812.5 28 12.812 55.5 28 55.5 55.5 43.188 55.5 28Z" stroke="#252627" stroke-opacity=".12"/><path d="m22.344 22.343 11.313 11.314m-11.313 0 11.313-11.313" stroke="#252627" stroke-width="2"/></svg>'
+        });
+        // bottom-bar "N / M" con prev/next (igual al demo)
+        lb.on('uiRegister', function () {
+          lb.pswp.ui.registerElement({
+            name: 'bottom-bar',
+            order: 5,
+            appendTo: 'wrapper',
+            html: '<div class="pagination">' +
+              '<button class="pagination__item group" rel="prev" aria-label="Foto anterior"><span class="animated-arrow animated-arrow--reverse"></span></button>' +
+              '<span class="pagination__current text-sm">' +
+              '<span class="pagination__page">1</span> / <span class="pagination__total"></span></span>' +
+              '<button class="pagination__item group" rel="next" aria-label="Foto siguiente"><span class="animated-arrow"></span></button>' +
+              '</div>',
+            onInit: function (el, pswp) {
+              el.querySelector('.pagination__total').innerText = pswp.getNumItems();
+              el.querySelector('[rel="prev"]').addEventListener('click', function () { pswp.prev(); });
+              el.querySelector('[rel="next"]').addEventListener('click', function () { pswp.next(); });
+              pswp.on('change', function () {
+                el.querySelector('.pagination__page').innerText = pswp.currIndex + 1;
+              });
+            }
+          });
+        });
+        lb.init();
+        lightbox = lb;
+        return lb;
+      }).catch(function (err) {
+        // CDN caído: permitir reintentar y no bloquear la galería
+        lightboxPromise = null;
+        console.error('PhotoSwipe no disponible:', err);
+        return null;
+      });
+    }
+    return lightboxPromise;
+  }
+
+  function abrirZoom(i) {
+    getLightbox().then(function (lb) {
+      if (lb) lb.loadAndOpen(i, dataSource());
+    });
+  }
+
+  var btnZoom = document.getElementById('btn-zoom-galeria');
+  if (btnZoom) btnZoom.addEventListener('click', function () { abrirZoom(indexActual()); });
+
+  // pinch con scale >1.5 abre el lightbox (igual al demo; solo
+  // existe en iOS — en el resto son eventos inertes)
+  if (items.length > 0) {
+    list.addEventListener('gesturestart', function (e) { e.preventDefault(); }, { passive: false });
+    list.addEventListener('gesturechange', function (e) {
+      e.preventDefault();
+      if (e.scale > 1.5) abrirZoom(indexActual());
+    }, { passive: false });
+  }
+})();
+</script>
 
 {% else %}
 
-  <div class="producto-imagen-wrap" style="background:linear-gradient(135deg,{{ g1 }},{{ g2 }});">
-    {% include svgPartial %}
+{# Sin imágenes reales: fallback de SVG sobre gradiente (igual que
+   antes de la migración de la galería) #}
+<div class="product-gallery">
+  <div class="product-gallery__ar-wrapper">
+    <div class="product-gallery__media-list-wrapper">
+      <div class="product-gallery__media" data-media-type="image"
+        style="background: linear-gradient(135deg, {{ g1 }}, {{ g2 }}); border-radius: var(--rounded-sm); display:flex; align-items:center; justify-content:center; aspect-ratio: 1/1;">
+        {% include svgPartial %}
+      </div>
+    </div>
   </div>
+</div>
 
 {% endif %}

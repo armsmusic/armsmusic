@@ -3,8 +3,8 @@
 > Contexto completo del proyecto para cualquier agente de código (OpenCode +
 > Qwen3.8-27B local, Claude Code, u otra IA). **Léelo entero antes de tocar
 > nada.** Estado verificado contra el repo `armsmusic/armsmusic` el 2026-10-07
-> (HEAD local: `f3d1155` + cambios sin commitear — ver §15; rama `main`
-> **adelante 9 commits de `origin/main`, nada pushed**).
+> (HEAD local: ver §16; rama `main` **adelante de `origin/main`, nada
+> pushed**).
 
 ---
 
@@ -298,9 +298,27 @@ hay menos (Cables tiene 3). Promos: accesorios → "Encuentra tus In-Ears" →
 `/in-ears/`; los de audio → "Audio y Accesorios" → `/audio/`.
 
 ### ✅ Página de producto — `src/_includes/producto.njk`
-(Generada por `src/producto-page.njk` con paginación.) Se conservó la
-estructura; se cambió layout y estilo:
-- `.producto-layout` (grid 5/7 en desktop), `.producto-relacionados` (2/4 col).
+(Generada por `src/producto-page.njk` con paginación.) Migrada al layout real
+del tema Impact en la sesión §16 (2026-10-07 parte 3):
+- **Galería (`product-gallery.njk`, reescrita):** igual al demo —
+  <1000px media full-bleed + dots con blur; 1000–1149px carousel + fila de
+  thumbs debajo; ≥1150px thumbs verticales a la izquierda + carousel
+  horizontal (scroll-snap **nativo**, sin JS de swipe). Zoom PhotoSwipe v5
+  por CDN (lazy: botón circular + pinch >1.5x en iOS) con bottom-bar "N / M".
+  `custom-cursor` (círculo con chevron) portado.
+- **Sección hero en caja** (`section-boxed` del demo): blanca, radius 24,
+  sombra, padding 48; **sin `.container` dentro** (el grid ocupa todo el
+  ancho interior de la caja).
+- **Grid** `.producto-layout` = `minmax(0,1.2fr) minmax(0,0.8fr)` (60/40) en
+  ≥1000px; gap fila container-gutter / columna 40→48 (≥1150) →96 (≥1600).
+- **Columna info:** precio `price-list--lg` + `text-lg` (20/18px), separador
+  1px, `variant-picker` con swatch de **imagen 60px** (`thumbnail-swatch`,
+  p. ej. kz-edx-pro) o de **texto + dot de color** (`block-swatch`) si no hay
+  foto por variante; label "Color / Versión: X" que se actualiza con
+  MutationObserver (sin tocar `cart-store.js`); botones en grid
+  `auto-fit minmax(180px,1fr)` (2×~232px en la columna de 480; full-width
+  apilados en móvil).
+- `.producto-relacionados` (2/4 col).
 - **Botón "Agregar al carrito" sticky** (ver §14 `00b4bba` + estado final en §15):
   columna de info envuelta en `<safe-sticky class="producto-info">` (sticky en
   desktop ≥1000px, mecanismo de Impact) + `#producto-barra` (JS inline al final
@@ -428,9 +446,11 @@ Se perdió al pasarlos al partial `subpilar.njk`. Bueno para SEO y
 navegación; añadirlo al partial (la clase `.breadcrumb-arms` ya existe en
 `arms.css`).
 
-### G. Galería de producto con zoom — 🟢
-Impact usa PhotoSwipe para el zoom de la galería. Evaluar si se incorpora
-(librería externa: consultar al dueño antes).
+### G. Galería de producto con zoom — ✅ HECHO (§16)
+PhotoSwipe v5 por CDN (lazy import solo al abrir), igual al demo: `bgOpacity
+1`, `maxZoomLevel 3`, sin flechas/contador propios, bottom-bar custom "N / M"
+con prev/next. Botón circular abajo-derecha (desktop, 56px renderizado a
+scale .8) / arriba-derecha (móvil, 35px) + pinch >1.5x en iOS.
 
 ### H. Migración a Eleventy 3 — 🟢
 Resuelve las 13 vulnerabilidades de `npm audit`. Es un cambio mayor: hacerlo
@@ -651,9 +671,175 @@ implementó. Iterado por feedback suyo hasta este estado:
 - Doble `<h1>` por página (logo sr-only + título del banner).
 
 ### Próxima sesión
-1. Resolver lo de los commits (dejar/deshacer) + commitear o no el trabajo de
-   esta parte 2 según diga él.
+1. ~~Resolver lo de los commits~~ → **resuelto 2026-10-07 (parte 3): se dejan.**
 2. **Cart-drawer (§11-A)** — el pendiente más importante (flujo de compra).
+
+---
+
+## 16. ESTADO — SESIÓN 2026-10-07 (parte 3): página de producto al 100% del demo
+
+### Lo que se hizo (aprobado por el dueño al inicio: alcance A+B+C + PhotoSwipe)
+La página de producto quedó igual al demo (`mg20-galactic-white`) en
+estructura y medidas. Archivos: `src/_includes/product-gallery.njk`
+(reescrita), `src/_includes/producto.njk` (columna info), `src/assets/css/arms.css`
+(bloque GALLERY + caja de sección + grid + tokens de `:root`).
+
+**A. Galería** (medidas del demo, Playwright, por breakpoint):
+- **<1000px:** media full-bleed (400×400 en viewport 400, x=0) + dots con
+  blur (píldora `page-dots--blurred`, bottom 8) · thumbs ocultos · zoom
+  circle **35px arriba-derecha** (top 16, `right: var(--container-outer-
+  width)` → 20px del borde de pantalla en <700, 48px del borde de la caja
+  en 700–999; medido en el demo en ambos rangos).
+- **1000–1149px:** grid 60/40, carousel horizontal, **fila de thumbs
+  debajo** de la media (64px, scroll si no caben), img radius 12.
+- **≥1150px:** **thumbs verticales a la IZQUIERDA** (64px, gap 10,
+  max-h 600 scroll) + carousel a la derecha (media 608 en 1440).
+- Carousel = **scroll-snap nativo** (`.scroll-area` + `snap-center`): swipe
+  móvil y arrastre/trackpad desktop, sin JS custom. JS (inline en
+  `product-gallery.njk`): sync scroll→dots/thumbs (rAF), click thumb/dot→
+  scroll, click mitad izq/der→prev/next (solo `pointer:fine`),
+  `custom-cursor` (círculo 56px con chevron que sigue al puntero;
+  `cursor:none` en el wrapper; se esconde sobre botones).
+- **Zoom = PhotoSwipe v5 por CDN** (jsdelivr, mismo patrón que Motion One):
+  **lazy import** solo al primer uso (botón o pinch), `bgOpacity 1`,
+  `maxZoomLevel 3` (attr `allow-zoom`), sin UI propia: bottom-bar custom
+  "N / M" con prev/next (clases `pagination`/`animated-arrow` portadas del
+  theme.css) + `closeSVG` del demo. CSS: `photoswipe@5.4.4/dist/photoswipe.css`
+  (link en la galería). Si el CDN falla: `catch` reintentable, la galería
+  sigue funcionando sin zoom.
+- Fallback SVG (sin fotos) conservado (`.product-gallery__media > svg` 55%).
+
+**B. Columna info:**
+- Precio → `price-list price-list--lg` + `producto-precio-actual`
+  (`text-lg` 20/18px, lh 1.6, 700) + original tachado (igual que las cards).
+- Separador `hr.producto-separator` (1px color texto) entre precio y picker.
+- **Picker de variantes** (`variant-picker` del demo): label
+  "Color / Versión:" (`text-subdued`) + **valor actual a la derecha**
+  (span `.producto-variante-actual` que se actualiza con MutationObserver
+  sobre `.var-btn-active` — **sin tocar `cart-store.js`**). Valores:
+  `thumbnail-swatch` (imagen 60px, radius 4, anillo 2px al seleccionar;
+  hoy solo **kz-edx-pro** tiene fotos en `variantes/`) o `block-swatch`
+  (texto + dot de color 14px, altura `--input-height` 42/50px, radius
+  `--rounded-button`; dot vía `--swatch-background` inline, mapa
+  `varDots` en `producto.njk` con los colores de `vs`).
+  El estado seleccionado sigue siendo **`.var-btn-active`** (hook de
+  `cart-store.js`); los swatches anulan el outline/scale genérico de esa
+  clase (regla específica).
+- **Botones:** grid `auto-fit minmax(180px,1fr)` (gap 8 móvil / 16 ≥700) →
+  2×~232px lado a lado en la columna de 480 (igual al demo), full-width
+  apilados en móvil. Se quitó `btn-agregar-lg` (ya sin CSS).
+- Se eliminó `cambiarImagen()` (código muerto: nada la llamaba).
+
+**C. Caja de la sección** (`section-boxed` del demo):
+- `section.pb-producto`: <700 sin caja (padding 0/20/48); ≥700 caja blanca
+  (`--background:255 255 255` local, radius `--rounded-lg` 24, sombra
+  `--shadow-block`, margin-inline 32); ≥1000 margin-inline 48 + margin-top
+  24, padding 48 (64 en ≥1600). **Sin `.container` dentro** (el demo no
+  lleva container en esa sección): el grid ocupa todo el ancho interior
+  (1248 en 1440). La sección redefine `--container-outer-width` con su
+  padding (48) para que el full-bleed llegue al borde de la caja en 700–999
+  (igual al demo, x=32 en 800).
+
+**Tokens añadidos a `:root`:** `--container-inner-width` y
+`--container-outer-width` (mismas fórmulas que `.container`, ahora globales
+para que `.full-bleed` funcione fuera de un `.container`). `.container`
+los redefine con la misma fórmula → sin efecto en el resto del sitio.
+
+**D. Fix snap móvil (bug reportado por el dueño, 2026-10-07):**
+al deslizar las fotos, el asentamiento dejaba ~18px de la imagen anterior
+a la vista. Causa: la media list era el scroll container Y llevaba
+`full-bleed` (márgenes negativos): **Chrome calcula el scroll-snap desde
+la posición de flujo del contenedor, no desde su caja real** → snap en
+0/372/764 (390) en vez de 0/392/784. Fix: el full-bleed pasa al
+**wrapper** (clases `full-bleed md:unbleed` sobre
+`.product-gallery__media-list-wrapper` en el njk); la media list queda
+sin márgenes y sin `scroll-padding-inline` (el demo no lleva
+scroll-padding en esa lista); el zoom pasa a
+`right: var(--container-outer-width)` (se quitó el override `right:0`
+@<1000); `section.pb-producto` gana `overflow:hidden` **solo en 700–999**
+(recorta las esquinas de la media al radius de la caja; el demo no
+recorta pero sus fotos de fondo blanco lo ocultan — con las nuestras de
+estudio oscuro se vería — y en ≥1000 el `overflow:hidden` rompería el
+`position:sticky` de la info). Con el fix, `irA()` (que usa
+`offsetLeft`) queda correcta sin cambios: el offsetParent (wrapper) está
+en x=0 en móvil → offsetLeft = coordenadas de contenido.
+
+### Trampas encontradas (para no volver a tropezar)
+- **`grid: auto / auto-flow 100%` es INVÁLIDO** (auto-flow no va en la
+  lista de tracks): el navegador descarta la declaración y el grid cae a
+  1 columna → la media se apilaba en VERTICAL (h=4094 en desktop). El demo
+  usa esa declaración y a él le funciona porque el elemento es
+  `media-carousel` (web component con `display:block` + su propio JS de
+  scroll); al portar a HTML plano hay que usar el equivalente válido:
+  `grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:100%`
+  (media list) y `grid-template-columns:auto minmax(0,1fr)` (galería ≥1150,
+  en vez de `auto / auto-flow auto minmax(0,1fr)`). **Si una regla portada
+  "no hace nada", comprobar si es inválida antes de buscar culpables.**
+- **`--container-outer-width` solo existía dentro de `.container`**: al
+  quitar el container de la sección, el `.full-bleed` dejó de funcionar en
+  silencio (margen 0). Ahora está en `:root`.
+- **PhotoSwipe se carga lazy con `import()` dinámico en script inline**
+  (no hace falta module). Si el CDN cae, `catch` resetea la promesa para
+  reintentar y no bloquea la galería.
+- El botón del lightbox "next" hace **loop** (de la última a la primera).
+- El zoom del demo en desktop **no resetea el `scale(.8)`** en modo
+  carousel: el círculo de 56px se ve a 45px. Portado tal cual.
+- **Un scroll container con márgenes negativos (full-bleed) ROMPE el
+  scroll-snap de Chrome**: asienta desplazado ~el valor del margen y queda
+  un pedacito de la imagen anterior a la vista en móvil (bug reportado
+  2026-10-07). El snap se calcula desde la posición de flujo del
+  contenedor, no desde su caja real (con margen -20, snap en -20+i*392 en
+  vez de i*392). Fix: el full-bleed vive en el **wrapper** (no en el
+  scroller). El demo no lo padece: su carousel es JS (`media-carousel`),
+  no CSS snap. **Si un carrusel con snap "no asienta bien" y el
+  contenedor tiene márgenes negativos, ese es el culpable.**
+
+### Verificado (Playwright, 2026-10-07)
+- **Fix snap móvil (chrome-devtools MCP, emulación 390×844×3
+  mobile+touch):** snap exacto 0/392/784 (antes 0/372/764),
+  offsetLefts 0/392/784 (antes -20/372/764), wrapper y lista x=0 w=390,
+  zoom a 20px del borde, dots centrados (offset 0), **0px de imagen
+  anterior a la vista** tras el asentamiento · 800: media a sangre hasta
+  el borde de la caja (x=32..753, como el demo), zoom x=670 w=35 a 48px
+  del borde de la caja y top 16 (idéntico al demo), `overflow:hidden` en
+  la caja · 1440: idéntico al demo bajo la misma emulación (media 599,
+  gallery 711, contenido de sección 1329) · funcional 25/25 ·
+  `npm run build` limpio.
+- **Medidas = demo:** 1440 (caja 1344 r24, grid 720/480 gap 48, gallery
+  64/608, mediaList 6×608 horizontal, thumbs 64×470, info 480 sticky top
+  117 vs 114 del demo — misma fórmula, header 97 vs 94 pendiente §14,
+  precio 20px, separator 480×1, acciones 232/232, zoom 45@742) · 400
+  (media 400×400 x=0 full-bleed, dots 148×22, info apilada, precio 18px,
+  botón 360×54, zoom 35@345,202) · 800 (caja x=32, media full-bleed hasta
+  borde de caja x=32) · 1100 (2 col + thumbs debajo).
+- **Funcional 25/25:** scroll→thumb activo, click thumb/dot→scroll, click
+  mitad→siguiente, zoom→lightbox (pagination "6/6", next hace loop, ESC
+  cierra), variante→label+anillo+data-img, agregar al carrito OK, barra
+  sticky desktop y píldora móvil OK (bottom-nav siempre visible), 1 imagen
+  (qkz-zen: sin dots/thumbs, zoom "1/1"), swatch de imagen (kz-edx-pro:
+  3 swatches, anillo+label "Verde").
+- `npm run build` limpio. El único 404 local es `/api/stock` (esperado,
+  sin Functions en dev — §9).
+
+### Diferencias restantes documentadas (5% dueño / sin datos)
+- Breadcrumb arriba de la caja (nuestro, SEO — §11-F).
+- Badge "🔥 -16% de descuento" bajo la galería (nuestro).
+- Botones negros (brand ARMS) vs púrpura del demo (brand).
+- Botón "Consultar por WhatsApp" + chips de garantía (nuestros).
+- Sin badge "New"/vendor/rating en la info (el catálogo no trae esos datos).
+- Título 1 línea vs 2 del demo (nombres más cortos).
+
+### Estado git (2026-10-07, parte 3)
+- Commits anteriores **se dejan** (decisión del dueño en esta sesión).
+- Este trabajo quedó en **1 commit** (work + 2 fixes + contexto):
+  página de producto + fix bottom-bar pswp + fix snap móvil (ver §16-D).
+  Es el HEAD local de `main`; **nada empujado a origin**.
+- **Sin commitear a propósito:** `package.json`/`package-lock.json`
+  (puerto 8081 local — decisión del dueño).
+
+### Próxima sesión
+1. **Cart-drawer (§11-A)** — el pendiente más importante (flujo de compra).
+2. Decisiones pendientes §14: header 97 vs 94px · doble `<h1>`.
 
 
 
