@@ -78,6 +78,21 @@ class SafeSticky extends HTMLElement {
   }
 
   connectedCallback() {
+    // El top depende de --sticky-area-height, que el height-observer del
+    // header va afinando en fases (fuentes, imágenes: p. ej. 64px → 97px).
+    // Si el primer latch (_recalculateStyles) cae entre fases, _initialTop
+    // queda en el valor intermedio y la columna se engancha detrás del
+    // header (medido: 84px en vez de 117px). Por eso se observa el
+    // atributo style de :root (donde el height-observer setea las
+    // variables) y se vuelve a latchear cuando cambia.
+    this._styleObserver = new MutationObserver(() => {
+      if (this._position === 'sticky') this._recalculateStyles();
+    });
+    this._styleObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['style'],
+    });
+
     inViewSafeSticky(this, () => {
       this._resizeObserver.observe(this);
       window.addEventListener('scroll', this._checkPositionListener);
@@ -89,14 +104,20 @@ class SafeSticky extends HTMLElement {
   }
 
   disconnectedCallback() {
+    this._styleObserver?.disconnect();
     window.removeEventListener('scroll', this._checkPositionListener);
   }
 
   _recalculateStyles() {
     this.style.removeProperty('top');
     const computedStyles = getComputedStyle(this);
-    this._initialTop = parseInt(computedStyles.top);
+    const newInitialTop = parseInt(computedStyles.top);
+    const topChanged = newInitialTop !== this._initialTop;
+    this._initialTop = newInitialTop;
     this._position = computedStyles.position;
+    // El top de diseño cambió (el header se midió de nuevo): re-enganchar
+    // la columna en el nuevo offset en vez de seguir con el antiguo.
+    if (topChanged) this._currentTop = newInitialTop;
     this._checkPosition();
   }
 

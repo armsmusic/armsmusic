@@ -43,9 +43,14 @@
       <div class="product-gallery__media-list scroll-area" id="gallery-media-list"
         role="region" aria-label="Fotos de {{ nombre }}">
         {% for img in imagenes %}
+        {% set dims = tamImagenes[img] if tamImagenes else null %}
         <div class="product-gallery__media snap-center" data-media-type="image">
+          {# width/height reales (build-time, tamImagenes): evitan CLS en
+             la galería y son la fuente de dims para PhotoSwipe v5, que
+             NO lee naturalWidth (sin ellos estira la foto al viewport) #}
           <img src="/assets/img/productos/{{ img }}"
             alt="{{ nombre }} foto {{ loop.index }}"
+            {% if dims %}width="{{ dims.w }}" height="{{ dims.h }}"{% endif %}
             onerror="this.style.display='none'"
             {% if loop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}>
         </div>
@@ -198,13 +203,21 @@
   function dataSource() {
     return items.map(function (it) {
       var img = it.querySelector('img');
+      // PhotoSwipe v5 NO lee naturalWidth: width/height son obligatorios,
+      // si no la imagen se estira al tamaño del viewport (bug de zoom).
+      // naturalWidth primero (imagen cargada); fallback al atributo
+      // width/height que el build inyecta desde el archivo real.
+      var w = img.naturalWidth  || parseInt(img.getAttribute('width'),  10) || 0;
+      var h = img.naturalHeight || parseInt(img.getAttribute('height'), 10) || 0;
       return {
-        thumbnailElement: img,
+        element: it, // v5 usa `element` (no `thumbnailElement`, que era v4)
         src: img.src,
         srcset: img.getAttribute('srcset') || undefined,
         msrc: img.currentSrc || img.src,
         alt: img.alt,
-        thumbCropped: true
+        width:  w || undefined,
+        height: h || undefined,
+        thumbCropped: false // la miniatura NO está recortada (width:100%, height:auto)
       };
     });
   }

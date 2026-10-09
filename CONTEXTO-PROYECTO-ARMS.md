@@ -211,7 +211,7 @@ Cargados en `base.njk`:
 | Archivo | Rol |
 |---|---|
 | `arms-announcement.js` | `<marquee-text>` + `HeightObserver`. **Único** dueño de `marquee-text`. |
-| `arms-header.js` | `<store-header>`: sticky tras 500px (`STICKY_THRESHOLD`), transparencia condicional. |
+| `arms-header.js` | `<store-header>`: las dos ramas del demo (§17): slide-in a 500px (`STICKY_THRESHOLD`) **solo** con `allow-transparency` (home); fallback sin animación en el resto. El sticky en sí es CSS: siempre en páginas sin hero; en home solo con `.is-filled`. |
 | `safe-sticky.js` | `<safe-sticky>`: compensación de scroll para `position:sticky` (portado del `theme.js` real de Impact). Lo usa la columna de info de la página de producto (botón sticky en desktop). |
 | `arms-slideshow.js` (module) | Hero/slideshow, `ScrollCarousel`, `PageDots`, prev/next buttons, `SplitLines` con Motion One. |
 | `arms-home.js` (module) | Resto de Web Components del home; Motion One para reveal-on-scroll. |
@@ -319,12 +319,13 @@ del tema Impact en la sesión §16 (2026-10-07 parte 3):
   `auto-fit minmax(180px,1fr)` (2×~232px en la columna de 480; full-width
   apilados en móvil).
 - `.producto-relacionados` (2/4 col).
-- **Botón "Agregar al carrito" sticky** (ver §14 `00b4bba` + estado final en §15):
-  columna de info envuelta en `<safe-sticky class="producto-info">` (sticky en
-  desktop ≥1000px, mecanismo de Impact) + `#producto-barra` (JS inline al final
-  del include): en desktop tarjeta compacta abajo-derecha (imagen + nombre +
-  precio + botón base) y en móvil píldora encima del bottom-nav, que aparece
-  cuando el botón principal sale de pantalla.
+- **Botón "Agregar al carrito"** (ver §14 `00b4bba` + estado final en §15):
+  columna de info envuelta en `<safe-sticky class="producto-info">` (el sticky
+  CSS de desktop quedó **desactivado por decisión del dueño — §17 final: la
+  columna se desplaza con la página como en el demo**) + `#producto-barra`
+  (JS inline al final del include): en desktop tarjeta compacta abajo-derecha
+  (imagen + nombre + precio + botón base) y en móvil píldora encima del
+  bottom-nav, que aparece cuando el botón principal sale de pantalla.
 - Al final: featured-collection "Los más vendidos" (excluye el producto
   actual vía `fcExcluirId = productoActualId`) + text-with-icons.
 - **Ojo:** el bucle de relacionados hace `{% set prod = rel %}` y sobrescribe
@@ -707,6 +708,31 @@ estructura y medidas. Archivos: `src/_includes/product-gallery.njk`
   theme.css) + `closeSVG` del demo. CSS: `photoswipe@5.4.4/dist/photoswipe.css`
   (link en la galería). Si el CDN falla: `catch` reintentable, la galería
   sigue funcionando sin zoom.
+  - **CRÍTICO: PhotoSwipe v5 NO lee `naturalWidth`** — el item DEBE llevar
+    `width`/`height`; si no, `updateContentSize()` cae en el fallback al
+    viewport y **estira la imagen a pantalla completa** (bug de zoom en
+    móvil y desktop; en Impact no pasaba porque el demo sí pasa dims).
+  - Los dims se parsean en **build** desde el header del archivo
+    (`dimsImagen()` en `.eleventy.js`: WebP VP8/VP8L/VP8X, JPEG SOFn,
+    PNG) y se exponen por producto como `tamImagenes` (mapa con las MISMAS
+    claves que `imagenes`/`imagenesVariantes`). Se inyectan como atributos
+    `width`/`height` en el `<img>` de la galería (bonus: sin CLS) y
+    `dataSource()` usa `naturalWidth || atributo`.
+  - `dataSource()` pasa `element: it` (v5 usa `element`; `thumbnailElement`
+    es v4 y en v5 no hace nada → sin él la animación zoom-in/out no
+    funciona) y `thumbCropped: false` (la miniatura NO está recortada:
+    `width:100%; height:auto`).
+  - Nota: `loop: true` es el default en v5.4.4 (el next/prev hace loop).
+  - **Botón X (cerrar)**: el photoswipe.css del CDN lo deja pegado a la
+    esquina (botón 50×60, `margin-right:6px`, opacidad .85). El theme.css
+    del demo lo overridea y esas reglas viven en `arms.css` (sección
+    "Botón de cerrar (X) del lightbox"): 56×56 (tamaño del SVG), opacidad
+    1, margen 24px arriba-derecha en móvil / 48px en ≥700px y
+    `rotate(90deg)` en hover (pointer:fine, .2s). OJO: hay que usar clase
+    doble `.pswp__button.pswp__button--close` (y re-declarar `transition`
+    en `:hover`) porque el link del CDN se carga DESPUÉS de arms.css (va
+    en el body, en el partial de la galería) y con la misma especificidad
+    ganaría el CDN (incluido su `transition:none` en hover).
 - Fallback SVG (sin fotos) conservado (`.product-gallery__media > svg` 55%).
 
 **B. Columna info:**
@@ -728,6 +754,17 @@ estructura y medidas. Archivos: `src/_includes/product-gallery.njk`
 - **Botones:** grid `auto-fit minmax(180px,1fr)` (gap 8 móvil / 16 ≥700) →
   2×~232px lado a lado en la columna de 480 (igual al demo), full-width
   apilados en móvil. Se quitó `btn-agregar-lg` (ya sin CSS).
+  - Los dos botones son `button button--xl` idénticos (mismas cajas:
+    60px desktop / 54px móvil, medido). El de WhatsApp ("Pedir por
+    WhatsApp" — el dueño pidió cambiar el texto de "Consultar por
+    WhatsApp") usa `fa-brands fa-whatsapp` a 1em (igual que el carrito;
+    el SVG inline de 18px se veía más gordo) y el verde #25D366 va vía
+    las variables del sistema de botones (`--button-background: 37 211
+    102 / var(--button-background-opacity,1)` — el patrón del demo, que
+    las setea inline por botón). **Sin hover propio**: el anterior
+    (`translateY(-2px)` + box-shadow verde) lo levantaba con un halo y
+    lo hacía ver más grande que el de agregar; en Impact los botones de
+    compra no cambian de tamaño (solo el fade a 0.85 base de `.button`).
 - Se eliminó `cambiarImagen()` (código muerto: nada la llamaba).
 
 **C. Caja de la sección** (`section-boxed` del demo):
@@ -840,6 +877,157 @@ en x=0 en móvil → offsetLeft = coordenadas de contenido.
 ### Próxima sesión
 1. **Cart-drawer (§11-A)** — el pendiente más importante (flujo de compra).
 2. Decisiones pendientes §14: header 97 vs 94px · doble `<h1>`.
+
+## 17. ESTADO — SESIÓN 2026-10-07 (parte 4): header sticky + latch del safe-sticky
+
+**Reporte del dueño:** "en desktop en la página de producto, al hacer scroll
+hacia abajo el título, precio y botones también bajan un poco, parece un
+efecto, pero en impact no pasa".
+
+### Causa raíz (dos bugs, verificados en vivo contra el demo con chrome-devtools)
+
+1. **El header NO era sticky en páginas sin hero** (producto, etc.).
+   Solo lo era con `.is-filled` (scroll > 500px), así que en el producto
+   se desplazaba con el contenido "como en móvil". El demo, verificado en
+   vivo: el wrapper `<header>` de la sección trae SIEMPRE
+   `position:sticky; top:0; z-index:10` (regla inline que Shopify genera
+   por sección: `#shopify-section-...__header`, sin media query — también
+   es sticky en móvil del demo). En páginas con header transparente
+   (home), el theme.css del demo lo anula mientras no hay `.is-filled`:
+   `:has([allow-transparent-header]) .shopify-section--header:not(:has(.header.is-filled))
+   { position:relative!important; top:0!important }`.
+   Consecuencia del bug: en el producto, la columna de info (que SÍ era
+   sticky) se enganchaba a 84px en un header que ya se había ido, y a
+   scroll >500 el header entraba deslizando y le tapaba 13px al título.
+   Eso era el "efecto" que veía el dueño.
+
+2. **Carrera de latch en `SafeSticky`**: `_recalculateStyles()` leía el
+   `top` computado una sola vez. El `height-observer` del header afina
+   `--header-height` en fases (64px → 97px: fuentes/imágenes), y si el
+   primer latch caía en la fase intermedia, `_initialTop` quedaba en 84
+   (64+20) para siempre → la columna se enganchaba 13px DENTRO del header.
+   (En el demo el latch cae directo al valor final, por eso no se nota.)
+
+### Fixes
+
+- `arms.css`: `height-observer[variable="header"]` ahora es
+  `position:sticky; top:0; z-index:10` **siempre** (regla base), y se
+  añadió el override del demo
+  `:has([allow-transparency]):not(:has(.header.is-filled))
+  { position:relative!important; top:0!important }`.
+  → Home: sin cambio perceptible (header transparente se desplaza, entra
+  a 500px y se fija — medido idéntico al demo: S=200 → top -152;
+  S=700 → top 0 filled). → Producto/otras: sticky desde el primer pixel.
+- `safe-sticky.js`: (a) `MutationObserver` sobre el atributo `style` de
+  `:root` (donde el height-observer setea las variables) → si cambia y el
+  elemento es sticky, `_recalculateStyles()` de nuevo; (b) en
+  `_recalculateStyles()`, si el `top` computado cambió, se resetea
+  `_currentTop` al nuevo `_initialTop` (re-enganchar en el offset nuevo).
+  El resto de la lógica del port se tocó en nada.
+
+### Verificado (chrome-devtools, build local)
+
+- Producto 1440×900: header top 0 desde S=48 (sticky); columna `_initialTop`
+  117 (97+20, antes 84); pinning exacto a 117 de S=180 a S=380;
+  0 movimientos hacia abajo en scroll continuo 0→1000; release normal.
+- Home 1440×900: S=0 relative@48 · S=200 relative@-152 · S=700 sticky@0
+  filled — idéntico al demo medido en las mismas posiciones.
+- Móvil 500×844: header sticky (igual que el demo en móvil); columna
+  static (<1000px, igual que el demo).
+
+### Decisión final del dueño: la columna NO se pega
+
+Con el header corregido, el dueño siguió viendo "el efecto": al hacer
+scroll, el título/precio/botones **se quedaban fijos** a 117px mientras
+la galería pasaba. En el demo eso NUNCA se ve porque en sus productos
+la info (595px) es casi igual de alta que la galería (599px) — el
+sticky existe en el CSS del demo pero no se manifiesta. En nuestras
+páginas la info es más corta y el pegado sí se notaba → **se quitó la
+regla `position:sticky` de `.producto-info`** (el wrapper
+`<safe-sticky>` + `safe-sticky.js` siguen en su sitio, inactivos:
+`_checkPosition()` hace return si position ≠ sticky; para reactivar,
+restaurar la regla — está documentada en el comentario de arms.css).
+Verificado en el servidor del dueño (8081, QKZ AK3, 1213×1000):
+columna 1:1 con el scroll (287→187→87→-12→…), 0 movimientos hacia
+abajo, header fijo a top 0.
+
+### Fix extra: el header ya no hace el "sube y vuelve a bajar"
+
+**Reporte:** con el header sticky, "en cierto punto del scroll sube y
+vuelve a bajar rápidamente" (comportamiento de móvil).
+
+**Causa:** el `theme.js` del demo tiene **dos ramas** en
+`_checkTransparency()`: la **animada** (slide-in `translateY(-100%)→0`
+a los 500px) solo aplica si el header tiene `allow-transparency`
+(páginas con hero — el demo lo gestiona en runtime en
+`_setupTransparentHeader()`); las demás páginas usan la **rama
+fallback** (`classList.toggle('is-filled', ...)` **sin animación**).
+Además, el demo solo instala el listener de scroll de transparencia
+cuando hay header transparente. El port original (`arms-header.js`)
+corría la rama animada en **todas** las páginas → en el producto, al
+cruzar los 500px, el header visible hacía el slide de "aparecer"
+(subía y bajaba).
+
+**Fix** (`arms-header.js`, lógica copiada del decompile):
+`_checkTransparency()` con las dos ramas del demo (la animada solo con
+`allow-transparency` + `sticky` + sin `hide-on-scroll`; fallback sin
+animación) · listeners de scroll/mouse solo si hay `allow-transparency`
+· handler `pageshow` (bfcache) como el demo. El atributo sigue viniendo
+del HTML (`headerTransparente`, solo home) — equivalente al setup del
+runtime del demo.
+
+**Verificado (8081, 1213×1000):** producto QKZ AK3 scroll 0→900→0:
+header fijo a top 0 todo el recorrido, 0 transforms/animaciones.
+Home: S=0 transparente @48 · S=600 sólido @0 filled (slide-in intacto)
+· S=200 se desplaza a -152 (igual que el demo: -152).
+
+
+## 18. ESTADO — SESIÓN 2026-10-08: botones de compra, mismo tamaño en todos los anchos
+
+**Reporte:** "en desktop, cuando redimensiono la ventana, el botón de
+Pedir por WhatsApp se vuelve más gordo en altura; en Impact ambos
+botones se mantienen del mismo tamaño".
+
+**Causa (medida en vivo contra el demo, chrome-devtools):**
+La geometría es **idéntica** al demo (columna info 0.8fr: 474px a
+1440, 418 a 1300, 378 a 1200, 341 a 1100, 301 a 1000 — mismos números
+que `.product` del demo). La diferencia es el **contenido**: el demo
+usa texto corto sin ícono ("Add to cart" ≈ 165px con padding → nunca
+se rompe, siempre 60px/1 línea en todos los anchos); nosotros teníamos
+"Pedir por WhatsApp" (141.7px) + ícono FA (14px) + padding 80 =
+239.7px, y "Agregar al carrito" + ícono = 226.4px. Con el grid del
+demo (`auto-fit minmax(180px,1fr)` + `align-items:start`), en tracks
+de 180-221px (ventana ~1200-1410px) el verde se rompía a 2 líneas
+(86px) y el negro se quedaba de 1 línea (60px) → el "más gordo en
+altura". El `align-items:start` del demo no le afecta porque su texto
+nunca se rompe.
+
+**Fix (decisión del dueño: "apilados, siempre 60px"):**
+- `producto.njk`: se quitaron los íconos de ambos botones (los del
+  demo son texto solo; el ícono ensanchaba el contenido y forzaba el
+  wrap donde el demo no lo hace).
+- `arms.css` `.producto-acciones`: `minmax(180px,1fr)` →
+  `minmax(226px,1fr)` (226 = ancho donde "Pedir por WhatsApp" +
+  padding cabe en 1 línea, 221.7 + margen). Los botones solo van
+  lado a lado cuando cada track ≥226px; en los demás anchos se
+  apilan a ancho de columna. Resultado: **60px/1 línea en todos los
+  anchos** (altura idéntica al demo, nunca cambia al redimensionar).
+- `arms.css` `.producto-acciones .button`: `align-self:stretch` +
+  `inline-flex` centrado (red de seguridad: misma altura de fila y
+  contenido centrado si algún día un botón estirara al otro).
+- Se quitó el `align-items:start` de `.producto-acciones` (el del
+  demo; innecesario ahora que ambos botones siempre miden igual).
+
+**Nota:** el demo a 1213px (ventana del dueño) los muestra lado a
+lado de 184×60 — no reproducible con nuestro texto más largo
+(ningún track de 184px cabe "Pedir por WhatsApp" en 1 línea con el
+padding del demo). El dueño prefirió altura constante (60px) sobre
+imitar ese layout; a 1440+ y <1200px quedamos idénticos al demo.
+
+**Verificado (8081, QKZ AK3, 15 anchos 1500→500):** ambos botones
+mismo tamaño + 1 línea en TODOS (2col a 1440+/700-950, apilados
+1000-1420 y <700). 1440: 229×60 lado a lado = demo exacto (229×60).
+1213: 383×60 apilados (demo: 184×60 lado a lado — trade-off elegido).
 
 
 

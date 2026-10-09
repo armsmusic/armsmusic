@@ -43,6 +43,83 @@ function leerImagenes(id) {
     .map(f => `${id}/${f}`);
 }
 
+// ── Dimensiones reales de una imagen (solo header, sin decodificar) ──
+// PhotoSwipe v5 NO lee naturalWidth: necesita width/height en el item
+// (si no, estira la imagen al tamaño del viewport → bug de zoom).
+function dimsWebP(buf) {
+  const tipo = buf.toString('ascii', 12, 16);
+  if (tipo === 'VP8 ') {
+    // lossy: 3B frame tag + 3B start code, luego W/H a 16-bit LE (& 0x3FFF)
+    return { w: buf.readUInt16LE(26) & 0x3fff, h: buf.readUInt16LE(28) & 0x3fff };
+  }
+  if (tipo === 'VP8L') {
+    // lossless: 1B signature (0x2f) + 30 bits: W-1 (14) + H-1 (14)
+    const v = buf.readUInt32LE(21);
+    return { w: (v & 0x3fff) + 1, h: ((v >> 14) & 0x3fff) + 1 };
+  }
+  if (tipo === 'VP8X') {
+    // extended: W-1 y H-1 a 24-bit LE
+    return { w: buf.readUIntLE(24, 3) + 1, h: buf.readUIntLE(27, 3) + 1 };
+  }
+  return null;
+}
+
+function dimsImagen(filePath) {
+  let buf;
+  try {
+    const fd = fs.openSync(filePath, 'r');
+    const n = Math.min(fs.fstatSync(fd).size, 65536); // JPEG: SOF puede ir lejos
+    buf = Buffer.alloc(n);
+    fs.readSync(fd, buf, 0, n, 0);
+    fs.closeSync(fd);
+  } catch (e) {
+    return null;
+  }
+  if (buf.length < 30) return null;
+
+  if (buf.toString('ascii', 0, 4) === 'RIFF' && buf.toString('ascii', 8, 12) === 'WEBP') {
+    return dimsWebP(buf);
+  }
+  if (buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47) { // PNG
+    return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) };
+  }
+  if (buf[0] === 0xff && buf[1] === 0xd8) { // JPEG: buscar SOFn
+    for (let i = 2; i < buf.length - 9; i++) {
+      if (buf[i] !== 0xff) continue;
+      const m = buf[i + 1];
+      if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) {
+        return { w: buf.readUInt16BE(i + 7), h: buf.readUInt16BE(i + 5) };
+      }
+      if (m < 0xd0 || m === 0xd8 || m === 0xd9 || m === 0x01) { i += 1; continue; } // standalone
+      const len = buf.readUInt16BE(i + 2); // incluye los 2B de la longitud
+      i += len + 1;
+    }
+    return null;
+  }
+  return null;
+}
+
+// ── Mapa "id/archivo" → {w,h} de las fotos del producto ─────────
+// Mismas claves que `imagenes` / `imagenesVariantes`, para que el
+// template resuelva dims con la misma cadena.
+function leerTamImagenes(id) {
+  const mapa = {};
+  const base = path.join(__dirname, 'src', 'assets', 'img', 'productos', id);
+  const escanear = (sub, prefijo) => {
+    const carpeta = path.join(base, sub);
+    if (!fs.existsSync(carpeta)) return;
+    fs.readdirSync(carpeta)
+      .filter(f => IMG_EXTS.has(path.extname(f).toLowerCase()))
+      .forEach(f => {
+        const d = dimsImagen(path.join(carpeta, f));
+        if (d) mapa[`${prefijo}/${f}`] = d;
+      });
+  };
+  escanear('', id);
+  escanear('variantes', `${id}/variantes`);
+  return mapa;
+}
+
 // ── Leer imagen OG desde subcarpeta og/ del producto ─────────
 function leerOgImagen(id) {
   const carpeta = path.join(__dirname, 'src', 'assets', 'img', 'productos', id, 'og');
@@ -81,6 +158,7 @@ function resolverSeccion(seccion) {
       ...prod,
       descripcion: descMd || prod.descripcion || null,
       imagenes:          leerImagenes(id),
+      tamImagenes:       leerTamImagenes(id),
       ogImagenProducto:  leerOgImagen(id),
       imagenesVariantes: leerImagenesVariantes(id),
       extra:       extra.includes(id)

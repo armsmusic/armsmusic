@@ -1243,22 +1243,29 @@ height-observer[variable="announcement-bar"] {
   display: block;
 }
 
+/* ── Sticky real de Impact (verificado en vivo en el demo, oct 2026):
+   el wrapper <header> de la sección trae SIEMPRE position:sticky;
+   top:0; z-index:10 (regla inline que Shopify genera por sección:
+   #shopify-section-...__header). En páginas con header transparente
+   (home), el theme.css del demo lo desactiva mientras el header aún
+   no tiene .is-filled:
+   ":has([allow-transparent-header]) .shopify-section--header:not(:has(.header.is-filled))
+    { position:relative!important; top:0!important }".
+   Resultado: en home el header transparente se desplaza con el
+   contenido y, al cruzar el umbral (STICKY_THRESHOLD=500px en
+   arms-header.js, clase .is-filled), entra deslizando y se engancha;
+   en el resto de páginas (producto, etc.) es sticky desde el primer
+   pixel de scroll. (Antes el sticky solo existía con .is-filled, así
+   que en desktop el header del producto se comportaba como en móvil.) ── */
 height-observer[variable="header"] {
-  position: relative;
+  position: sticky;
   top: 0;
   z-index: 10;
   display: block;
 }
-
-/* ── Sticky real de Impact: el header NO es sticky mientras está
-   transparente (se desplaza con el contenido como cualquier
-   elemento normal) — solo se "engancha" como sticky después de
-   cruzar el umbral de scroll (STICKY_THRESHOLD=500px en
-   arms-header.js), momento en que gana la clase .is-filled.
-   Antes de este fix, el header era sticky desde el primer pixel
-   de scroll, distinto al comportamiento real de Impact. ── */
-height-observer[variable="header"]:has(.header.is-filled) {
-  position: sticky;
+height-observer[variable="header"]:has([allow-transparency]):not(:has(.header.is-filled)) {
+  position: relative !important;
+  top: 0 !important;
 }
 
 .header {
@@ -4334,6 +4341,41 @@ section.pb-producto {
   transform: rotate(180deg);
 }
 
+/* ── Botón de cerrar (X) del lightbox — igual al demo ──
+   El theme.css del demo overridea el pswp.css por defecto: el
+   botón mide lo que mide su SVG de 56px (no el 50×60 del CDN),
+   va a opacidad completa y su margen desde la esquina
+   arriba-derecha de la pantalla es 24px en móvil / 48px en
+   ≥700px, con rotate(90deg) en hover (pointer:fine). El CDN solo
+   da margin-right:6px → pegado a la esquina (bug reportado).
+   Clase doble para subir la especificidad: el link del
+   photoswipe.css CDN se carga DESPUÉS de arms.css (va en el body,
+   en el partial de la galería) y con la misma especificidad
+   ganaría el CDN. */
+.pswp__button.pswp__button--close {
+  width: 56px;
+  height: 56px;
+  opacity: 1;
+  margin-block-start: 24px;
+  margin-inline-end: 24px;
+  transition: transform .2s;
+}
+@media screen and (min-width: 700px) {
+  .pswp__button.pswp__button--close {
+    margin-block-start: 48px;
+    margin-inline-end: 48px;
+  }
+}
+@media screen and (pointer: fine) {
+  .pswp__button.pswp__button--close:hover {
+    transform: rotate(90deg);
+    /* el CDN pone `transition:none` en :hover (misma especificidad,
+       carga después): re-declarar aquí (0-3-0) para que la rotación
+       dure .2s, igual al demo */
+    transition: transform .2s;
+  }
+}
+
 /* ── Bottom-bar del lightbox (pagination) — igual al demo ──
    Se registra como elemento custom de PhotoSwipe (ver
    product-gallery.njk). Solo existe cuando el lightbox está
@@ -4596,51 +4638,74 @@ section.pb-producto {
 
 /* ── Botones de acción — buy-buttons del demo ──
    Grid: 1 columna full-width (móvil); ≥700px auto-fit
-   minmax(180px,1fr) con gap 16 — en la columna de 480px quedan
-   dos botones lado a lado de ~232px (igual al demo). */
+   minmax(226px,1fr) con gap 16.
+
+   FIX (2026-10-08, decisión del dueño "apilados, siempre 60px"):
+   el demo usa minmax(180px,1fr) y sus botones quedan SIEMPRE de
+   60px/1 línea porque su texto es corto ("Add to cart" ≈ 165px con
+   padding). Con nuestro texto español "Pedir por WhatsApp" (141.7px
+   + 80 de padding = 221.7px) los botones lado a lado de 180-221px
+   (rango de ventana ~1200-1410px) se rompían a 2 líneas: el de
+   WhatsApp crecía a 86px mientras "Agregar al carrito" se quedaba
+   de 60px → "se vuelve más gordo en altura al redimensionar".
+   minmax(226px) = ancho donde el label más largo CABE en 1 línea
+   (221.7 + margen): los botones solo van lado a lado cuando cada
+   track ≥226px; en los demás anchos se apilan a ancho de columna.
+   Resultado: 60px/1 línea en TODOS los anchos (altura idéntica al
+   demo, nunca cambia al redimensionar). El demo a 1213px los pone
+   lado a lado de 60px — no reproducible con nuestro texto más
+   largo (se necesitarían ≤104px de contenido en tracks de 184px). */
 .producto-acciones {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--spacing-2);
-  align-items: start;
   margin-bottom: var(--spacing-6);
 }
 @media screen and (min-width: 700px) {
   .producto-acciones {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(226px, 1fr));
     gap: var(--spacing-4);
   }
 }
-/* Tamaño (font/padding/radius) viene de .button + .button--xl — igual al demo */
-.btn-whatsapp-producto {
+/* Red de seguridad (mismo fix): aunque ambos botones siempre tengan
+   el mismo número de líneas, stretch garantiza que ocupen la misma
+   altura de fila y el flex centra el contenido cuando uno estira al
+   otro. (El ícono también se quitó del HTML: ensanchaba el contenido
+   y forzaba el wrap donde el demo no lo hace — los botones de compra
+   del demo son texto solo.) */
+.producto-acciones .button {
+  align-self: stretch;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-2);
-  background: #25D366;
-  color: #fff;
-  transition: transform .2s ease, box-shadow .2s ease;
 }
-.btn-whatsapp-producto:hover {
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgb(37 211 102 / 0.35);
+/* Tamaño (font/padding/radius) viene de .button + .button--xl — igual
+   al demo. El verde se setea con las variables del sistema de botones
+   (el demo las setea inline en cada botón de compra): así hereda el
+   MISMO hover que "Agregar al carrito" (fade a 0.85, sin cambio de
+   tamaño). El hover anterior (translateY(-2px) + box-shadow verde)
+   levantaba el botón con un halo y lo hacía ver más grande que el
+   de agregar — en Impact los botones de compra no cambian de tamaño. */
+.btn-whatsapp-producto {
+  --button-background: 37 211 102 / var(--button-background-opacity, 1);
+  --button-text-color: 255 255 255;
+  --button-outline-color: 37 211 102;
 }
 
-/* ── Sticky de la columna de info — mecanismo real de Impact ──
-   Igual que .product-info del demo (theme.css, min-width:1000px):
-   position:sticky + top = sticky-area (header real, medido por
-   height-observer) + 20px. El wrapper <safe-sticky> (safe-sticky.js)
-   compensa el scroll para que no salte. Con la galería más alta
-   que la info, la columna (y su botón) se queda fija mientras
-   pasa la galería. */
-@media screen and (min-width: 1000px) {
-  .producto-info {
-    top: calc(var(--sticky-area-height) + 20px);
-    z-index: 1;
-    position: sticky;
-  }
-}
+/* ── Columna de info: NO sticky (decisión del dueño, 2026-10-07) ──
+   El demo SÍ trae esta regla (theme.css, min-width:1000px:
+   .product-info { top: calc(var(--sticky-area-height) + 20px);
+   z-index:1; position:sticky }) y el wrapper <safe-sticky> sigue en
+   el HTML + safe-sticky.js (inactivo: _checkPosition() hace return
+   si position ≠ sticky). PERO en los productos del demo la info
+   (595px) es casi igual de alta que la galería (599px), así que el
+   pegado NUNCA se manifiesta: la columna se desplaza con la página.
+   En nuestras páginas la info es más corta que la galería, el sticky
+   sí se activaba (título/precio/botones se quedaban "flotando"
+   debajo del header) y el dueño lo percibía como un efecto que "no
+   pasa en Impact" → la columna debe desplazarse natural, como se ve
+   en el demo. Si algún día se quiere reactivar: restaurar la regla
+   de arriba. */
 
 /* Barra sticky: aparece cuando el boton principal queda por
    arriba del viewport. Igual al demo de Impact:
