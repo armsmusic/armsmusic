@@ -402,8 +402,8 @@ restos de Bootstrap. Migrarlos al estilo Impact **sin tocar su lógica JS**.
 
 | Componente | Problemas detectados |
 |---|---|
-| `cart-drawer.njk` + `cart-drawer.js` | Drawer oscuro (`#171717`); el JS renderiza los items con estilos inline blancos/oscuros (8 ocurrencias); 2 clases Bootstrap (`btn btn-outline-secondary`, `btn btn-primary w-100`); animaciones `btn-adding/btn-success-anim/btn-bounce` que vivían en `main.css`. **Es el más crítico (flujo de compra).** |
-| `nav-drawer.njk` | 20 estilos inline oscuros. |
+| `cart-drawer.njk` + `cart-drawer.js` | ✅ HECHO §19 (2026-10-08). Drawer oscuro (`#171717`) → panel blanco flotante del demo, estilos inline → clases, animaciones `btn-adding/btn-success-anim/btn-bounce` portadas a arms.css. Funcionamiento intacto. |
+| `nav-drawer.njk` | ✅ HECHO §20 (2026-10-10). 20 estilos inline oscuros → bottom-sheet móvil / drawer 412px desktop, estilos del demo. |
 | `search-panel.njk` + `buscar.js` | 3 + 12 estilos oscuros inline; paleta morada vieja en `buscar.js`; 1 clase Bootstrap. |
 | `bottom-nav.njk` | 8 estilos oscuros, 1 variable `--bs-*` muerta, paleta morada vieja. |
 | `floating-ui.njk` | 1 variable `--bs-*` muerta. |
@@ -1095,6 +1095,117 @@ dueño (puerto 8081) — **no commitear ni tocar**.
 3. Decisiones pendientes del dueño (§14): header 97 vs 94px · doble `<h1>`.
 4. Pendiente de backend (bloquea stock real): `GET /api/stock` (404 hoy,
    §9) — trabajo del dueño.
+
+
+## 20. ESTADO — SESIÓN 2026-10-10: nav-drawer, estilos del demo
+
+**Aprobado por el dueño al inicio** (método §11-A, igual al cart-drawer:
+estilos del demo, funcionamiento intacto). Decisión del dueño en la sesión:
+**logo FUERA** del menú (el demo no lleva logo; cierre = × circular).
+
+### Referencia del demo (componente real)
+El menú del demo son **dos instancias** del web component
+`<navigation-drawer class="navigation-drawer drawer">` (theme.js:
+`NavigationDrawer extends Drawer`, shadow DOM con parts overlay/content/
+header/body/footer):
+- `#header-sidebar-menu` — `mobile-opening="bottom" open-from="left"`,
+  visible **<1150px** (clase `lg:hidden`): es el menú de la hamburguesa.
+  En móvil abre como **bottom-sheet** (clip-path desde abajo), en ≥700px
+  como **drawer de la izquierda de 412px**.
+- `#navigation-drawer-1` — `mega-menu`, visible **≥1150px** (clase
+  `lg-max:hidden`): lo abre el botón "Shop" del header (drawer 472px de
+  2 columnas con carrusel de promos). NO es la hamburguesa.
+
+Animación del demo: `clip-path: inset(100% 0 0 0 round 6px)` →
+`inset(0 0 0 0 round 6px)` (`.4s cubic-bezier(.86,0,.07,1)`). Aquí se
+conservó el mecanismo propio de transform (igual que en el cart-drawer):
+visualmente equivalente.
+
+### Lo que se hizo
+- **`src/_includes/nav-drawer.njk`** (reescrito visual): se fueron los ~20
+  estilos inline oscuros + los hover `onmouseover`. Se conservan **tal
+  cual**: IDs (`menu-nav-drawer`, `menu-nav-overlay`, `audio-submenu`,
+  `audio-submenu-arrow`), todos los `onclick` (`cerrarMenuNav`,
+  `toggleAudioSubmenu`), los 7 links, `aria-label`. Nuevo: botón ×
+  circular (móvil: flotante centrado sobre la hoja · desktop: dentro
+  arriba-izq con borde), **footer con redes 27px (Facebook + WhatsApp**;
+  las de Instagram/YouTube del footer son `#` placeholder — no se
+  incluyeron), **sin logo** (decisión dueño).
+- **`src/assets/css/arms.css`** (sección final, tras la del cart-drawer):
+  geometría y estilos del demo medidos en vivo (ver abajo).
+- **`src/assets/js/site-ui.js`**: solo mecánica visual —
+  `abrirMenuNav`/`cerrarMenuNav` ahora usan transform por viewport
+  (móvil `translateY` / desktop `translateX`), setean `visibility`
+  (el CSS hace la transición discreta: se oculta al terminar el slide de
+  cierre, aparece al instante en el de apertura) y ocultan el flotante
+  de WhatsApp mientras el menú está abierto (ver trampas). Se quitó el
+  `box-shadow` inline (el demo no lleva sombra). `toggleAudioSubmenu`
+  gana UNA línea: sincroniza `aria-expanded` en el botón Audio (el CSS
+  del chevron se dispara por ese atributo; el demo lo lleva). Nada más.
+
+### Medidas (Playwright, 2026-10-10) — idénticas al demo
+- **Móvil 390×844 (bottom-sheet):** panel 374×590.8 @ (8, 245.2) — demo
+  (8, 245.2) 374×590.8 · blanco · radius 6px · padding 24px ·
+  **min-height 70vh / max-height 75vh** (el min-height es lo que da los
+  590px: el contenido solo da ~269px) · × flotante 48×48 @ (171, 173.2)
+  — demo (171, 173.2) · links 24px/700/-0.025em/28.8px Barlow (h3) ·
+  list gap 16px · circle-chevron 24px fondo (26 26 26)/10% · footer
+  social iconos 27px · wrapper gap 24px (nav→footer).
+- **≥700px (drawer izq. 412px):** drawer 412×100% @0,0 (margen 16px) ·
+  panel 380×868 @16,16 · padding `0 32 32` · × inline 48×48 @ (48,48)
+  con borde 1px (26 26 26)/12% · links **26px/33.8px** en 800 (h4 de la
+  escala ≥700 del demo) y **32px** en 1440 (escala ≥1400) — ambos ya
+  vivos en `arms.css` vía los `:root` responsivos (mismos valores que el
+  demo) · lista 32px bajo el × · footer 32px del borde.
+- **Overlay:** negro 40% sin blur (igual al cart-drawer), z 1999.
+- **Acordeón Audio (funcionalidad propia, intacta):** display none/block
+  + rotación del svg; al expandir el circle-chevron se invierte
+  (fondo (26 26 26), chevron blanco) vía `button[aria-expanded="true"]`.
+  Sublinks h5 (18px móvil / 20px ≥700) gap 12px (panel-2 del demo).
+- **Verificado:** cierre por × flotante, × inline, overlay, y por link
+  (navega + cierra + restaura el float) · slide animado (transform
+  intermedio medido a 150ms) · 0 errores de consola (solo el 404
+  `/api/stock` preexistente, §9) · `npm run build` limpio.
+
+### Trampas encontradas
+- **`min-height: 70vh` del contenido** (`.navigation-drawer::part(content)`
+  en theme.css): sin él la hoja móvil mide solo el contenido (~269px) en
+  vez de los 590px del demo.
+- **El flotante de WhatsApp (z 9999, `left:1.5rem; bottom:90px` móvil)
+  queda ENCIMA de la hoja full-width** y le intercepta los clicks a los
+  sublinks de la izquierda. Fix: `abrirMenuNav`/`cerrarMenuNav` setean
+  `display:none`/'' en `.whatsapp-float` mientras el menú está abierto.
+  ⚠️ **El cart-drawer (también full-width móvil, z 2001) tiene el MISMO
+  choque preexistente** (el float le tapa la zona de line-items/footer):
+  pendiente de decidir si se aplica el mismo fix (no tocado en esta
+  sesión: fuera de alcance).
+- **`visibility` en transición:** `transition: ..., visibility .4s` — al
+  abrir, visible de inmediato; al cerrar, visible hasta terminar el slide
+  (comportamiento discreto del CSS). El JS solo setea visible/hidden.
+- **Transform por viewport en inline:** el CSS pone el estado inicial
+  (media queries); el JS pisa con inline según `innerWidth < 700`. Si se
+  redimensiona con el menú abierto, queda en el estado que era (visible
+  en ambos) — mismo comportamiento que antes.
+- **Escala tipográfica responsiva del demo** (h4: 22px base → 26px ≥700 →
+  32px ≥1400): `arms.css` ya la trae en los `:root` de las media queries
+  (portada en sesiones previas) — por eso el link mide 26px en 800 y
+  32px en 1440 sin tocar nada.
+
+### Estado git (2026-10-10)
+- Commit de esta sesión en `main` (work + contexto); rama sigue sin
+  empujar (el push es decisión del dueño). `package.json`/
+  `package-lock.json` (puerto 8081) siguen sin commitear a propósito.
+
+### Próxima sesión
+1. **`search-panel.njk` + `buscar.js`** — siguiente de §11-A (paleta
+   morada vieja en el JS; componente del demo = `search-drawer`).
+2. Resto de §11-A: `bottom-nav.njk`, `floating-ui.njk`, `footer.njk`,
+   `checkout` (sacarle Bootstrap), `orden-confirmada.njk`.
+3. Decidir: el float de WhatsApp sobre el **cart-drawer** (mismo choque
+   que el del nav-drawer, preexistente — ver trampas).
+4. Decisiones pendientes del dueño (§14): header 97 vs 94px · doble `<h1>`.
+5. Pendiente de backend (bloquea stock real): `GET /api/stock` — trabajo
+   del dueño.
 
 
 

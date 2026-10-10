@@ -1,57 +1,102 @@
 {# ===============================================================
    ARMS Music — nav-drawer.njk
-   Menú lateral de navegación (hamburguesa). Extraído de base.njk
-   sin modificar contenido/comportamiento — solo modularización.
+   Menú lateral de navegación (hamburguesa). Extraído de base.njk.
+
+   2026-10-10: estilos del Impact (navigation-drawer del demo,
+   medido en vivo con Playwright + theme.css/theme.js):
+   - <700px: bottom-sheet full-width (margen 8px), alto máx 75vh,
+     blanco, radius 6px, × circular 48px flotando encima centrado
+   - ≥700px: drawer de la izquierda 412px (margen 16px), full-height,
+     blanco, radius 6px, × circular 48px con borde DENTRO
+     (arriba-izquierda)
+   - Links h3 (24px) / h4 (26px ≥700 · 32px ≥1400) bold, gap 16px,
+     subrayado animado al hover (reversed-link del demo)
+   - Submenú Audio = acordeón (funcionalidad propia, intacta),
+     sublinks h5
+   - Footer con íconos sociales 27px (Facebook + WhatsApp)
+   - Overlay negro 40% (igual al cart-drawer)
+   - SIN logo (decisión del dueño 2026-10-10: 100% fiel al demo)
+
+   JS: abrirMenuNav / cerrarMenuNav / toggleAudioSubmenu
+   (site-ui.js). Mismos IDs, onclick y links que antes — solo la
+   capa visual (los estilos inline oscuros viejos pasaron a clases
+   .menu-nav-* en arms.css).
 ================================================================ #}
 
-<div id="menu-nav-overlay" onclick="cerrarMenuNav()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1999; backdrop-filter:blur(2px);"></div>
+<div id="menu-nav-overlay" class="menu-nav-overlay" onclick="cerrarMenuNav()"></div>
 
-<div id="menu-nav-drawer" aria-label="Menú de navegación" style="position:fixed; top:0; left:0; height:100%; width:82%; max-width:320px; background:#111111; z-index:2000; transform:translateX(-100%); transition:transform .3s cubic-bezier(0.4,0,0.2,1), box-shadow .3s ease; display:flex; flex-direction:column; border-right:1px solid rgba(255,255,255,0.08); box-shadow:none;">
+<div id="menu-nav-drawer" class="menu-nav-drawer" aria-label="Menú de navegación">
 
-  <!-- Header -->
-  <div style="padding:1.25rem 1.25rem 1rem; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:space-between;">
-    <a href="/" onclick="cerrarMenuNav()" aria-label="ARMS Music">
-      <img src="/logo-navbar.svg" alt="ARMS Music" height="36" style="display:block;" />
-    </a>
-    <button onclick="cerrarMenuNav()" aria-label="Cerrar menú" style="background:none; border:none; color:rgba(255,255,255,0.5); font-size:1.4rem; cursor:pointer; padding:0.25rem; line-height:1; display:flex; align-items:center; justify-content:center;">&times;</button>
-  </div>
+  <!-- Cerrar: móvil — flota sobre la hoja (demo: outside-close-button) -->
+  <button type="button" class="menu-nav-close menu-nav-close--float" onclick="cerrarMenuNav()" aria-label="Cerrar menú">
+    <svg role="presentation" stroke-width="2" focusable="false" width="19" height="19" viewBox="0 0 24 24">
+      <path d="M17.658 6.343 6.344 17.657M17.658 17.657 6.344 6.343" stroke="currentColor"></path>
+    </svg>
+  </button>
 
-  <!-- Items -->
-  <nav style="flex:1; overflow-y:auto; padding:0.5rem 0;">
+  <div class="menu-nav-panel">
 
-    <a href="/in-ears/" onclick="cerrarMenuNav()" style="display:flex; align-items:center; justify-content:space-between; padding:1rem 1.25rem; color:#fff; text-decoration:none; font-size:0.9rem; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.06); transition:background .15s ease;"
-      onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
-      In-Ears
-    </a>
+    <!-- Cerrar: desktop — dentro del drawer (arriba-izquierda) -->
+    <button type="button" class="menu-nav-close menu-nav-close--inline" onclick="cerrarMenuNav()" aria-label="Cerrar menú">
+      <svg role="presentation" stroke-width="2" focusable="false" width="19" height="19" viewBox="0 0 24 24">
+        <path d="M17.658 6.343 6.344 17.657M17.658 17.657 6.344 6.343" stroke="currentColor"></path>
+      </svg>
+    </button>
 
-    <a href="/in-ears/accesorios/" onclick="cerrarMenuNav()" style="display:flex; align-items:center; justify-content:space-between; padding:1rem 1.25rem; color:#fff; text-decoration:none; font-size:0.9rem; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.06); transition:background .15s ease;"
-      onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
-      Accesorios
-    </a>
+    <nav class="menu-nav-nav" aria-label="Navegación principal">
+      <ul class="menu-nav-list" role="list">
 
-    <a href="/audio/sistemas/" onclick="cerrarMenuNav()" style="display:flex; align-items:center; justify-content:space-between; padding:1rem 1.25rem; color:#fff; text-decoration:none; font-size:0.9rem; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.06); transition:background .15s ease;"
-      onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
-      Monitoreo
-    </a>
+        <li>
+          <a href="/in-ears/" class="menu-nav-link" onclick="cerrarMenuNav()"><span class="menu-nav-link-text">In-Ears</span></a>
+        </li>
 
-    <!-- Audio con acordeón -->
-    <div>
-      <button onclick="toggleAudioSubmenu()" style="width:100%; display:flex; align-items:center; justify-content:space-between; padding:1rem 1.25rem; color:#fff; background:none; border:none; border-bottom:1px solid rgba(255,255,255,0.06); font-size:0.9rem; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; cursor:pointer; transition:background .15s ease;"
-        onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
-        Audio
-        <svg id="audio-submenu-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .25s ease; flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-      <div id="audio-submenu" style="display:none; background:rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.06);">
-        <a href="/audio/sistemas/" onclick="cerrarMenuNav()" style="display:block; padding:0.75rem 1.25rem 0.75rem 2rem; color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.85rem; font-weight:500; border-bottom:1px solid rgba(255,255,255,0.04); transition:color .15s ease, background .15s ease;"
-          onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='rgba(255,255,255,0.7)';this.style.background='transparent'">Sistemas</a>
-        <a href="/audio/interfaces/" onclick="cerrarMenuNav()" style="display:block; padding:0.75rem 1.25rem 0.75rem 2rem; color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.85rem; font-weight:500; border-bottom:1px solid rgba(255,255,255,0.04); transition:color .15s ease, background .15s ease;"
-          onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='rgba(255,255,255,0.7)';this.style.background='transparent'">Interfaces</a>
-        <a href="/audio/microfonos/" onclick="cerrarMenuNav()" style="display:block; padding:0.75rem 1.25rem 0.75rem 2rem; color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.85rem; font-weight:500; border-bottom:1px solid rgba(255,255,255,0.04); transition:color .15s ease, background .15s ease;"
-          onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='rgba(255,255,255,0.7)';this.style.background='transparent'">Micrófonos</a>
-        <a href="/audio/cables/" onclick="cerrarMenuNav()" style="display:block; padding:0.75rem 1.25rem 0.75rem 2rem; color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.85rem; font-weight:500; transition:color .15s ease, background .15s ease;"
-          onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='rgba(255,255,255,0.7)';this.style.background='transparent'">Cables</a>
-      </div>
+        <li>
+          <a href="/in-ears/accesorios/" class="menu-nav-link" onclick="cerrarMenuNav()"><span class="menu-nav-link-text">Accesorios</span></a>
+        </li>
+
+        <li>
+          <a href="/audio/sistemas/" class="menu-nav-link" onclick="cerrarMenuNav()"><span class="menu-nav-link-text">Monitoreo</span></a>
+        </li>
+
+        <!-- Audio con acordeón -->
+        <li>
+          <button type="button" class="menu-nav-link menu-nav-link--parent" onclick="toggleAudioSubmenu()" aria-controls="audio-submenu" aria-expanded="false">
+            <span>Audio</span>
+            <span class="menu-nav-chevron">
+              <svg id="audio-submenu-arrow" role="presentation" focusable="false" width="5" height="8" viewBox="0 0 5 8">
+                <path d="m.75 7 3-3-3-3" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+              </svg>
+            </span>
+          </button>
+          <ul id="audio-submenu" class="menu-nav-submenu" role="list" style="display:none">
+            <li><a href="/audio/sistemas/" onclick="cerrarMenuNav()"><span class="menu-nav-link-text">Sistemas</span></a></li>
+            <li><a href="/audio/interfaces/" onclick="cerrarMenuNav()"><span class="menu-nav-link-text">Interfaces</span></a></li>
+            <li><a href="/audio/microfonos/" onclick="cerrarMenuNav()"><span class="menu-nav-link-text">Micrófonos</span></a></li>
+            <li><a href="/audio/cables/" onclick="cerrarMenuNav()"><span class="menu-nav-link-text">Cables</span></a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </nav>
+
+    <div class="menu-nav-footer">
+      <ul class="social-media" role="list" aria-label="Redes sociales">
+        <li>
+          <a href="https://facebook.com/armsmusicgt" target="_blank" rel="noopener" class="tap-area" aria-label="Facebook">
+            <svg role="presentation" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="icon">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://wa.me/50234646667" target="_blank" rel="noopener" class="tap-area" aria-label="WhatsApp">
+            <svg role="presentation" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="icon">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+          </a>
+        </li>
+      </ul>
     </div>
 
-  </nav>
+  </div>
 </div>

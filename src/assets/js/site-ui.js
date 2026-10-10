@@ -22,20 +22,35 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', checkBottomNav, { passive: true });
 
   // ── MENÚ NAV DRAWER ─────────────────────────────────────────
+  // Estilos Impact (2026-10-10): <700px = bottom-sheet (desliza
+  // desde abajo, translateY); ≥700px = drawer 412px a la izquierda
+  // (desliza desde la izquierda, translateX). La geometría y el
+  // fondo viven en arms.css (.menu-nav-*); aquí solo el transform.
+  function menuNavMovil() { return window.innerWidth < 700; }
+
+  // El flotante de WhatsApp (z 9999) queda encima de la hoja
+  // full-width del menú: se oculta mientras el menú está abierto.
+  function menuNavFloat(visible) {
+    const wf = document.querySelector('.whatsapp-float');
+    if (wf) wf.style.display = visible ? '' : 'none';
+  }
+
   window.abrirMenuNav = function() {
     const drawer = document.getElementById('menu-nav-drawer');
     if (!drawer) return;
     document.getElementById('menu-nav-overlay').style.display = 'block';
-    drawer.style.transform  = 'translateX(0)';
-    drawer.style.boxShadow  = '20px 0 60px rgba(0,0,0,0.5)';
+    drawer.style.visibility = 'visible';
+    drawer.style.transform  = menuNavMovil() ? 'translateY(0)' : 'translateX(0)';
+    menuNavFloat(false);
   };
 
   window.cerrarMenuNav = function() {
     const drawer = document.getElementById('menu-nav-drawer');
     if (!drawer) return;
     document.getElementById('menu-nav-overlay').style.display = 'none';
-    drawer.style.transform  = 'translateX(-100%)';
-    drawer.style.boxShadow  = 'none';
+    drawer.style.transform  = menuNavMovil() ? 'translateY(100%)' : 'translateX(-100%)';
+    drawer.style.visibility = 'hidden';
+    menuNavFloat(true);
   };
 
   window.toggleAudioSubmenu = function() {
@@ -45,6 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const open  = sub.style.display === 'block';
     sub.style.display     = open ? 'none' : 'block';
     arrow.style.transform = open ? '' : 'rotate(90deg)';
+    // aria-expanded del botón Audio: estado para el CSS del chevron
+    // (circle-chevron del demo se invierte al expandir)
+    if (sub.previousElementSibling) {
+      sub.previousElementSibling.setAttribute('aria-expanded', String(!open));
+    }
   };
 
   // ── MENÚ CATEGORÍAS BOTTOM NAV ───────────────────────────────
