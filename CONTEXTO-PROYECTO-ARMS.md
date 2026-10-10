@@ -216,7 +216,7 @@ Cargados en `base.njk`:
 | `arms-slideshow.js` (module) | Hero/slideshow, `ScrollCarousel`, `PageDots`, prev/next buttons, `SplitLines` con Motion One. |
 | `arms-home.js` (module) | Resto de Web Components del home; Motion One para reveal-on-scroll. |
 | `cart-store.js` | Estado del carrito, stock (`/api/stock`), variantes (`seleccionarVariante`), `agregarAlCarrito`. |
-| `cart-drawer.js` | Panel lateral del carrito (renderiza los items por JS con estilos inline). |
+| `cart-drawer.js` | Panel lateral del carrito (renderiza los items por JS con clases `.cart-line*`; estilos en `arms.css` §19). |
 | `site-ui.js` | Nav drawer, bottom nav, observers, lógica muerta de `#cat-tabs-bar`. |
 | `buscar.js` | Buscador. |
 | `checkout-page.js` | Solo en checkout (layout propio). |
@@ -1028,6 +1028,73 @@ imitar ese layout; a 1440+ y <1200px quedamos idénticos al demo.
 mismo tamaño + 1 línea en TODOS (2col a 1440+/700-950, apilados
 1000-1420 y <700). 1440: 229×60 lado a lado = demo exacto (229×60).
 1213: 383×60 apilados (demo: 184×60 lado a lado — trade-off elegido).
+
+
+## 19. ESTADO — SESIÓN 2026-10-08 (parte 2): cart-drawer, estilos del demo
+
+**Reporte/decisión del dueño:** "no te pedí que replicaras ese carrito; yo ya
+tengo el mío — lo que le hace falta es solo **copiar los estilos**, el
+**funcionamiento se queda igual**". Es decir: misma estructura, mismos IDs,
+mismos hooks, mismos controles (−/+, ✕) y textos; solo la capa visual pasa al
+estilo del cart-drawer de Impact.
+
+**Migración (estilo demo, medido en vivo con el drawer abierto):**
+- `cart-drawer.njk`: inline styles → clases `.cart-*`. **Mismos IDs, textos,
+  onclicks** (`cerrarCarrito`/`irACheckout`). Los botones Bootstrap
+  (`btn-outline-secondary`, `btn-primary w-100`) → `.button button--xl`.
+- `cart-drawer.js`: solo el template de `renderCarrito()` pasa a clases
+  (`.cart-line*`); el hover del ✕ pasa de `onmouseover/out` a CSS `:hover`.
+  El resto del JS (abrir/cerrar, animación, toast, eventos) intacto.
+- `arms.css` (sección final): panel **blanco** (`--dialog-background`)
+  flotante — margen 16px desktop / 8px móvil, radius 6px, ancho **680px**
+  (`.drawer--lg` del demo) / full-width móvil · overlay `rgb(0 0 0/.4)` sin
+  blur (antes .6 + blur) · header "🛒 Tu carrito" h5 18px/700 + × de 24px ·
+  items: media 96/80px radius 4px, gap 20px, sin separadores (spacing),
+  nombre 600, muted al 70%, bordes `(26 26 26)/12%` · footer: border-top
+  12%, "Total" muted + valor h5 700, botón "Proceder al pago →" full-width
+  dark pill · vacío: emoji 3rem + texto muted + botón dark pill (márgenes
+  demo 48/128px) · `#cart-stock-msg` reestilizado a fondo claro.
+
+**Fix colateral (animación "Agregar" rota):** `btn-adding` /
+`btn-success-anim` / `btn-bounce` vivían en `main.css` (desconectado) y el
+estado de check verde + bounce se perdían. Portadas a `arms.css` (con el
+`!important` necesario: `animarAgregar()` setea `width` inline). Scope
+ampliado a `.producto-barra__btn` (botón de la barra sticky, al que la
+animación también se le aplica).
+
+**Trampa:** al reescribir el HTML se perdió el `onclick="cerrarCarrito()"`
+del `#cart-overlay` (función, no estilo) — detectado al probar el cierre por
+overlay y restaurado. Al testear estados abiertos/cerrados, NO comparar el
+prefijo `matrix(1` del transform (coincide abierto Y cerrado); comparar el
+offset-x (0 = abierto, ancho = cerrado).
+
+**Verificado (8081, QKZ AK3):** desktop 1440 — panel 680×868 @16px, blanco,
+radius 6px, media 96, footer border 12% + botón 600×60 dark pill · móvil
+(<700) — full-width @8px, media 80 · funcionalidad: + → Q149→Q298, ✕ →
+estado vacío, overlay y × cierran · animación: 42px circle → check verde
+(rgb(33,180,87)) → bounce con badge · consola limpia (solo 404 `/api/stock`
+preexistente, §9).
+
+### Próxima sesión (punto de partida)
+
+**Todo lo de las sesiones 2026-10-07/08 está commiteado** (último: cart-
+drawer §19). `package.json`/`package-lock.json` modificados = trabajo del
+dueño (puerto 8081) — **no commitear ni tocar**.
+
+1. **`nav-drawer.njk`** — siguiente componente de §11-A (menú móvil: 20
+   estilos inline oscuros + paleta vieja). Método §11-A: leer njk+js →
+   separar hooks de visual → componente del demo = `navigation-drawer`
+   (theme.css: `.navigation-drawer`, `.panel*`, `drawer--lg`, attrs
+   `mobile-opening="bottom" open-from="left"`) → proponer → aprobar →
+   aplicar → compilar. Igual que cart-drawer: **estilos del demo,
+   funcionamiento propio intacto**.
+2. Resto de §11-A en orden: `search-panel.njk`+`buscar.js` (paleta morada
+   vieja en el JS), `bottom-nav.njk`, `floating-ui.njk`, `footer.njk`,
+   `checkout` (sacarle Bootstrap — §11-A lo tiene como el más engorroso),
+   `orden-confirmada.njk`.
+3. Decisiones pendientes del dueño (§14): header 97 vs 94px · doble `<h1>`.
+4. Pendiente de backend (bloquea stock real): `GET /api/stock` (404 hoy,
+   §9) — trabajo del dueño.
 
 
 
