@@ -1136,8 +1136,11 @@ visualmente equivalente.
   teléfono — se leía como chat). Reemplazado en el drawer por el glifo
   oficial monocromo de WhatsApp (path 448×512 de Font Awesome Free 6.5.2,
   `fill="currentColor"`; mismo diseño que el path 24×24 del botón
-  `.whatsapp-float`): burbuja + teléfono. ⚠️ **`footer.njk` sigue con el
-  genérico** — pendiente de decisión del dueño (el float ya es correcto).
+  `.whatsapp-float`): burbuja + teléfono. El dueño aprobó el mismo
+  cambio en **`footer.njk`** (ícono 20px, mismo path 448×512) → los tres
+  puntos WhatsApp (drawer, footer, float) ya traen el glifo real. Ahí
+  mismo, por el dueño: año del copyright **2025 → 2026** (única
+  ocurrencia en `src/`).
 - **`src/assets/css/arms.css`** (sección final, tras la del cart-drawer):
   geometría y estilos del demo medidos en vivo (ver abajo).
 - **`src/assets/js/site-ui.js`**: solo mecánica visual —
@@ -1199,10 +1202,11 @@ visualmente equivalente.
   32px en 1440 sin tocar nada.
 
 ### Estado git (2026-10-10)
-- Dos commits en `main`: migración del nav-drawer (work + contexto) y
-  corrección del glifo de WhatsApp (nav-drawer.njk + contexto); rama
-  sigue sin empujar (el push es decisión del dueño). `package.json`/
-  `package-lock.json` (puerto 8081) siguen sin commitear a propósito.
+- Tres commits en `main`: migración del nav-drawer (work + contexto),
+  glifo de WhatsApp en el drawer y glifo de WhatsApp + año 2026 en el
+  footer; rama sigue sin empujar (el push es decisión del dueño).
+  `package.json`/`package-lock.json` (puerto 8081) siguen sin commitear
+  a propósito.
 
 ### Próxima sesión
 1. **`search-panel.njk` + `buscar.js`** — siguiente de §11-A (paleta
