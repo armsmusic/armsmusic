@@ -1131,6 +1131,13 @@ visualmente equivalente.
   arriba-izq con borde), **footer con redes 27px (Facebook + WhatsApp**;
   las de Instagram/YouTube del footer son `#` placeholder — no se
   incluyeron), **sin logo** (decisión dueño).
+- **Glifo real de WhatsApp (corrección dueño, mismo día):** el icono que
+  se heredó del `footer.njk` era un "chat" genérico (burbuja **sin**
+  teléfono — se leía como chat). Reemplazado en el drawer por el glifo
+  oficial monocromo de WhatsApp (path 448×512 de Font Awesome Free 6.5.2,
+  `fill="currentColor"`; mismo diseño que el path 24×24 del botón
+  `.whatsapp-float`): burbuja + teléfono. ⚠️ **`footer.njk` sigue con el
+  genérico** — pendiente de decisión del dueño (el float ya es correcto).
 - **`src/assets/css/arms.css`** (sección final, tras la del cart-drawer):
   geometría y estilos del demo medidos en vivo (ver abajo).
 - **`src/assets/js/site-ui.js`**: solo mecánica visual —
@@ -1192,8 +1199,9 @@ visualmente equivalente.
   32px en 1440 sin tocar nada.
 
 ### Estado git (2026-10-10)
-- Commit de esta sesión en `main` (work + contexto); rama sigue sin
-  empujar (el push es decisión del dueño). `package.json`/
+- Dos commits en `main`: migración del nav-drawer (work + contexto) y
+  corrección del glifo de WhatsApp (nav-drawer.njk + contexto); rama
+  sigue sin empujar (el push es decisión del dueño). `package.json`/
   `package-lock.json` (puerto 8081) siguen sin commitear a propósito.
 
 ### Próxima sesión
