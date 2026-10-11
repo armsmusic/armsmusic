@@ -1222,14 +1222,31 @@ Verificado (mismo protocolo de muestreo): pre 350×54 → adding 42×42 →
 success 42×42 verde → bounce → **final 350×54 estable**, en el botón de
 la barra y en el principal.
 
+### Fix franja del cart-drawer (bug reportado por el dueño)
+El carrito cerrado "no terminaba de ocultarse": quedaba una franja
+blanca de 8px (móvil) / 16px (desktop) en el borde derecho. Causa: el
+estado cerrado era `translateX(100%)` (solo el ancho del panel), pero
+el panel vive con margen (`right: 8px` móvil / `16px` desktop) → el
+100% no alcanzaba a sacarlo de la pantalla. Fix: estado cerrado =
+`translateX(calc(100% + 16px))` en los DOS lados que lo definen:
+`arms.css` (base de `.cart-drawer`) y `cerrarCarrito()` de
+`cart-drawer.js` (setea inline y pisa el CSS — tiene que ser el MISMO
+valor). Los 16px cubren el margen desktop justo y el móvil se va 8px
+extra fuera (robusto: cerrado = contentW siempre, sin importar el
+ancho del scrollbar). Verificado chrome-devtools: móvil closedLeft
+398 en vw 390 · desktop closedLeft 1265 = borde del content viewport
+(1280 − 15 de scrollbar) → 0px sobre el contenido; screenshots limpios
+en ambos.
+
 ### Estado git (2026-10-10)
 - Commits de trabajo de la sesión: migración del nav-drawer (work +
   contexto), glifo de WhatsApp en el drawer, glifo de WhatsApp + año
-  2026 en el footer, fix de la animación "Agregar" (+1 commit meta de
-  contexto). **PUSHED hasta `ece22d8`** por indicación del dueño
-  (2026-10-10); el fix de la animación quedó sin empujar (el push es
-  decisión del dueño). `package.json`/`package-lock.json` (puerto 8081)
-  siguen sin commitear a propósito.
+  2026 en el footer, fix de la animación "Agregar", fix de la franja
+  del cart-drawer (+1 commit meta de contexto). **PUSHED hasta
+  `ece22d8`** por indicación del dueño (2026-10-10); los dos fixes
+  quedaron sin empujar (el push es decisión del dueño).
+  `package.json`/`package-lock.json` (puerto 8081) siguen sin
+  commitear a propósito.
 
 ### Próxima sesión
 1. **`search-panel.njk` + `buscar.js`** — siguiente de §11-A (paleta

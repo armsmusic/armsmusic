@@ -23,7 +23,9 @@ function abrirCarrito() {
 function cerrarCarrito() {
   const drawer = document.getElementById('cart-drawer');
   document.getElementById('cart-overlay').style.display = 'none';
-  drawer.style.transform = 'translateX(100%)';
+  // MISMO valor que el CSS (estado cerrado): 100% + margen, para que el
+  // panel salga del todo de la pantalla y no quede la franja de 8/16px.
+  drawer.style.transform = 'translateX(calc(100% + 16px))';
   drawer.style.boxShadow = 'none';
   const waf = document.querySelector('.whatsapp-float');
   if (waf) waf.style.display = 'flex';

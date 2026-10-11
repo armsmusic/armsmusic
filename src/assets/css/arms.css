@@ -4918,7 +4918,12 @@ section.pb-producto {
   border-radius: var(--rounded-sm);
   box-shadow: none;
   z-index: 2001;
-  transform: translateX(100%);
+  /* cerrado: 100% + 16px. El 100% solo mueve el ancho del panel, pero
+     este vive con margen (right: 8px móvil / 16px desktop) y quedaba
+     una franja saliente (8px móvil, 16px desktop). Los 16px cubren el
+     margen desktop justo y el móvil se va 8px extra fuera (fix
+     2026-10-10; cerrarCarrito() setea el MISMO valor inline) */
+  transform: translateX(calc(100% + 16px));
   transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .3s ease;
   display: flex;
   flex-direction: column;
