@@ -81,6 +81,10 @@ function renderCarrito() {
 function animarAgregar(btnEl, callback) {
   if (!btnEl) { callback(); return; }
   const originalWidth = btnEl.offsetWidth;
+  // El ancho INLINE original importa: el botón de la barra sticky solo
+  // recibe su ancho por inline (posicionarBarra de producto.njk); si al
+  // terminar se limpiara a '', el botón quedaría chiquito (ancho auto).
+  const originalInlineWidth = btnEl.style.width;
   btnEl.style.width       = originalWidth + 'px';
   btnEl.style.minWidth    = originalWidth + 'px';
   btnEl.style.transformOrigin = 'center center';
@@ -115,7 +119,7 @@ function animarAgregar(btnEl, callback) {
         btnEl.classList.add('btn-bounce');
         btnEl.addEventListener('animationend', () => {
           btnEl.classList.remove('btn-bounce');
-          btnEl.style.width    = '';
+          btnEl.style.width    = originalInlineWidth;
           btnEl.style.minWidth = '';
         }, { once: true });
       });

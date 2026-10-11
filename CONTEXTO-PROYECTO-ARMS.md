@@ -1201,12 +1201,35 @@ visualmente equivalente.
   (portada en sesiones previas) — por eso el link mide 26px en 800 y
   32px en 1440 sin tocar nada.
 
+### Fix animación "Agregar al carrito" (bug reportado por el dueño)
+Repro con chrome-devtools MCP (390×844, `/in-ears/kz-castor/`): dos
+bugs independientes en el port del §19:
+1. **El botón sticky quedaba chiquito tras la animación (130px en vez
+   de 350):** `animarAgregar()` (cart-drawer.js) limpiaba el `width`
+   inline a `''` en `animationend`; el botón de la barra solo recibe su
+   ancho por inline (lo setea `posicionarBarra()` de producto.njk para
+   igualar al principal) → caía al ancho auto. Fix: capturar el
+   `style.width` original al inicio y restaurarlo al terminar (el botón
+   principal no se afecta: su original es `''`).
+2. **El estado de 42px se veía aplastado/invisible (42×0 en "adding",
+   42×14 en el check):** `padding:0` colapsaba la altura, que vive solo
+   en el padding de `.button` (no hay `height` ni en main.css viejo).
+   Fix en arms.css: `height:42px !important` + `display:flex` centrado
+   en `.btn-adding`/`.btn-success-anim` → círculo 42×42 real con el
+   check centrado.
+
+Verificado (mismo protocolo de muestreo): pre 350×54 → adding 42×42 →
+success 42×42 verde → bounce → **final 350×54 estable**, en el botón de
+la barra y en el principal.
+
 ### Estado git (2026-10-10)
-- Tres commits en `main`: migración del nav-drawer (work + contexto),
-  glifo de WhatsApp en el drawer y glifo de WhatsApp + año 2026 en el
-  footer. **PUSHED a `origin/main`** por indicación del dueño
-  (2026-10-10, `9edcf6d..22326ee`). `package.json`/`package-lock.json`
-  (puerto 8081) siguen sin commitear a propósito.
+- Commits de trabajo de la sesión: migración del nav-drawer (work +
+  contexto), glifo de WhatsApp en el drawer, glifo de WhatsApp + año
+  2026 en el footer, fix de la animación "Agregar" (+1 commit meta de
+  contexto). **PUSHED hasta `ece22d8`** por indicación del dueño
+  (2026-10-10); el fix de la animación quedó sin empujar (el push es
+  decisión del dueño). `package.json`/`package-lock.json` (puerto 8081)
+  siguen sin commitear a propósito.
 
 ### Próxima sesión
 1. **`search-panel.njk` + `buscar.js`** — siguiente de §11-A (paleta
