@@ -4953,7 +4953,11 @@ section.pb-producto {
    full, a lo ancho del contenido) — aquí se replica como barra
    ::after (fix dueño 2026-10-10: título sin emoji + burbuja + línea). */
 .cart-drawer__header {
+  /* flex-wrap: la línea ::after es un item flex; con width:100% baja a
+     su propia fila (sin el wrap quedaba como tercer item de 0px y el
+     justify-between dejaba la × en el centro — bug 2026-10-10) */
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   padding: 20px 24px 0;
@@ -4965,6 +4969,7 @@ section.pb-producto {
 .cart-drawer__header::after {
   content: "";
   display: block;
+  flex-basis: 100%;
   height: 4px;
   border-radius: 9999px;
   background: rgb(var(--text-primary));
