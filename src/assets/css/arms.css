@@ -4945,16 +4945,41 @@ section.pb-producto {
   min-height: 0;
 }
 
-/* ── Header: "🛒 Tu carrito" + × (demo: h5 + icon-close 24px) ── */
+/* ── Header: "Tu Carrito" + burbuja de conteo + × ──
+   Demo (cart-drawer__top): <p class="h5">Cart</p> + count-bubble--md
+   (círculo 20px móvil/24px desktop, fondo 26 26 26, count blanco)
+   + icon-close 24px stroke-2. Debajo, la línea negra: en el demo es
+   el progress-bar de envío gratis al 100% (4px, 26 26 26, radius
+   full, a lo ancho del contenido) — aquí se replica como barra
+   ::after (fix dueño 2026-10-10: título sin emoji + burbuja + línea). */
 .cart-drawer__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px 16px;
+  padding: 20px 24px 0;
   flex-shrink: 0;
 }
 @media screen and (min-width: 700px) {
-  .cart-drawer__header { padding: 32px 40px 20px; }
+  .cart-drawer__header { padding: 32px 40px 0; }
+}
+.cart-drawer__header::after {
+  content: "";
+  display: block;
+  height: 4px;
+  border-radius: 9999px;
+  background: rgb(var(--text-primary));
+  margin-top: 20px;
+}
+@media screen and (min-width: 700px) {
+  .cart-drawer__header::after { margin-top: 24px; }
+}
+.cart-drawer__header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+@media screen and (min-width: 700px) {
+  .cart-drawer__header-title { gap: 0.625rem; }
 }
 .cart-drawer__title {
   margin: 0;
@@ -4962,6 +4987,28 @@ section.pb-producto {
   font-weight: 700;
   letter-spacing: var(--heading-letter-spacing);
   color: rgb(var(--text-primary));
+}
+.cart-drawer__count {
+  /* demo: .count-bubble--md — --spacing-6 (24px) / font text-xs */
+  width: var(--spacing-5);
+  height: var(--spacing-5);
+  min-width: min-content;
+  border-radius: 9999px;
+  background: rgb(var(--text-primary));
+  color: rgb(var(--dialog-background));
+  place-items: center;
+  padding-inline: 0.25rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1;
+  display: grid;
+}
+@media screen and (min-width: 700px) {
+  .cart-drawer__count {
+    width: var(--spacing-6);
+    height: var(--spacing-6);
+    font-size: 0.75rem;
+  }
 }
 .cart-drawer__close {
   width: 24px;
@@ -4973,11 +5020,10 @@ section.pb-producto {
   border: none;
   padding: 0;
   color: rgb(var(--text-primary));
-  font-size: 24px;
-  line-height: 1;
   cursor: pointer;
   transition: opacity .15s ease;
 }
+.cart-drawer__close svg { display: block; }
 .cart-drawer__close:hover { opacity: 0.6; }
 
 /* ── Body (scroll) ── */
@@ -4986,10 +5032,12 @@ section.pb-producto {
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior-y: contain;
-  padding: 0 24px;
+  /* padding-top: distancia línea→primer item (demo: 24px móvil /
+     ~40px desktop; el item lleva 16px propios de padding) */
+  padding: 8px 24px 0;
 }
 @media screen and (min-width: 700px) {
-  .cart-drawer__body { padding: 0 40px; }
+  .cart-drawer__body { padding: 28px 40px 0; }
 }
 
 /* ── Estado vacío (demo: empty-state, margen 48/128px) ── */
@@ -5140,8 +5188,11 @@ section.pb-producto {
   margin-bottom: 1rem;
 }
 .cart-drawer__total-label {
-  color: rgb(var(--text-primary) / 0.7);
-  font-size: 0.9rem;
+  /* demo: "Total" es h5/700 a color lleno (igual que el valor) —
+     antes era 0.9rem al 70% (cambio dueño 2026-10-10) */
+  color: rgb(var(--text-primary));
+  font-size: var(--text-h5);
+  font-weight: 700;
 }
 .cart-drawer__total-value {
   font-size: var(--text-h5);

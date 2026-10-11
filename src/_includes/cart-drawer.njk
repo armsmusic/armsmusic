@@ -16,8 +16,17 @@
   <!-- Pantalla 1: Carrito -->
   <div id="screen-cart" class="cart-drawer__screen">
     <div class="cart-drawer__header">
-      <h5 class="cart-drawer__title">🛒 Tu carrito</h5>
-      <button onclick="cerrarCarrito()" class="cart-drawer__close" aria-label="Cerrar carrito">&times;</button>
+      <div class="cart-drawer__header-title">
+        <h5 class="cart-drawer__title">Tu Carrito</h5>
+        {# Burbuja de conteo (demo: count-bubble--md junto al título) #}
+        <span id="cart-count-bubble" class="cart-drawer__count">0</span>
+      </div>
+      <button onclick="cerrarCarrito()" class="cart-drawer__close" aria-label="Cerrar carrito">
+        {# × del demo (icon-close 24px, stroke 2) #}
+        <svg role="presentation" stroke-width="2" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M17.658 6.343 6.344 17.657M17.658 17.657 6.344 6.343" stroke="currentColor"></path>
+        </svg>
+      </button>
     </div>
     <div id="cart-items" class="cart-drawer__body">
       <div id="cart-empty" class="cart-drawer__empty">

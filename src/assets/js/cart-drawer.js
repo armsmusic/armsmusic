@@ -38,6 +38,11 @@ function renderCarrito() {
   const footer  = document.getElementById('cart-footer');
   const totalEl = document.getElementById('cart-total');
 
+  // Burbuja de conteo del header (demo: count-bubble junto al título).
+  // Mismo total que los badges: suma de cantidades (0 si está vacío).
+  const countEl = document.getElementById('cart-count-bubble');
+  if (countEl) countEl.textContent = carrito.reduce((s, i) => s + i.cantidad, 0);
+
   if (carrito.length === 0) {
     empty.style.display  = 'block';
     lista.style.display  = 'none';

@@ -1222,6 +1222,33 @@ Verificado (mismo protocolo de muestreo): pre 350×54 → adding 42×42 →
 success 42×42 verde → bounce → **final 350×54 estable**, en el botón de
 la barra y en el principal.
 
+### Cart-drawer header a la par del demo (petición dueño)
+Referencia medida en vivo (demo con 1 item, móvil 390 + desktop 1661):
+- **Título:** "🛒 Tu carrito" → **"Tu Carrito"** (sin emoji, tal cual lo
+  pidió el dueño).
+- **Burbuja de conteo** (demo: `count-bubble--md` junto al título):
+  círculo 20px/11px móvil · 24px/12px desktop, fondo (26 26 26), texto
+  blanco 700, gap 8/10px. Markup: `span#cart-count-bubble` dentro de
+  `.cart-drawer__header-title` (wrapper flex porque el header es
+  justify-between). JS: 1 línea en `renderCarrito()` — suma de
+  cantidades (mismo total que los badges); 0 si está vacío.
+- **Línea negra** (en el demo es el progress-bar de envío gratis al
+  100%): aquí `::after` del header — 4px, (26 26 26), radius full, a lo
+  ancho del contenido. Header `padding-bottom: 0` (antes 16/20),
+  `margin-top` de la línea 20/24px, body `padding-top` 8/28px (mantiene
+  la distancia línea→primer item: 24px móvil / ~43px desktop, como el
+  demo).
+- **Total:** label era 0.9rem al 70% → `var(--text-h5)`/700 a color
+  lleno (el "Total" del demo es h5 como el valor; escala 18/20/24).
+- **× de cierre:** carácter `&times;` → SVG del demo (icon-close 24px,
+  stroke-width 2, path `M17.658 6.343 6.344 17.657M17.658 17.657
+  6.344 6.343`). onclick/aria-label intactos.
+
+Verificado chrome-devtools contra el demo: móvil (título 18, burbuja
+20/11 gap 8, línea 4px, Total 18/700) y desktop 1280 (título 20,
+burbuja 24/12 gap 10, Total 20/700) — mismo resultado que las medidas
+del demo en sus viewports.
+
 ### Fix franja del cart-drawer (bug reportado por el dueño)
 El carrito cerrado "no terminaba de ocultarse": quedaba una franja
 blanca de 8px (móvil) / 16px (desktop) en el borde derecho. Causa: el
@@ -1242,11 +1269,11 @@ en ambos.
 - Commits de trabajo de la sesión: migración del nav-drawer (work +
   contexto), glifo de WhatsApp en el drawer, glifo de WhatsApp + año
   2026 en el footer, fix de la animación "Agregar", fix de la franja
-  del cart-drawer (+1 commit meta de contexto). **PUSHED hasta
-  `ece22d8`** por indicación del dueño (2026-10-10); los dos fixes
-  quedaron sin empujar (el push es decisión del dueño).
-  `package.json`/`package-lock.json` (puerto 8081) siguen sin
-  commitear a propósito.
+  del cart-drawer, header del cart-drawer (burbuja + línea + Total + ×)
+  (+1 commit meta de contexto). **PUSHED hasta `ece22d8`** por
+  indicación del dueño (2026-10-10); los tres últimos quedaron sin
+  empujar (el push es decisión del dueño). `package.json`/
+  `package-lock.json` (puerto 8081) siguen sin commitear a propósito.
 
 ### Próxima sesión
 1. **`search-panel.njk` + `buscar.js`** — siguiente de §11-A (paleta
