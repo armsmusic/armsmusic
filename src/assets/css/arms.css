@@ -5007,12 +5007,27 @@ section.pb-producto {
   font-weight: 700;
   line-height: 1;
   display: grid;
+  /* Ajuste óptico (verificado por píxeles 2026-10-10): con 11px la
+     tinta de las cifras Barlow queda ~0.83px ARRIBA del centro del
+     círculo (la caja de línea se centra, el glifo dentro de ella no).
+     El demo no lo corrige, pero el dueño pidió el número bien centrado.
+     Se resuelve con padding (layout, determinista), NO con transform:
+     el transform re-rasteriza el texto en otra fase subpíxel y el
+     desplazamiento real de la tinta varía 0.4–1px según el contexto.
+     2px de padding-top baja la caja de línea 1px → la tinta queda a
+     ~+0.17px del centro (imperceptible) en renderizadores con y sin
+     subpíxel; valores menores (1.4–1.6) NO mueven la tinta en
+     renderizadores que pegan el texto al píxel entero. Solo aplica en
+     móvil: con 12px (≥700px) el sesgo natural es -0.26px (ya centrado),
+     así que ahí se resetea a 0. */
+  padding-top: 2px;
 }
 @media screen and (min-width: 700px) {
   .cart-drawer__count {
     width: var(--spacing-6);
     height: var(--spacing-6);
     font-size: 0.75rem;
+    padding-top: 0;
   }
 }
 .cart-drawer__close {
@@ -5204,7 +5219,15 @@ section.pb-producto {
   font-weight: 700;
   color: rgb(var(--text-primary));
 }
-.cart-drawer__checkout { width: 100%; }
+.cart-drawer__checkout {
+  /* demo: candado + texto en flex con gap --spacing-3 (12px), icon 18px */
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-3);
+}
+.cart-drawer__checkout svg { flex-shrink: 0; }
 
 /* ── Aviso de stock (se mantiene; paleta para fondo claro) ── */
 .cart-stock-msg {

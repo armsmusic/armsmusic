@@ -1265,14 +1265,43 @@ ancho del scrollbar). Verificado chrome-devtools: móvil closedLeft
 (1280 − 15 de scrollbar) → 0px sobre el contenido; screenshots limpios
 en ambos.
 
+### Centrado del número en la burbuja + candado en "Proceder al pago" (2026-10-10)
+- **Burbuja**: el dueño reportó que el número no estaba bien centrado
+  en altura. Verificado por píxeles (render controlado, coords
+  enteras, 3×): la tinta de las cifras Barlow 700 queda **0.83px
+  ARRIBA** del centro del círculo (la caja de línea se centra, el
+  glifo dentro de ella no). El demo usa el mismo font (Barlow) y el
+  mismo CSS → el demo tiene el mismo sesgo, pero el ajuste se hizo
+  igual (pedido del dueño).
+  - Fix: `padding-top: 2px` en `.cart-drawer__count` (baja la caja de
+    línea 1px → la tinta queda a ~+0.17px del centro, imperceptible).
+  - NO `transform: translateY()`: re-rasteriza el texto en otra fase
+    subpíxel y el desplazamiento real de la tinta varía 0.4–1px
+    según el contexto (medido: el fondo se movía 0.75px y la tinta
+    solo 0.4px).
+  - NO valores < 1.5px: en renderizadores que pegan el texto al
+    píxel entero (sweep medido: pad 1.4/1.5/1.6 → la tinta NO se
+    mueve), el ajuste no aplica. 2px es robusto con y sin subpíxel.
+  - Solo móvil: con 12px (≥700px) el sesgo natural medido es -0.26px
+    (ya centrado; con el pad 2px saldría +0.74), así que el bloque
+    `@media (min-width: 700px)` resetea `padding-top: 0`.
+- **Candado en "Proceder al pago"**: SVG exacto del demo
+  (`icon-picto-lock` 18×18, stroke 2, cuerpo fill currentColor 12% +
+  arco + ojial) extraído del botón checkout del demo vivo.
+  `.cart-drawer__checkout` ahora es `inline-flex` centrado con
+  `gap: var(--spacing-3)` (12px = el gap `.text-with-icon` del demo)
+  y `svg { flex-shrink: 0 }`.
+- Verificado 390×844@3× y 1280: burbuja centrada, botón con candado
+  idéntico al del demo (comparado lado a lado). Screenshots:
+  /tmp/opencode/final-bubble-mobile-3x.png, final-checkout-local-3x.png,
+  final-checkout-demo-3x.png.
+
 ### Estado git (2026-10-10)
-- Commits de trabajo de la sesión: migración del nav-drawer (work +
-  contexto), glifo de WhatsApp en el drawer, glifo de WhatsApp + año
-  2026 en el footer, fix de la animación "Agregar", fix de la franja
-  del cart-drawer, header del cart-drawer (burbuja + línea + Total + ×)
-  (+1 commit meta de contexto). **PUSHED hasta `ece22d8`** por
-  indicación del dueño (2026-10-10); los tres últimos quedaron sin
-  empujar (el push es decisión del dueño). `package.json`/
+- **PUSHED hasta `ece22d8`** por indicación del dueño. Sin empujar
+  (decisión del dueño): fix animación "Agregar" (`c844e60`), fix
+  franja del cart-drawer (`77f50cb`), header del cart-drawer
+  (`2a22d2c`), fix línea/× del header (`0b76b80`) + el de
+  burbuja/candado (commit de esta sesión). `package.json`/
   `package-lock.json` (puerto 8081) siguen sin commitear a propósito.
 
 ### Próxima sesión
