@@ -1204,9 +1204,9 @@ visualmente equivalente.
 ### Estado git (2026-10-10)
 - Tres commits en `main`: migración del nav-drawer (work + contexto),
   glifo de WhatsApp en el drawer y glifo de WhatsApp + año 2026 en el
-  footer; rama sigue sin empujar (el push es decisión del dueño).
-  `package.json`/`package-lock.json` (puerto 8081) siguen sin commitear
-  a propósito.
+  footer. **PUSHED a `origin/main`** por indicación del dueño
+  (2026-10-10, `9edcf6d..22326ee`). `package.json`/`package-lock.json`
+  (puerto 8081) siguen sin commitear a propósito.
 
 ### Próxima sesión
 1. **`search-panel.njk` + `buscar.js`** — siguiente de §11-A (paleta
