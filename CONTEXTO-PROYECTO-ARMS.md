@@ -1326,15 +1326,15 @@ en ambos.
   final-checkout-demo-3x.png.
 
 ### Estado git (2026-10-17)
-- **PUSHED hasta `ece22d8`** por indicación del dueño. Sin empujar
-  (decisión del dueño): fix animación "Agregar" (`c844e60`), fix
-  franja del cart-drawer (`77f50cb`), header del cart-drawer
-  (`2a22d2c`), fix línea/× del header (`0b76b80`), burbuja/candado
-  (`81f4b42`), corrección del centrado de la burbuja del drawer
-  (`a184e0b`), fix del centrado horizontal de la burbuja del icono de
-  carrito (`59e95c1`) + fix del centrado vertical de la misma (commit
-  de esta sesión, 2026-10-17). `package.json`/`package-lock.json`
-  (puerto 8081) siguen sin commitear a propósito.
+- **PUSHED hasta `49464eb`** por indicación del dueño (2026-10-17,
+  "haz push"): `ece22d8..49464eb` — fix animación "Agregar"
+  (`c844e60`), fix franja del cart-drawer (`77f50cb`), header del
+  cart-drawer (`2a22d2c`), fix línea/× del header (`0b76b80`),
+  burbuja/candado (`81f4b42`), centrado de la burbuja del drawer
+  (`a184e0b`), centrado horizontal de la burbuja del icono de carrito
+  (`59e95c1`), centrado vertical de la misma (`49464eb`).
+  `package.json`/`package-lock.json` (puerto 8081) siguen sin
+  commitear a propósito.
 
 ### Próxima sesión
 1. **`search-panel.njk` + `buscar.js`** — siguiente de §11-A (paleta
