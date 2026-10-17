@@ -122,7 +122,15 @@ function actualizarContador() {
   const total = carrito.reduce((s, i) => s + i.cantidad, 0);
   ['cart-count-desktop', 'cart-count-mobile', 'cart-count-bottom'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) { el.textContent = total; el.style.display = total > 0 ? 'inline-flex' : 'none'; }
+    if (el) {
+      el.textContent = total;
+      // Bugfix 2026-10-17 (reporte dueño): 'inline-flex' pisaba el
+      // `display: grid` del CSS en la .count-bubble del header (texto
+      // pegado a la izquierda, número descentrado). El grid centra la
+      // caja de línea; el badge rojo viejo del bottom-nav sigue en
+      // inline-flex (sus estilos inline son de flex).
+      el.style.display = total > 0 ? (el.classList.contains('count-bubble') ? 'grid' : 'inline-flex') : 'none';
+    }
   });
   const pulse = document.getElementById('cart-pulse');
   if (pulse) pulse.style.display = total > 0 ? 'block' : 'none';

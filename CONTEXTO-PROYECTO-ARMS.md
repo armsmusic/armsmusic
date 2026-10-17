@@ -1287,6 +1287,18 @@ en ambos.
     SIEMPRE en la página real, con screenshots de viewport completo +
     `getBoundingClientRect` (los element-screenshots tienen origen
     subpíxel ambiguo).
+- **Burbuja del icono de carrito en el header** (fix 2026-10-17): el
+  dueño reportó que el número iba hacia la IZQUIERDA. Root cause:
+  `actualizarContador()` en `cart-store.js` (escrito para el badge rojo
+  viejo) inyectaba `style.display = 'inline-flex'` al conteo, y el
+  INLINE pisaba el `display: grid` del CSS de `.count-bubble` → con
+  flex, `place-items: center` solo centra la vertical y el texto se
+  queda pegado a la izquierda (justify-content flex-start). Medido:
+  offsetX −1.83px (gaps 5.7/9.3). Fix: el JS ahora pone `grid` en
+  elementos `.count-bubble` y `inline-flex` en el resto (el badge rojo
+  del bottom-nav sigue en flex). Verificado: móvil DPR3 gaps 8/7
+  (offsetX +0.5), desktop visual OK. El archivo de font es byte-
+  idéntico al del demo (md5 comprobado) — no era el font.
 - **Candado en "Proceder al pago"**: SVG exacto del demo
   (`icon-picto-lock` 18×18, stroke 2, cuerpo fill currentColor 12% +
   arco + ojial) extraído del botón checkout del demo vivo.
@@ -1303,9 +1315,10 @@ en ambos.
   (decisión del dueño): fix animación "Agregar" (`c844e60`), fix
   franja del cart-drawer (`77f50cb`), header del cart-drawer
   (`2a22d2c`), fix línea/× del header (`0b76b80`), burbuja/candado
-  (`81f4b42`) + la corrección del centrado de la burbuja
-  (commit de 2026-10-17). `package.json`/`package-lock.json` (puerto
-  8081) siguen sin commitear a propósito.
+  (`81f4b42`), corrección del centrado de la burbuja del drawer
+  (`a184e0b`) + fix del centrado horizontal de la burbuja del icono
+  de carrito (commit de esta sesión, 2026-10-17). `package.json`/
+  `package-lock.json` (puerto 8081) siguen sin commitear a propósito.
 
 ### Próxima sesión
 1. **`search-panel.njk` + `buscar.js`** — siguiente de §11-A (paleta
