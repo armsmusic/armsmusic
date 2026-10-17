@@ -1299,6 +1299,21 @@ en ambos.
   del bottom-nav sigue en flex). Verificado: móvil DPR3 gaps 8/7
   (offsetX +0.5), desktop visual OK. El archivo de font es byte-
   idéntico al del demo (md5 comprobado) — no era el font.
+  - **Vertical** (segundo reporte 2026-10-17): el número iba ABAJO.
+    Medido con constraint CIRCULAR (pixels blancos a dist < 0.9·radio
+    del centro del rect — el bbox oscuro se contamina con el stroke
+    del icono del carrito, que toca la región; con bbox daba 5.7/5.7
+    falso centrado). Sin ajuste: móvil DPR3 gaps 5.7/4.3 (+0.67 abajo)
+    · desktop DPR2 gaps 5.1/4.9 (+0.11, ya centrado — el hinting por
+    DPR cambia el sesgo; DPR1 contamina la medida por AA, no fiarse).
+    Fix: `padding-bottom: 1px` en `.count-bubble` (móvil → gaps 4.7/5.3,
+    −0.33) con reset a 0 en `@media (min-width: 700px)` (desktop ya
+    centra sin padding).
+  - **Badge rojo del bottom bar** (`#cart-count-bottom`, 18px/10px,
+    flex por JS): medido en 4 DPRs — sin padding: DPR1 0.00 · DPR2
+    0.00 · DPR2.5 +0.6 · DPR3 +0.33 (sesgo de tinta del font, no del
+    layout). Con padding-bottom 2px empeora en DPR1/2 (−1.0). SIN
+    CAMBIO: el valor actual es el óptimo alcanzable (snapping).
 - **Candado en "Proceder al pago"**: SVG exacto del demo
   (`icon-picto-lock` 18×18, stroke 2, cuerpo fill currentColor 12% +
   arco + ojial) extraído del botón checkout del demo vivo.
@@ -1316,9 +1331,10 @@ en ambos.
   franja del cart-drawer (`77f50cb`), header del cart-drawer
   (`2a22d2c`), fix línea/× del header (`0b76b80`), burbuja/candado
   (`81f4b42`), corrección del centrado de la burbuja del drawer
-  (`a184e0b`) + fix del centrado horizontal de la burbuja del icono
-  de carrito (commit de esta sesión, 2026-10-17). `package.json`/
-  `package-lock.json` (puerto 8081) siguen sin commitear a propósito.
+  (`a184e0b`), fix del centrado horizontal de la burbuja del icono de
+  carrito (`59e95c1`) + fix del centrado vertical de la misma (commit
+  de esta sesión, 2026-10-17). `package.json`/`package-lock.json`
+  (puerto 8081) siguen sin commitear a propósito.
 
 ### Próxima sesión
 1. **`search-panel.njk` + `buscar.js`** — siguiente de §11-A (paleta

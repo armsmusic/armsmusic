@@ -1485,6 +1485,17 @@ height-observer[variable="header"]:has([allow-transparency]):not(:has(.header.is
   font-weight: bold;
   line-height: 1;
   display: grid;
+  /* Ajuste óptico vertical (medido en página real 2026-10-17,
+     constraint circular para no contaminar con el stroke del icono
+     vecino): sin ajuste la tinta queda ~0.67px ABAJO del centro
+     (gaps 5.7/4.3, DPR3 móvil). 1px de padding-bottom sube la caja
+     de línea 0.5px → gaps 4.7/5.3 (−0.33). En desktop (≥700px) sin
+     padding ya mide +0.11 (gaps 5.1/4.9, DPR2) — el hinting por DPR
+     cambia el sesgo, así que ahí se resetea a 0. */
+  padding-bottom: 1px;
+}
+@media screen and (min-width: 700px) {
+  .count-bubble { padding-bottom: 0; }
 }
 
 .subheading {
