@@ -2,9 +2,9 @@
 
 > Contexto completo del proyecto para cualquier agente de código (OpenCode +
 > Qwen3.8-27B local, Claude Code, u otra IA). **Léelo entero antes de tocar
-> nada.** Estado verificado contra el repo `armsmusic/armsmusic` el 2026-10-07
-> (HEAD local: ver §16; rama `main` **adelante de `origin/main`, nada
-> pushed**).
+> nada.** Estado verificado contra el repo `armsmusic/armsmusic` el
+> 2026-10-17: rama `main` **en sync con `origin/main`** (último push
+> `45cab5e`). Punto de partida de la sesión: §20 → "Próxima sesión".
 
 ---
 
@@ -95,6 +95,16 @@ Demo de referencia: `https://impact-theme-sound.myshopify.com`.
   propios archivos del proyecto; nada de eso llega al navegador). **NO correr
   `npm audit fix --force`**: sube a Eleventy 3 de golpe (cambio mayor). La
   migración a Eleventy 3 es un pendiente aparte (§11-H).
+- **Medición de layout (Playwright):** el entorno de medición vive en
+  `/tmp/opencode` (node + `npm i playwright pngjs`; chromium en
+  `/usr/bin/chromium`, lanzar con `args: ['--no-sandbox']`). Se mide
+  contra `http://localhost:8081` (build previa con `npm run build`);
+  página de prueba de carrito: `/in-ears/kz-castor/` (botón
+  `#btn-add-KZ-CASTOR`). **TRAMPA: `/tmp/opencode` se limpia entre
+  sesiones** — al empezar: reinstalar `playwright`+`pngjs` y reescribir
+  los scripts de medición (no viven en el repo). Cómo medir bien
+  (screenshots de viewport, constraint circular, DPR 2/3): regla 10
+  de §5.
 
 ---
 
@@ -201,6 +211,20 @@ entren al build). **No reconstruyas componentes de Impact de memoria.**
 9. Si un bug persiste tras un "fix correcto", busca **otra regla de igual
    especificidad ganando la cascada**, y revisa con `git diff` / `git log`
    que el cambio realmente esté aplicado (y compilado) antes de recalcular.
+10. **Centrado óptico de texto en burbujas pequeñas: medir, no estimar**
+    (lecciones 2026-10-17, detalles con datos en §20):
+    (a) solo en la PÁGINA REAL — un render suelto no es representativo
+    (la capa compuesta cambia la rasterización del texto);
+    (b) con screenshot de viewport completo + `getBoundingClientRect`
+    (los element-screenshots tienen origen subpíxel ambiguo);
+    (c) en círculos pequeños, constraint CIRCULAR (píxeles a distancia
+    < 0.9·radio del centro del rect) — el bbox de color se contamina
+    con elementos vecinos que tocan la región;
+    (d) medir a DPR 2/3: a DPR 1 el AA/hinting de glifos ≤10px corrompe
+    la medida;
+    (e) el texto salta por píxeles enteros: barrer el valor
+    (`padding-bottom` 0/1/2) y ver dónde aterriza la tinta; el hinting
+    cambia el sesgo por DPR, a veces toca un valor por breakpoint.
 
 ---
 
@@ -1326,26 +1350,32 @@ en ambos.
   final-checkout-demo-3x.png.
 
 ### Estado git (2026-10-17)
-- **PUSHED hasta `49464eb`** por indicación del dueño (2026-10-17,
-  "haz push"): `ece22d8..49464eb` — fix animación "Agregar"
-  (`c844e60`), fix franja del cart-drawer (`77f50cb`), header del
-  cart-drawer (`2a22d2c`), fix línea/× del header (`0b76b80`),
-  burbuja/candado (`81f4b42`), centrado de la burbuja del drawer
-  (`a184e0b`), centrado horizontal de la burbuja del icono de carrito
-  (`59e95c1`), centrado vertical de la misma (`49464eb`).
-  `package.json`/`package-lock.json` (puerto 8081) siguen sin
-  commitear a propósito.
+- **PUSHED hasta `45cab5e`** — main en SYNC con `origin/main`. Por
+  indicación del dueño (2026-10-17, "haz push"): `ece22d8..49464eb`
+  (8 commits: fix animación "Agregar" `c844e60`, fix franja del
+  cart-drawer `77f50cb`, header del cart-drawer `2a22d2c`, fix línea/×
+  del header `0b76b80`, burbuja/candado `81f4b42`, centrado de la
+  burbuja del drawer `a184e0b`, centrado H de la burbuja del icono de
+  carrito `59e95c1`, centrado V de la misma `49464eb`) + `45cab5e`
+  (meta de contexto). `package.json`/`package-lock.json` (puerto 8081)
+  siguen sin commitear a propósito.
 
 ### Próxima sesión
 1. **`search-panel.njk` + `buscar.js`** — siguiente de §11-A (paleta
    morada vieja en el JS; componente del demo = `search-drawer`).
-2. Resto de §11-A: `bottom-nav.njk`, `floating-ui.njk`, `footer.njk`,
-   `checkout` (sacarle Bootstrap), `orden-confirmada.njk`.
-3. Decidir: el float de WhatsApp sobre el **cart-drawer** (mismo choque
-   que el del nav-drawer, preexistente — ver trampas).
-4. Decisiones pendientes del dueño (§14): header 97 vs 94px · doble `<h1>`.
-5. Pendiente de backend (bloquea stock real): `GET /api/stock` — trabajo
-   del dueño.
+   Método §11-A: leer njk+js → separar hooks de visual → componente
+   del demo → proponer → aprobar → aplicar → compilar.
+2. Resto de §11-A: `bottom-nav.njk` (ojo: su badge rojo
+   `#cart-count-bottom` ya está medido y en su valor óptimo de
+   centrado — no "corregirlo" al migrar, ver §20; el JS
+   `cart-store.js` lo sigue manejando con `inline-flex`),
+   `floating-ui.njk`, `footer.njk`, `checkout` (sacarle Bootstrap —
+   el más engorroso), `orden-confirmada.njk`.
+3. Decisiones pendientes del dueño: header 97 vs 94px · doble `<h1>`
+   (§14) · URLs reales de Instagram/YouTube (footer y nav-drawer las
+   traen como `#`).
+4. Pendiente de backend (bloquea stock real): `GET /api/stock` —
+   trabajo del dueño.
 
 
 
