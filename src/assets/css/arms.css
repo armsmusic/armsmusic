@@ -5007,27 +5007,26 @@ section.pb-producto {
   font-weight: 700;
   line-height: 1;
   display: grid;
-  /* Ajuste óptico (verificado por píxeles 2026-10-10): con 11px la
-     tinta de las cifras Barlow queda ~0.83px ARRIBA del centro del
-     círculo (la caja de línea se centra, el glifo dentro de ella no).
-     El demo no lo corrige, pero el dueño pidió el número bien centrado.
-     Se resuelve con padding (layout, determinista), NO con transform:
-     el transform re-rasteriza el texto en otra fase subpíxel y el
-     desplazamiento real de la tinta varía 0.4–1px según el contexto.
-     2px de padding-top baja la caja de línea 1px → la tinta queda a
-     ~+0.17px del centro (imperceptible) en renderizadores con y sin
-     subpíxel; valores menores (1.4–1.6) NO mueven la tinta en
-     renderizadores que pegan el texto al píxel entero. Solo aplica en
-     móvil: con 12px (≥700px) el sesgo natural es -0.26px (ya centrado),
-     así que ahí se resetea a 0. */
-  padding-top: 2px;
+  /* Ajuste óptico (verificado en la página real 2026-10-17, sweep de
+     padding con screenshots a DPR 1/2/3, móvil y desktop): sin ajuste
+     la caja de tinta de las cifras (cap-height→baseline) queda ~0.5px
+     ABAJO del centro del círculo (gaps 7.3/5 en móvil, 9/7 en desktop,
+     visible a simple vista). padding-bottom: 2px sube la caja de línea
+     1px y equilibra los gaps en los 4 entornos medidos
+     (6.3/6, 6/6, 8/8, 7.5/8 → ±0.6px del centro).
+     OJO: el render controlado (elemento suelto, sin ancestro
+     transformado) NO es representativo: aquí la tinta se rasteriza en
+     la capa compuesta del drawer y el sesgo sale opuesto al del
+     render suelto. Medir siempre en la página real.
+     (Un intento anterior con padding-top: 2px empeoró el problema:
+     empujaba la tinta 1.2px más abajo. No reabrir.) */
+  padding-bottom: 2px;
 }
 @media screen and (min-width: 700px) {
   .cart-drawer__count {
     width: var(--spacing-6);
     height: var(--spacing-6);
     font-size: 0.75rem;
-    padding-top: 0;
   }
 }
 .cart-drawer__close {

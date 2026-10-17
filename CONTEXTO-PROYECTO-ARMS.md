@@ -1265,26 +1265,28 @@ ancho del scrollbar). Verificado chrome-devtools: móvil closedLeft
 (1280 − 15 de scrollbar) → 0px sobre el contenido; screenshots limpios
 en ambos.
 
-### Centrado del número en la burbuja + candado en "Proceder al pago" (2026-10-10)
-- **Burbuja**: el dueño reportó que el número no estaba bien centrado
-  en altura. Verificado por píxeles (render controlado, coords
-  enteras, 3×): la tinta de las cifras Barlow 700 queda **0.83px
-  ARRIBA** del centro del círculo (la caja de línea se centra, el
-  glifo dentro de ella no). El demo usa el mismo font (Barlow) y el
-  mismo CSS → el demo tiene el mismo sesgo, pero el ajuste se hizo
-  igual (pedido del dueño).
-  - Fix: `padding-top: 2px` en `.cart-drawer__count` (baja la caja de
-    línea 1px → la tinta queda a ~+0.17px del centro, imperceptible).
-  - NO `transform: translateY()`: re-rasteriza el texto en otra fase
-    subpíxel y el desplazamiento real de la tinta varía 0.4–1px
-    según el contexto (medido: el fondo se movía 0.75px y la tinta
-    solo 0.4px).
-  - NO valores < 1.5px: en renderizadores que pegan el texto al
-    píxel entero (sweep medido: pad 1.4/1.5/1.6 → la tinta NO se
-    mueve), el ajuste no aplica. 2px es robusto con y sin subpíxel.
-  - Solo móvil: con 12px (≥700px) el sesgo natural medido es -0.26px
-    (ya centrado; con el pad 2px saldría +0.74), así que el bloque
-    `@media (min-width: 700px)` resetea `padding-top: 0`.
+### Centrado del número en la burbuja + candado en "Proceder al pago" (2026-10-10, corrección 2026-10-17)
+- **Burbuja** (corrección 2026-10-17): el dueño reportó que el número
+  no estaba bien centrado. PRIMER intento (10-10, ERRADO):
+  `padding-top: 2px` basado en un render controlado (elemento suelto
+  en body) que medía la tinta 0.83px ARRIBA del centro. En la página
+  REAL (texto dentro de la capa compuesta del drawer, que tiene
+  `transform`) el sesgo sale OPUESTO: la caja de tinta
+  (cap-height→baseline, que es el centro que usa el ojo para cifras)
+  queda ~0.5px ABAJO. Con el `padding-top: 2px` la tinta se fue 1.2px
+  más abajo → el dueño volvió a reportarlo ("aún no está centrado").
+  - Fix real: `padding-bottom: 2px` en `.cart-drawer__count` (sube la
+    caja de línea 1px). Verificado en la página real con sweep de
+    padding + screenshots de viewport completo (rect exacto del
+    elemento): gaps top/bottom → móvil DPR3 6.3/6 · móvil DPR2 6/6 ·
+    desktop DPR1 8/8 · desktop DPR2 7.5/8 (±0.6px del centro en los
+    4 entornos). Sin ajuste era 7.3/5 · 7/5 · 9/7 · 8.5/7.
+  - LECCIÓN (no reabrir): el render controlado suelto NO es
+    representativo de la página real (la capa compuesta cambia la
+    rasterización del texto). Los ajustes ópticos de texto se miden
+    SIEMPRE en la página real, con screenshots de viewport completo +
+    `getBoundingClientRect` (los element-screenshots tienen origen
+    subpíxel ambiguo).
 - **Candado en "Proceder al pago"**: SVG exacto del demo
   (`icon-picto-lock` 18×18, stroke 2, cuerpo fill currentColor 12% +
   arco + ojial) extraído del botón checkout del demo vivo.
@@ -1296,13 +1298,14 @@ en ambos.
   /tmp/opencode/final-bubble-mobile-3x.png, final-checkout-local-3x.png,
   final-checkout-demo-3x.png.
 
-### Estado git (2026-10-10)
+### Estado git (2026-10-17)
 - **PUSHED hasta `ece22d8`** por indicación del dueño. Sin empujar
   (decisión del dueño): fix animación "Agregar" (`c844e60`), fix
   franja del cart-drawer (`77f50cb`), header del cart-drawer
-  (`2a22d2c`), fix línea/× del header (`0b76b80`) + el de
-  burbuja/candado (commit de esta sesión). `package.json`/
-  `package-lock.json` (puerto 8081) siguen sin commitear a propósito.
+  (`2a22d2c`), fix línea/× del header (`0b76b80`), burbuja/candado
+  (`81f4b42`) + la corrección del centrado de la burbuja
+  (commit de 2026-10-17). `package.json`/`package-lock.json` (puerto
+  8081) siguen sin commitear a propósito.
 
 ### Próxima sesión
 1. **`search-panel.njk` + `buscar.js`** — siguiente de §11-A (paleta
